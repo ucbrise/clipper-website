@@ -66,7 +66,7 @@ With curl:
 curl -X POST --header "Content-Type:application/json" -d '{"uid": 0, "input": [1.1, 2.2, 3.3]}' 127.0.0.1:1337/test_app/predict
 ```
 
-Once again in a Python REPL:
+From a Python REPL:
 
 ```py
 >>> import requests, json, numpy as np
