@@ -392,7 +392,7 @@ REST endpoint that clipper created for your application:
 <pre><code class="language-sh">curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;uid&quot;: 0, &quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/test_app/predict
 </code></pre>
 
-<p>Once again in a Python REPL:</p>
+<p>From a Python REPL:</p>
 
 <pre><code class="language-py">&gt;&gt;&gt; import requests, json, numpy as np
 &gt;&gt;&gt; headers = json.dumps({&quot;Content-type&quot;: &quot;application/json&quot;})
