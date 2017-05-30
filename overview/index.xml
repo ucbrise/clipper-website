@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Getting Started on Clipper</title>
+    <link>http://clipper.ai/overview/</link>
+    <description>Recent content in Getting Started on Clipper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 20 May 2017 18:54:20 -0700</lastBuildDate>
+    
+	<atom:link href="http://clipper.ai/overview/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Quickstart</title>
+      <link>http://clipper.ai/overview/quickstart/</link>
+      <pubDate>Sat, 20 May 2017 18:01:34 -0700</pubDate>
+      
+      <guid>http://clipper.ai/overview/quickstart/</guid>
+      <description>The easiest way to get started using Clipper is to install the clipper_admin pip package and use it interactively from a Python REPL. The Clipper admin contains the Clipper manager which can be used to start and manage a Clipper instance.
+$ pip install clipper_admin $ python  Once you have the clipper_admin package installed, you can use it to start a Clipper instance and deploy your first model. When you use the Clipper manager to start a Clipper instance, it will run Clipper in Docker containers using Docker Compose.</description>
+    </item>
+    
+    <item>
+      <title>Image Classification Tutorial</title>
+      <link>http://clipper.ai/overview/tutorial/</link>
+      <pubDate>Sat, 20 May 2017 19:16:04 -0700</pubDate>
+      
+      <guid>http://clipper.ai/overview/tutorial/</guid>
+      <description>This tutorial will walk you through the process of starting Clipper, creating an application, querying the application, and deploying models to improve application accuracy.
+The tutorial uses the Clipper client management Python library for controlling Clipper. While this is the simplest way to manage Clipper, the client library is simply a convenience wrapper around a standardized management REST interface which can be queried with any REST client.
+Setup The tutorial runs Clipper in Docker containers and orchestrates them with Docker-Compose, so you must have Docker and Docker-Compose installed.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://clipper.ai/documentation/clipper_manager/</loc>
+    <lastmod>2017-05-23T09:08:41-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/overview/</loc>
+    <lastmod>2017-05-20T18:54:20-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/overview/quickstart/</loc>
+    <lastmod>2017-05-20T18:01:34-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/querying_clipper/</loc>
+    <lastmod>2017-05-23T12:10:39-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/documentation/python_model_deployment/</loc>
+    <lastmod>2017-05-23T09:07:44-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/overview/tutorial/</loc>
+    <lastmod>2017-05-20T19:16:04-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/documentation/</loc>
+    <lastmod>2017-05-20T17:52:40-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/contributing/</loc>
+    <lastmod>2017-05-23T08:59:49-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/roadmap/</loc>
+    <lastmod>2017-05-23T09:00:06-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/design_docs/container_implementation/</loc>
+    <lastmod>2017-05-20T18:23:55-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/</loc>
+    <lastmod>2017-05-20T17:53:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/design_docs/</loc>
+    <lastmod>2017-05-23T08:39:59-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="generator" content="Hugo 0.20.5" />
+    <meta name="description" content="">
+
+
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+
+    
+    <title>Python Model Deployment</title>
+    <link href="http://clipper.ai//css/nucleus.css" rel="stylesheet">
+    <link href="http://clipper.ai//css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://clipper.ai//css/hybrid.css" rel="stylesheet">
+    <link href="http://clipper.ai//css/featherlight.min.css" rel="stylesheet">
+    <link href="http://clipper.ai//css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="http://clipper.ai//css/horsey.css" rel="stylesheet">
+    <link href="http://clipper.ai//css/theme.css" rel="stylesheet">
+    <link href="http://clipper.ai//css/hugo-theme.css" rel="stylesheet">
+    <script src="http://clipper.ai//js/jquery-2.x.min.js"></script>
+    <style type="text/css">:root #header + #content > #left > #rlblock_left
+    {display:none !important;}</style>
+    
+
+  </head>
+  <body class="" data-url="/documentation/python_model_deployment/">
+    
+    <nav id="sidebar">
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="http://clipper.ai">
+  <img id="grav-logo" src="/images/clipper-logo.png">
+  </img>
+</a>
+
+    </div>
+    
+</div>
+
+
+  <div class="highlightable">
+    <ul class="topics">
+      
+        
+        
+          
+          
+            
+          
+        
+          
+          
+            
+          
+        
+          
+          
+            
+          
+        
+          
+          
+            
+          
+        
+          
+          
+            
+          
+        
+          
+          
+            
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  " data-nav-id="/overview/">
+        <a href="/overview/">
+          <span>
+            
+              <b>1. </b>
+            
+             Getting Started
+            
+           </span>
+        </a>
+        
+        <ul>
+          
+            <li class="dd-item " data-nav-id="/overview/quickstart/">
+              <a href="/overview/quickstart/">
+                <span>Quickstart     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/overview/tutorial/">
+              <a href="/overview/tutorial/">
+                <span>Image Classification Tutorial     </i></span>
+              </a>
+            </li>
+          
+        </ul>
+        
+      </li>
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  " data-nav-id="/querying_clipper/">
+        <a href="/querying_clipper/">
+          <span>
+            
+              <b>2. </b>
+            
+             Querying Clipper
+            
+           </span>
+        </a>
+        
+      </li>
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  parent" data-nav-id="/documentation/">
+        <a href="/documentation/">
+          <span>
+            
+              <b>3. </b>
+            
+             Documentation
+            
+           </span>
+        </a>
+        
+        <ul>
+          
+            <li class="dd-item " data-nav-id="/documentation/clipper_manager/">
+              <a href="/documentation/clipper_manager/">
+                <span>Managing a Clipper Instance     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item active" data-nav-id="/documentation/python_model_deployment/">
+              <a href="/documentation/python_model_deployment/">
+                <span>Python Model Deployment     </i></span>
+              </a>
+            </li>
+          
+        </ul>
+        
+      </li>
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  " data-nav-id="/contributing/">
+        <a href="/contributing/">
+          <span>
+            
+              <b>4. </b>
+            
+             Contributing
+            
+           </span>
+        </a>
+        
+      </li>
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  " data-nav-id="/roadmap/">
+        <a href="/roadmap/">
+          <span>
+            
+              <b>5. </b>
+            
+             Status and Roadmap
+            
+           </span>
+        </a>
+        
+      </li>
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
+      <li class="dd-item  " data-nav-id="/design_docs/">
+        <a href="/design_docs/">
+          <span>
+            
+              <b>6. </b>
+            
+             Additional Resources
+            
+           </span>
+        </a>
+        
+        <ul>
+          
+            <li class="dd-item " data-nav-id="/design_docs/container_implementation/">
+              <a href="/design_docs/container_implementation/">
+                <span>Container Implementation     </i></span>
+              </a>
+            </li>
+          
+        </ul>
+        
+      </li>
+      
+      
+    </ul>
+    <hr>
+     
+    <section id="footer">
+      <p>Built with <a href="http://gohugo.io/">Hugo</a></p>
+
+    </section>
+  </div>
+</nav>
+
+        <section id="body">
+        <div id="overlay"></div>
+
+        <div class="padding highlightable">
+
+            <div id="top-bar">
+              
+              <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                  <span id="sidebar-toggle-span">
+                      <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                        <i class="fa fa-bars"></i>
+                      </a>
+                  </span>
+                
+                <span id="toc-menu"><a href=""><i class="fa fa-list-alt"></i></a></span>
+                
+                
+                  
+                  
+                  
+                    
+                    
+                <a href="/documentation/" itemprop="url"><span itemprop="title">Documentation</span></a> <i class="fa fa-angle-right"></i>
+                    
+                  
+                
+                <span itemprop="title"> Python Model Deployment</span>
+              </div>
+              
+                  <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#defining-your-prediction-function">Defining your prediction function</a></li>
+<li><a href="#requesting-deployment-of-your-python-function">Requesting deployment of  your Python function</a>
+<ul>
+<li><a href="#checking-for-conflicting-package-dependencies">Checking for conflicting package dependencies</a></li>
+<li><a href="#checking-for-package-existence-in-linux-channels">Checking for package existence in linux channels</a></li>
+<li><a href="#deploying-the-function-in-a-container">Deploying the function in a container</a></li>
+</ul></li>
+<li><a href="#initializing-your-model-container">Initializing your model-container</a>
+<ul>
+<li><a href="#how-you-can-check-container-logs">How you can check container logs</a></li>
+<li><a href="#optimistic-startup">Optimistic Startup</a></li>
+<li><a href="#loading-anaconda-packages">Loading Anaconda packages</a></li>
+<li><a href="#loading-pip-packages">Loading pip packages</a></li>
+<li><a href="#starting-up-the-model">Starting up the model</a></li>
+<li><a href="#loading-your-prediction-function">Loading your prediction function</a></li>
+<li><a href="#ready-to-query">Ready to query!</a></li>
+</ul></li>
+<li><a href="#errors-you-may-encounter">Errors you may encounter</a>
+<ul>
+<li><a href="#errors-during-container-initialization">Errors during container initialization</a></li>
+<li><a href="#errors-at-query-time">Errors at query time</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+              
+
+            </div>
+            
+              <div id="body-inner">
+                
+                <h1>Python Model Deployment</h1>
+                
+
+
+
+<p>Clipper supports a simplified process for deploying arbitrary Python prediction functions as model-containers.</p>
+
+<p>The Clipper management library supports this functionality through <code>deploy_prediction_func</code>, which consumes a function you want to deploy. All dependencies for the function must be installed with Anaconda or Pip. <code>deploy_prediction_func</code> must be called from within an <a href="https://conda.io/docs/using/envs.html">Anaconda environment</a> that tracks all such dependencies.</p>
+
+<h2 id="defining-your-prediction-function">Defining your prediction function</h2>
+
+<p>Prediction functions should take a list of inputs of type <code>&lt;input-type&gt;</code> and return a Python list of strings (often JSON strings, but JSON is not required). Internally, the function is free to do anything so long as the function&rsquo;s closure captures its full state.</p>
+
+<pre><code class="language-py">from sklearn import linear_model
+
+def center(xs):
+  means = np.mean(xs, axis=0)
+  return xs - means
+
+centered_xs = center(xs)
+model = sklearn.linear_model.LogisticRegression()
+model.fit(centered_xs, ys)
+
+def centered_predict(inputs):
+  centered_inputs = center(inputs)
+  return model.predict(centered_inputs)
+
+</code></pre>
+
+<h2 id="requesting-deployment-of-your-python-function">Requesting deployment of  your Python function</h2>
+
+<p>Deploying this function to Clipper doesn&rsquo;t require writing any container code. All that&rsquo;s needed is a call to <code>deploy_predict_function()</code> from within an Anaconda environment that has necessary conda and pip packages to run the function.</p>
+
+<pre><code class="language-py">clipper.deploy_predict_function(
+  &quot;example_model&quot;,
+  1,
+  centered_predict,
+  [&quot;example&quot;],
+  &quot;doubles&quot;,
+  num_containers=1)
+</code></pre>
+
+<p>The management library will do some dependency checks from your client before deploying the function:</p>
+
+<h3 id="checking-for-conflicting-package-dependencies">Checking for conflicting package dependencies</h3>
+
+<p>The management library will first ensure that no packages have conflicting dependencies in the container&rsquo;s linux-64 conda channel. If they do, you will see a message like:</p>
+
+<pre><code>Fetching package metadata .........
+Solving package specifications: ..........
+Your conda dependencies are unsatisfiable (see error text below). Please resolve these issues and call `deploy_predict_func` again.
+UnsatisfiableError: The following specifications were found to be in conflict:
+  - appnope 0.1.0 py27_0
+  - scikit-learn 0.17.1 np110py27_0 -&gt; mkl 11.3.1
+  - scikit-learn 0.17.1 np110py27_0 -&gt; numpy 1.10*
+</code></pre>
+
+<h3 id="checking-for-package-existence-in-linux-channels">Checking for package existence in linux channels</h3>
+
+<p>If none of your packages have conflicting dependencies, the management library will check for the existence of your packages in the linux-64 conda channel (the channel the container will use). If any packages cannot be found, they will be skipped during package installation on the container. You should see a message like this:</p>
+
+<pre><code>Fetching package metadata .........
+Solving package specifications: ..........
+The following packages in your conda environment aren't available in the linux-64 conda channel the container will use:
+conda-forge::nltk 3.2.1 py27_0, conda-forge::libsodium 1.0.10 0, conda-forge::cloudpickle 0.2.1 py27_0
+...
+We will skip their installation when deploying your function. If your function uses these packages, the container will experience a runtime error when queried.
+Removed unavailable packages from supplied environment specifications
+</code></pre>
+
+<h3 id="deploying-the-function-in-a-container">Deploying the function in a container</h3>
+
+<p>A successful call to <code>deploy_prediction_function()</code> will output:</p>
+
+<pre><code>Supplied environment details
+Serialized and supplied predict function
+Published model to Clipper
+Found clipper/python-container in Docker hub
+Copied model data to host
+True
+</code></pre>
+
+<h2 id="initializing-your-model-container">Initializing your model-container</h2>
+
+<p>Calling <code>deploy_prediction_func()</code> starts a Docker container and loads it with the necessary info to create your model. However, it may take some time (up to several minutes) before the model-container is ready to serve predictions: it still has to install and load dependencies and deserialize your prediction function.</p>
+
+<h3 id="how-you-can-check-container-logs">How you can check container logs</h3>
+
+<p>You can read the container&rsquo;s logs to keep track of its initialization progress. Run <code>docker ps</code> and find the container instance for the image <code>clipper/python-container</code>. Grab its container id and run <code>docker logs &lt;container_id&gt;</code>.</p>
+
+<p>There are several stages in the model-container&rsquo;s initialization.</p>
+
+<h3 id="optimistic-startup">Optimistic Startup</h3>
+
+<p>The container will attempt to start up the model without downloading any packages. The start of this process is reflected in the output of <code>docker logs</code> as:</p>
+
+<p>Attempting to run Python container without installing dependencies</p>
+
+<p>If this attempt is successful, the logs should show the following when the container is ready to be queried:</p>
+
+<p>Starting PythonContainer container
+  Connecting to Clipper with <port information>
+  Initializing Python function container
+  Serving predictions for <input_type> input type.</p>
+
+<p><strong>If an ImportError is reached</strong> either at startup or upon being queried, the logs will show:</p>
+
+<p>Running Python container without installing dependencies fails
+  Will install dependencies and try again</p>
+
+<p>and the process will continue on to the steps detailed below.</p>
+
+<p><strong>If any other error is reached</strong> the logs will show the error and the process will not continue (installing dependencies could only possibly resolve ImportErrors).</p>
+
+<h3 id="loading-anaconda-packages">Loading Anaconda packages</h3>
+
+<p>If you still have conda packages to install, the output of <code>docker logs</code> should show progress like so:</p>
+
+<pre><code>...
+bokeh-0.12.5-p 100% |###############################| Time: 0:00:02   1.88 MB/s
+boto3-1.4.4-py 100% |###############################| Time: 0:00:00  12.64 MB/s
+fabric-1.13.1- 100% |###############################| Time: 0:00:00   4.76 MB/s
+flask-cors-2.1 100% |###############################| Time: 0:00:00 347.15 kB/s
+s3fs-0.0.9-py2 100% |###############################| Time: 0:00:00  12.35 MB/s
+blaze-0.10.1-p 100% |###############################| Time: 0:00:00   4.79 MB/s
+...
+</code></pre>
+
+<h3 id="loading-pip-packages">Loading pip packages</h3>
+
+<p>If you still have pip packages to install, the output of <code>docker logs</code> should show progress like so:</p>
+
+<pre><code>...
+Collecting packaging==16.8
+  Downloading packaging-16.8-py2.py3-none-any.whl
+Collecting path-and-address==2.0.1
+  Downloading path-and-address-2.0.1.zip
+...
+</code></pre>
+
+<h3 id="starting-up-the-model">Starting up the model</h3>
+
+<p>In this stage, the container attempts to load in the parameters you have provided it and connect to Clipper accordingly. The output of <code>docker logs</code> should show:</p>
+
+<pre><code>Starting PythonContainer container
+Connecting to Clipper with &lt;port information&gt;
+</code></pre>
+
+<h3 id="loading-your-prediction-function">Loading your prediction function</h3>
+
+<p>In this stage, the container deserializes your prediction function and embeds in the model so it can be queried. The start of this process is indicated by:</p>
+
+<pre><code>Loading provided Python prediction function
+</code></pre>
+
+<h3 id="ready-to-query">Ready to query!</h3>
+
+<p>After your prediction function has been loaded, you should see:</p>
+
+<pre><code>Serving predictions for &lt;input_type&gt; input type.
+</code></pre>
+
+<p>At this point, your prediction function and its environment have successfully been loaded and are ready to be queried!</p>
+
+<h2 id="errors-you-may-encounter">Errors you may encounter</h2>
+
+<p>There are several problems you can encounter in deploying your Python function to Clipper. This section will walk you through how you can identify and resolve them.</p>
+
+<p>If you run into issues not listed here, please file a GitHub issue and we will try to help you diagnose and solve the problem.</p>
+
+<h3 id="errors-during-container-initialization">Errors during container initialization</h3>
+
+<p><strong>Some pip packages weren&rsquo;t installed</strong></p>
+
+<p>This is possible if conda is not tracking your pip packages. Make sure that you install your pip packages through a conda-installed <code>pip</code>. This way, conda can keep track of which pip packages you are using in your environment. You can see which pip packages conda is keeping track of by writing your environment to a file with <code>conda env export &gt;&gt; &lt;filename&gt;</code></p>
+
+<p><strong>Logs indicate that some pip packages don&rsquo;t exist in the container&rsquo;s pip distribution library</strong></p>
+
+<p>If this occurs, <code>docker logs</code> should output something like the following during the &lsquo;Loading pip packages&rsquo; phase:</p>
+
+<p>Collecting nb-conda-kernels==2.1.0
+    Could not find a version that satisfies the requirement nb-conda-kernels==2.1.0 (from versions: )
+  No matching distribution found for nb-conda-kernels==2.1.0</p>
+
+<p>CondaValueError: Value error: pip returned an error.</p>
+
+<p>This will not stop container startup; the pip package&rsquo;s installation will be skipped. If your Python function needs the package, you can run into runtime errors upon querying the container. The best way to avoid this issue is to ensure that all of your pip packages exist on linux-64 pip distribution library.</p>
+
+<h3 id="errors-at-query-time">Errors at query time</h3>
+
+<p>Runtime errors that occur within the container will crash it. You can diagnose what caused the issue by looking at the out put of <code>docker logs &lt;container_id&gt;</code> (where <code>&lt;container_id&gt;</code> is the id of the container in which your Python function was deployed)</p>
+
+<p><strong>Container crash: module not found</strong></p>
+
+<p>This can occur if:</p>
+
+<ul>
+<li>Your function makes use of a pip package that your conda environment wasn&rsquo;t tracking. See the &ldquo;Some pip packages weren&rsquo;t installed&rdquo; section above.</li>
+<li>Your function makes use of a conda package that doesn&rsquo;t exist in the container&rsquo;s conda channel and whose installation was skipped. If any packages in your local conda environment were skipped for installation on the container, you should have been notified of them in a warning message after calling <code>deploy_predict_function</code>.</li>
+<li>Conda and pip both don’t have a dependency being used by the function. Unfortunately, Clipper&rsquo;s Python function deployment feature only supports conda and pip packages for now. Usage of modules not within these distributions is incompatible with this deployment process.</li>
+</ul>
+
+<p><strong>Container crash: prediction function has some other runtime error (index out of bounds, divide by zero, incorrect operand types for a function, etc</strong></p>
+
+<p>Make sure that you test your function locally before deploying it. Remember that it should take as input a list of datapoints (numpy arrays or native Python lists) with entries of type <input_type> and should output a list of strings with a prediction for each datapoint.</p>
+
+<p><strong>Container crash: function makes use of something that’s not captured in the function closure</strong></p>
+
+<p>Your function can&rsquo;t use objects or connections whose states aren&rsquo;t captured in the function closure. An example of this would be a database connection that is configured/initialized outside of the function.</p>
+
+<p><strong>Container logs indicate no issues but the Python function&rsquo;s predictions aren&rsquo;t getting served</strong>
+First, make sure that your Python function is actually getting called. One way to do this is to check the container&rsquo;s logs for print statements in your Python function.</p>
+
+<p>If you can confirm that your function is indeed getting called, then thereare a couple of things that could prevent its prediction from getting served:</p>
+
+<ul>
+<li>Prediction function returns items of the wrong shape</li>
+<li>Prediction function takes too long (longer than the <code>latency_slo_micros</code> parameter of the app) and so its results are never considered</li>
+</ul>
+
+
+      
+      
+      </div>
+    </div>
+
+    
+
+    <div id="navigation">
+        
+        
+        
+    </div>
+
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="http://clipper.ai//js/clipboard.min.js"></script>
+    <script src="http://clipper.ai//js/perfect-scrollbar.min.js"></script>
+    <script src="http://clipper.ai//js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="http://clipper.ai//js/jquery.sticky-kit.min.js"></script>
+    <script src="http://clipper.ai//js/featherlight.min.js"></script>
+    <script src="http://clipper.ai//js/html5shiv-printshiv.min.js"></script>
+    <script src="http://clipper.ai//js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="http://clipper.ai//js/modernizr.custom.71422.js"></script>
+    <script src="http://clipper.ai//js/learn.js"></script>
+    <script src="http://clipper.ai//js/hugo-learn.js"></script>
+    
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-99816998-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+  </body>
+</html>
+
