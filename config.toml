@@ -1,0 +1,7 @@
+baseURL = "http://clipper.ai/"
+languageCode = "en-us"
+title = "Clipper"
+theme = "hugo-theme-learn"
+# PygmentsCodeFences = true
+PygmentsStyle = "monokai"
+googleAnalytics = "UA-99816998-1"

@@ -1,0 +1,17 @@
+*.swp
+.color_coded
+.ycm_p
+.ycm_extra_conf.py
+*.pyc
+
+# build directories
+release/
+debug/
+.DS_STORE
+.idea/
+config.log
+target/
+
+# scala
+dependency-reduced-pom.xml
+*.iml
