@@ -60,12 +60,18 @@ Now that you've deployed your first model, you can start requesting predictions 
 REST endpoint that clipper created for your application:
 `http://localhost:1337/test_app/predict`
 
+With curl:
+
+```sh
+curl -X POST --header "Content-Type:application/json" -d '{"uid": 0, "input": [1.1, 2.2, 3.3]}' 127.0.0.1:1337/test_app/predict
+```
+
 Once again in a Python REPL:
 
 ```py
 >>> import requests, json, numpy as np
 >>> headers = json.dumps({"Content-type": "application/json"})
->>> pred = requests.post("http://localhost:1337/test_app/predict", headers=headers, data=list(np.random.random(10))
+>>> pred = requests.post("http://localhost:1337/test_app/predict", headers=headers, data=list(np.random.random(10)))
 >>> pred.json()
 ```
 
