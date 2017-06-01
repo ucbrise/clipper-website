@@ -10,7 +10,7 @@ REPL.
 The Clipper admin contains the [Clipper manager]({{< relref "documentation/clipper_manager.md" >}}) which can be used to start and manage a Clipper instance.
 
 {{% notice note %}}
-**Dependencies:** Before using Clipper, you must install [Docker](https://www.docker.com/) and Docker-Compose [Docker Compose](https://docs.docker.com/compose/) and the [Anaconda Python](https://www.continuum.io/downloads) distribution.
+**Dependencies:** Before using Clipper, you must install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) and the [Anaconda Python](https://www.continuum.io/downloads) distribution.
 {{% /notice %}}
 
 ```
@@ -68,8 +68,8 @@ With curl:
 
 ```sh
 $ curl -X POST --header "Content-Type:application/json" -d '{"uid": 0, "input": [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello_world/predict
-{"query_id":0,"output":6.6,"default":false}
 
+{"query_id":0,"output":6.6,"default":false}
 ```
 
 From a Python REPL:
