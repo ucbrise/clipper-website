@@ -339,7 +339,7 @@
 REPL.
 The Clipper admin contains the <a href="/documentation/clipper_manager/">Clipper manager</a> which can be used to start and manage a Clipper instance.</p>
 
-<div class="notices note" ><p><strong>Dependencies:</strong> Before using Clipper, you must install <a href="https://www.docker.com/">Docker</a> and Docker-Compose <a href="https://docs.docker.com/compose/">Docker Compose</a> and the <a href="https://www.continuum.io/downloads">Anaconda Python</a> distribution.</p>
+<div class="notices note" ><p><strong>Dependencies:</strong> Before using Clipper, you must install <a href="https://www.docker.com/">Docker</a> and <a href="https://docs.docker.com/compose/">Docker Compose</a> and the <a href="https://www.continuum.io/downloads">Anaconda Python</a> distribution.</p>
 </div>
 
 
@@ -394,8 +394,8 @@ REST endpoint that clipper created for your application:
 <p>With curl:</p>
 
 <pre><code class="language-sh">$ curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;uid&quot;: 0, &quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello_world/predict
-{&quot;query_id&quot;:0,&quot;output&quot;:6.6,&quot;default&quot;:false}
 
+{&quot;query_id&quot;:0,&quot;output&quot;:6.6,&quot;default&quot;:false}
 </code></pre>
 
 <p>From a Python REPL:</p>

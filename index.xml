@@ -29,7 +29,7 @@ pip install clipper_admin  A user guide and hosted API docs for the Clipper mana
       
       <guid>http://clipper.ai/overview/quickstart/</guid>
       <description>The easiest way to get started using Clipper is to install the clipper_admin pip package and use it interactively from a Python REPL. The Clipper admin contains the Clipper manager which can be used to start and manage a Clipper instance.
-Dependencies: Before using Clipper, you must install Docker and Docker-Compose Docker Compose and the Anaconda Python distribution.
+Dependencies: Before using Clipper, you must install Docker and Docker Compose and the Anaconda Python distribution.
  $ pip install clipper_admin $ python  Once you have the clipper_admin package installed, you can use it to start a Clipper instance and deploy your first model.</description>
     </item>
     
