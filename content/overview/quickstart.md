@@ -9,6 +9,10 @@ The easiest way to get started using Clipper is to install the `clipper_admin` p
 REPL.
 The Clipper admin contains the [Clipper manager]({{< relref "documentation/clipper_manager.md" >}}) which can be used to start and manage a Clipper instance.
 
+{{% notice note %}}
+**Dependencies:** Before using Clipper, you must install [Docker](https://www.docker.com/) and Docker-Compose [Docker Compose](https://docs.docker.com/compose/) and the [Anaconda Python](https://www.continuum.io/downloads) distribution.
+{{% /notice %}}
+
 ```
 $ pip install clipper_admin
 $ python
