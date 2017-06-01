@@ -339,7 +339,11 @@
 REPL.
 The Clipper admin contains the <a href="/documentation/clipper_manager/">Clipper manager</a> which can be used to start and manage a Clipper instance.</p>
 
-<pre><code class="language-py">$ pip install clipper_admin
+<div class="notices note" ><p><strong>Dependencies:</strong> Before using Clipper, you must install <a href="https://www.docker.com/">Docker</a> and Docker-Compose <a href="https://docs.docker.com/compose/">Docker Compose</a> and the <a href="https://www.continuum.io/downloads">Anaconda Python</a> distribution.</p>
+</div>
+
+
+<pre><code>$ pip install clipper_admin
 $ python
 </code></pre>
 
@@ -355,10 +359,10 @@ Checking if Docker is running...
 &gt;&gt;&gt; clipper.start()
 Clipper is running
 
-# Register an application called &quot;test_app&quot; that will query a model
-called &quot;test_model&quot;. This will create a prediction REST endpoint at
-# http://localhost:1337/test_app/predict
-&gt;&gt;&gt; clipper.register_application(&quot;test_app&quot;, &quot;test_model&quot;, &quot;doubles&quot;, &quot;-1.0&quot;, 100000)
+# Register an application called &quot;hello_world&quot; that will query a model
+# called &quot;feature_sum_model&quot;. This will create a prediction REST endpoint
+# at http://localhost:1337/hello_world/predict
+&gt;&gt;&gt; clipper.register_application(&quot;hello_world&quot;, &quot;feature_sum_model&quot;, &quot;doubles&quot;, &quot;-1.0&quot;, 100000)
 Success!
 
 # Inspect Clipper to see the registered apps
@@ -369,10 +373,10 @@ Success!
 # Note that the prediction function takes a list of feature vectors as
 # input and returns a list of strings.
 &gt;&gt;&gt; def pred(xs):
-...     return [str(np.sum(x)) for x in xs]
+      return [str(np.sum(x)) for x in xs]
 
-# Deploy the model, naming it &quot;test_model&quot; and giving it version 1
-&gt;&gt;&gt; clipper.deploy_predict_function(&quot;test_model&quot;, 1, pred, [&quot;test&quot;], &quot;doubles&quot;)
+# Deploy the model, naming it &quot;feature_sum_model&quot; and giving it version 1
+&gt;&gt;&gt; clipper.deploy_predict_function(&quot;feature_sum_model&quot;, 1, pred, [&quot;test&quot;], &quot;doubles&quot;)
 </code></pre>
 
 <div class="notices note" ><p>If your Docker installation requires root access, you can pass
@@ -385,19 +389,20 @@ You can find an explanation for the problem and a workaround in <a href="https:/
 
 <p>Now that you&rsquo;ve deployed your first model, you can start requesting predictions at the
 REST endpoint that clipper created for your application:
-<code>http://localhost:1337/test_app/predict</code></p>
+<code>http://localhost:1337/hello_world/predict</code></p>
 
 <p>With curl:</p>
 
-<pre><code class="language-sh">curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;uid&quot;: 0, &quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/test_app/predict
+<pre><code class="language-sh">$ curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;uid&quot;: 0, &quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello_world/predict
+{&quot;query_id&quot;:0,&quot;output&quot;:6.6,&quot;default&quot;:false}
+
 </code></pre>
 
 <p>From a Python REPL:</p>
 
 <pre><code class="language-py">&gt;&gt;&gt; import requests, json, numpy as np
-&gt;&gt;&gt; headers = json.dumps({&quot;Content-type&quot;: &quot;application/json&quot;})
-&gt;&gt;&gt; pred = requests.post(&quot;http://localhost:1337/test_app/predict&quot;, headers=headers, data=list(np.random.random(10)))
-&gt;&gt;&gt; pred.json()
+&gt;&gt;&gt; headers = {&quot;Content-type&quot;: &quot;application/json&quot;}
+&gt;&gt;&gt; requests.post(&quot;http://localhost:1337/hello_world/predict&quot;, headers=headers, data=json.dumps({&quot;uid&quot;: 0, &quot;input&quot;: list(np.random.random(10))})).json()
 </code></pre>
 
 
