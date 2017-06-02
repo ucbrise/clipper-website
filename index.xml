@@ -19,7 +19,7 @@
       <guid>http://clipper.ai/documentation/clipper_manager/</guid>
       <description>You can use the Clipper manager Python library to start and manage a Clipper instance.
 The Clipper manager library can be installed with pip. We recommend using Anaconda as your Python installation.
-pip install clipper_admin  A user guide and hosted API docs for the Clipper manager are coming soon. Until then, the best place to find API documentation are the method comments in the clipper_manager.py source code.</description>
+pip install clipper_admin  A user guide is coming soon. In the meantime, you can check out the API Documentation.</description>
     </item>
     
     <item>
