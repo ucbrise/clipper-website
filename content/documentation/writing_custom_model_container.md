@@ -1,4 +1,11 @@
-# Implementing your own model-container
++++
+date = "2017-06-02T13:40:41-07:00"
+title = "Implementing your own model-container"
+toc = true
+weight = 5
+
++++
+
 Clipper allows for quick deployment of custom models. In order to query these models in a live application, they need to be deployed in model-containers that implement a specific Clipper interface.
 
 The good news is that you only need to define your model-container once per model. The bad news is that it can be an involved process. This document will walk you through the process of creating your model-container and deploying your model within it.
