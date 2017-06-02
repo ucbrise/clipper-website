@@ -18,4 +18,4 @@ pip install clipper_admin
 
 
 A user guide is coming soon.
-In the meantime, you can check out the [API Documentation](docs.clipper.ai).
+In the meantime, you can check out the [API Documentation](http://docs.clipper.ai).
