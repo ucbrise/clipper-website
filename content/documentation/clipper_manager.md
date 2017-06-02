@@ -17,6 +17,5 @@ pip install clipper_admin
 ```
 
 
-A user guide and hosted API docs for the Clipper manager are coming soon.
-Until then, the best place to find API documentation are the method comments in
-the `clipper_manager.py` [source code](https://github.com/ucbrise/clipper/blob/release-0.1/clipper_admin/clipper_manager.py).
+A user guide is coming soon.
+In the meantime, you can check out the [API Documentation](docs.clipper.ai).
