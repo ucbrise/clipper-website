@@ -11,6 +11,8 @@ chapter = false
 
 Clipper is a prediction serving system that sits between user-facing applications and a wide range of commonly used machine learning models and frameworks.
 
+Clipper is open-source software. [Check out our code on GitHub](https://github.com/ucbrise/clipper).
+
 ## What does Clipper do?
 
 * Clipper **simplifies integration of machine learning techniques** into user facing applications by providing a simple standard REST interface for prediction and feedback across a wide range of commonly used machine learning frameworks.  *Clipper makes product teams happy.*
