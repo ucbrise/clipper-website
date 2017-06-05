@@ -7,7 +7,7 @@ weight = 1
 
 The easiest way to get started using Clipper is to install the `clipper_admin` pip package and use it interactively from a Python
 REPL.
-The Clipper admin contains the [Clipper manager]({{< relref "documentation/clipper_manager.md" >}}) which can be used to start and manage a Clipper instance.
+The clipper-admin package contains the [Clipper manager]({{< relref "documentation/clipper_manager.md" >}}) which can be used to start and manage a Clipper instance.
 
 {{% notice note %}}
 **Dependencies:** Before using Clipper, you must install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) and the [Anaconda Python](https://www.continuum.io/downloads) distribution.
@@ -25,21 +25,21 @@ When you use the Clipper manager to start a Clipper instance, it will run Clippe
 From the Python REPL:
 
 ```py
->>> import clipper_admin.clipper_manager as cm
+>>> from clipper_admin import Clipper
 # Start a Clipper instance on localhost
->>> clipper = cm.Clipper("localhost")
+>>> clipper_conn = Clipper("localhost")
 Checking if Docker is running...
->>> clipper.start()
+>>> clipper_conn.start()
 Clipper is running
 
 # Register an application called "hello_world" that will query a model
 # called "feature_sum_model". This will create a prediction REST endpoint
 # at http://localhost:1337/hello_world/predict
->>> clipper.register_application("hello_world", "feature_sum_model", "doubles", "-1.0", 100000)
+>>> clipper_conn.register_application("hello_world", "feature_sum_model", "doubles", "-1.0", 100000)
 Success!
 
 # Inspect Clipper to see the registered apps
->>> clipper.get_all_apps()
+>>> clipper_conn.get_all_apps()
 [u'test']
 
 # Define a simple model that just returns the sum of each feature vector.
@@ -49,7 +49,7 @@ Success!
       return [str(np.sum(x)) for x in xs]
 
 # Deploy the model, naming it "feature_sum_model" and giving it version 1
->>> clipper.deploy_predict_function("feature_sum_model", 1, pred, "doubles")
+>>> clipper_conn.deploy_predict_function("feature_sum_model", 1, pred, "doubles")
 ```
 
 {{% notice note %}}
