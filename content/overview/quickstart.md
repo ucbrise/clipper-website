@@ -49,7 +49,7 @@ Success!
       return [str(np.sum(x)) for x in xs]
 
 # Deploy the model, naming it "feature_sum_model" and giving it version 1
->>> clipper.deploy_predict_function("feature_sum_model", 1, pred, ["test"], "doubles")
+>>> clipper.deploy_predict_function("feature_sum_model", 1, pred, "doubles")
 ```
 
 {{% notice note %}}
@@ -67,7 +67,7 @@ REST endpoint that clipper created for your application:
 With curl:
 
 ```sh
-$ curl -X POST --header "Content-Type:application/json" -d '{"uid": 0, "input": [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello_world/predict
+$ curl -X POST --header "Content-Type:application/json" -d '{"input": [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello_world/predict
 
 {"query_id":0,"output":6.6,"default":false}
 ```
@@ -77,7 +77,7 @@ From a Python REPL:
 ```py
 >>> import requests, json, numpy as np
 >>> headers = {"Content-type": "application/json"}
->>> requests.post("http://localhost:1337/hello_world/predict", headers=headers, data=json.dumps({"uid": 0, "input": list(np.random.random(10))})).json()
+>>> requests.post("http://localhost:1337/hello_world/predict", headers=headers, data=json.dumps({"input": list(np.random.random(10))})).json()
 ```
 
 
