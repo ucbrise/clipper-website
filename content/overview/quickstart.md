@@ -56,8 +56,6 @@ Success!
 If your Docker installation requires root access, you can pass
 the keyword argument `sudo=True` when constructing a `clipper_manager.Clipper()`
 instance to tell the Clipper manager to execute Docker commands as root.
-Unfortunately, this only works when running Clipper in remote mode currently.
-You can find an explanation for the problem and a workaround in [#179](https://github.com/ucbrise/clipper/issues/179).
 {{% /notice %}}
 
 Now that you've deployed your first model, you can start requesting predictions at the
