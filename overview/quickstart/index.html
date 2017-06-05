@@ -376,7 +376,7 @@ Success!
       return [str(np.sum(x)) for x in xs]
 
 # Deploy the model, naming it &quot;feature_sum_model&quot; and giving it version 1
-&gt;&gt;&gt; clipper.deploy_predict_function(&quot;feature_sum_model&quot;, 1, pred, &quot;doubles&quot;)
+&gt;&gt;&gt; clipper.deploy_predict_function(&quot;feature_sum_model&quot;, 1, pred, [&quot;test&quot;], &quot;doubles&quot;)
 </code></pre>
 
 <div class="notices note" ><p>If your Docker installation requires root access, you can pass
@@ -393,7 +393,7 @@ REST endpoint that clipper created for your application:
 
 <p>With curl:</p>
 
-<pre><code class="language-sh">$ curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello_world/predict
+<pre><code class="language-sh">$ curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;uid&quot;: 0, &quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello_world/predict
 
 {&quot;query_id&quot;:0,&quot;output&quot;:6.6,&quot;default&quot;:false}
 </code></pre>
@@ -402,7 +402,7 @@ REST endpoint that clipper created for your application:
 
 <pre><code class="language-py">&gt;&gt;&gt; import requests, json, numpy as np
 &gt;&gt;&gt; headers = {&quot;Content-type&quot;: &quot;application/json&quot;}
-&gt;&gt;&gt; requests.post(&quot;http://localhost:1337/hello_world/predict&quot;, headers=headers, data=json.dumps({&quot;input&quot;: list(np.random.random(10))})).json()
+&gt;&gt;&gt; requests.post(&quot;http://localhost:1337/hello_world/predict&quot;, headers=headers, data=json.dumps({&quot;uid&quot;: 0, &quot;input&quot;: list(np.random.random(10))})).json()
 </code></pre>
 
 
