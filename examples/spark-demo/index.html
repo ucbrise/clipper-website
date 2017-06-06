@@ -374,12 +374,7 @@
               
                   <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li><a href="#install-clipper-admin">Install Clipper Admin</a></li>
-<li><a href="#train-an-svm-with-pyspark">Train an SVM with PySpark</a></li>
-</ul>
-</nav>
+
     </div>
 </div>
 
@@ -392,45 +387,39 @@
                 <h1>Deploy a PySpark Model</h1>
                 
 
-
-
 <p><a href="/ipynb/spark_meetup_demo.ipynb">Download Jupyter notebook version of this demo</a></p>
 
-<pre><code class="language-python">import sys, os, json, numpy as np, requests
-headers = {&quot;Content-type&quot;: &quot;application/json&quot;}
-</code></pre>
-
-<h1 id="install-clipper-admin">Install Clipper Admin</h1>
+<p>First, install the Clipper admin tool with pip.</p>
 
 <pre><code class="language-sh">$ pip install clipper_admin
 </code></pre>
 
-<pre><code class="language-python">from clipper_admin import Clipper
-</code></pre>
+<p>Now from a Python REPL:</p>
 
-<pre><code class="language-python">clipper_client  = Clipper(&quot;localhost&quot;)
-</code></pre>
+<p>First, start a Clipper instance and register an application:</p>
 
-<pre><code class="language-python">clipper_client.start()
-</code></pre>
+<pre><code class="language-python">import sys, os, json, numpy as np, requests
+headers = {&quot;Content-type&quot;: &quot;application/json&quot;}
 
-<pre><code class="language-python">clipper_client.get_all_apps()
-</code></pre>
+from clipper_admin import Clipper
+clipper_client  = Clipper(&quot;localhost&quot;)
+clipper_client.start()
 
-<pre><code class="language-python"># An application in Clipper corresponds to a REST prediction endpoint
+clipper_client.get_all_apps()
+
+# An application in Clipper corresponds to a REST prediction endpoint
 clipper_client.register_application(
     &quot;digits&quot;,
     &quot;pyspark_svm&quot;, &quot;ints&quot;, &quot;-1.0&quot;, 100000)
-</code></pre>
 
-<pre><code class="language-python"># Send a test prediction
+# Send a test prediction
 requests.post(
     &quot;http://localhost:1337/digits/predict&quot;,
     headers=headers,
     data=json.dumps({&quot;input&quot;: [np.random.randint(255) for _ in range(784)]})).json()
 </code></pre>
 
-<h1 id="train-an-svm-with-pyspark">Train an SVM with PySpark</h1>
+<p>Now train a logistic regression model with PySpark</p>
 
 <blockquote>
 <p>Note that this code uses the <code>findspark</code> package to import Spark. You can install it with <code>pip install findspark</code>.</p>
@@ -441,18 +430,14 @@ findspark.init()
 from pyspark.mllib.classification import LogisticRegressionWithLBFGS
 from pyspark.mllib.regression import LabeledPoint
 from pyspark.sql import SparkSession
-</code></pre>
 
-<pre><code class="language-python">spark = SparkSession\
+spark = SparkSession\
         .builder\
         .appName(&quot;clipper-pyspark&quot;)\
         .getOrCreate()
 sc = spark.sparkContext
 
-
-</code></pre>
-
-<pre><code class="language-python">def normalize(x):
+def normalize(x):
     x = x.astype(np.double)
     mu = np.mean(x)
     sigma = np.var(x)
@@ -474,17 +459,8 @@ def parse(line):
 train_path = &quot;/Users/crankshaw/model-serving/data/mnist_data/train.data&quot;
 trainRDD = sc.textFile(train_path).map(
     lambda line: parse(line)).cache()
-</code></pre>
 
-<pre><code class="language-python">model = LogisticRegressionWithLBFGS.train(trainRDD)
-</code></pre>
-
-<pre><code class="language-python">def simple_predict(spark, model, xs):
-    return [str(model.predict(normalize(x))) for x in xs]
-</code></pre>
-
-<pre><code class="language-python">test_point = np.array([np.random.randint(255) for _ in range(784)])
-simple_predict(spark, model, [test_point])
+model = LogisticRegressionWithLBFGS.train(trainRDD)
 </code></pre>
 
 <div class="notices note" ><p>You can find <a href="http://docs.clipper.ai/en/latest/#clipper_admin.Clipper.deploy_pyspark_model">method documentation</a>
@@ -492,8 +468,19 @@ and read more about <code>clipper_admin</code> at <a href="docs.clipper.ai">docs
 </div>
 
 
-<pre><code class="language-python">clipper_client.deploy_pyspark_model(&quot;pyspark_svm&quot;, 1, simple_predict, model, sc, &quot;ints&quot;)
+<p>Finally, define a predict function for the model and deploy
+it directly from your Python session to Clipper.</p>
+
+<pre><code class="language-python">def simple_predict(spark, model, xs):
+    return [str(model.predict(normalize(x))) for x in xs]
+
+test_point = np.array([np.random.randint(255) for _ in range(784)])
+simple_predict(spark, model, [test_point])
+
+clipper_client.deploy_pyspark_model(&quot;pyspark_svm&quot;, 1, simple_predict, model, sc, &quot;ints&quot;)
 </code></pre>
+
+<p>Now query the application and see your model make predictions.</p>
 
 <pre><code class="language-python">requests.post(
     &quot;http://localhost:1337/digits/predict&quot;,

@@ -29,7 +29,10 @@ Setup The tutorial runs Clipper in Docker containers and orchestrates them with 
       
       <guid>http://clipper.ai/examples/spark-demo/</guid>
       <description>Download Jupyter notebook version of this demo
-import sys, os, json, numpy as np, requests headers = {&amp;quot;Content-type&amp;quot;: &amp;quot;application/json&amp;quot;}  Install Clipper Admin $ pip install clipper_admin  from clipper_admin import Clipper  clipper_client = Clipper(&amp;quot;localhost&amp;quot;)  clipper_client.start()  clipper_client.get_all_apps()  # An application in Clipper corresponds to a REST prediction endpoint clipper_client.register_application( &amp;quot;digits&amp;quot;, &amp;quot;pyspark_svm&amp;quot;, &amp;quot;ints&amp;quot;, &amp;quot;-1.0&amp;quot;, 100000)  # Send a test prediction requests.post( &amp;quot;http://localhost:1337/digits/predict&amp;quot;, headers=headers, data=json.dumps({&amp;quot;input&amp;quot;: [np.random.randint(255) for _ in range(784)]})).</description>
+First, install the Clipper admin tool with pip.
+$ pip install clipper_admin  Now from a Python REPL:
+First, start a Clipper instance and register an application:
+import sys, os, json, numpy as np, requests headers = {&amp;quot;Content-type&amp;quot;: &amp;quot;application/json&amp;quot;} from clipper_admin import Clipper clipper_client = Clipper(&amp;quot;localhost&amp;quot;) clipper_client.start() clipper_client.get_all_apps() # An application in Clipper corresponds to a REST prediction endpoint clipper_client.register_application( &amp;quot;digits&amp;quot;, &amp;quot;pyspark_svm&amp;quot;, &amp;quot;ints&amp;quot;, &amp;quot;-1.</description>
     </item>
     
   </channel>
