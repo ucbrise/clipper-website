@@ -1,8 +1,8 @@
 +++
 date = "2017-05-23T09:25:27-07:00"
-icon = "<b>7. </b>"
+icon = ""
 title = "Troubleshooting"
-weight = 7
+weight = 8
 chapter = false
 draft = true
 

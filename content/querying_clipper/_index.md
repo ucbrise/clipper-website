@@ -1,6 +1,6 @@
 +++
 date = "2017-05-23T12:10:39-07:00"
-icon = "<b>2. </b>"
+icon = ""
 title = "Querying Clipper"
 weight = 2
 chapter = false
