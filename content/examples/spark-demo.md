@@ -8,8 +8,6 @@ weight = 5
 
 [Download Jupyter notebook version of this demo](/ipynb/spark_meetup_demo.ipynb)
 
-You can download a Jupyter notebook version of this demo on [GitHub](link)
-
 ```python
 import sys, os, json, numpy as np, requests
 headers = {"Content-type": "application/json"}
