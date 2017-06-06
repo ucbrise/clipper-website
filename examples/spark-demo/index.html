@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="js csstransforms3d">
   <head>
@@ -11,7 +10,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Documentation</title>
+    <title>Deploy a PySpark Model</title>
     <link href="http://clipper.ai//css/nucleus.css" rel="stylesheet">
     <link href="http://clipper.ai//css/font-awesome.min.css" rel="stylesheet">
     <link href="http://clipper.ai//css/hybrid.css" rel="stylesheet">
@@ -26,7 +25,7 @@
     
 
   </head>
-  <body class="" data-url="/documentation/">
+  <body class="" data-url="/examples/spark-demo/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -174,7 +173,7 @@
       
       
 
-      <li class="dd-item active parent" data-nav-id="/documentation/">
+      <li class="dd-item  " data-nav-id="/documentation/">
         <a href="/documentation/">
           <span>
             
@@ -216,7 +215,7 @@
       
       
 
-      <li class="dd-item  " data-nav-id="/examples/">
+      <li class="dd-item  parent" data-nav-id="/examples/">
         <a href="/examples/">
           <span>
             
@@ -235,7 +234,7 @@
               </a>
             </li>
           
-            <li class="dd-item " data-nav-id="/examples/spark-demo/">
+            <li class="dd-item active" data-nav-id="/examples/spark-demo/">
               <a href="/examples/spark-demo/">
                 <span>Deploy a PySpark Model     </i></span>
               </a>
@@ -358,35 +357,154 @@
                       </a>
                   </span>
                 
+                <span id="toc-menu"><a href=""><i class="fa fa-list-alt"></i></a></span>
+                
                 
                   
                   
                   
                     
                     
+                <a href="/examples/" itemprop="url"><span itemprop="title">Examples</span></a> <i class="fa fa-angle-right"></i>
+                    
                   
                 
-                <span itemprop="title"> Documentation</span>
+                <span itemprop="title"> Deploy a PySpark Model</span>
               </div>
+              
+                  <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li><a href="#install-clipper-admin">Install Clipper Admin</a></li>
+<li><a href="#train-an-svm-with-pyspark">Train an SVM with PySpark</a></li>
+</ul>
+</nav>
+    </div>
+</div>
+
               
 
             </div>
             
-              <div id="chapter">
-            
               <div id="body-inner">
+                
+                <h1>Deploy a PySpark Model</h1>
                 
 
 
 
-<h1 id="documentation">Documentation</h1>
+<p><a href="/ipynb/spark_meetup_demo.ipynb">Download Jupyter notebook version of this demo</a></p>
 
-<p>Documentation on how to use different parts of the Clipper system.</p>
+<p>You can download a Jupyter notebook version of this demo on <a href="link">GitHub</a></p>
+
+<pre><code class="language-python">import sys, os, json, numpy as np, requests
+headers = {&quot;Content-type&quot;: &quot;application/json&quot;}
+</code></pre>
+
+<h1 id="install-clipper-admin">Install Clipper Admin</h1>
+
+<pre><code class="language-sh">$ pip install clipper_admin
+</code></pre>
+
+<pre><code class="language-python">from clipper_admin import Clipper
+</code></pre>
+
+<pre><code class="language-python">clipper_client  = Clipper(&quot;localhost&quot;)
+</code></pre>
+
+<pre><code class="language-python">clipper_client.start()
+</code></pre>
+
+<pre><code class="language-python">clipper_client.get_all_apps()
+</code></pre>
+
+<pre><code class="language-python"># An application in Clipper corresponds to a REST prediction endpoint
+clipper_client.register_application(
+    &quot;digits&quot;,
+    &quot;pyspark_svm&quot;, &quot;ints&quot;, &quot;-1.0&quot;, 100000)
+</code></pre>
+
+<pre><code class="language-python"># Send a test prediction
+requests.post(
+    &quot;http://localhost:1337/digits/predict&quot;,
+    headers=headers,
+    data=json.dumps({&quot;input&quot;: [np.random.randint(255) for _ in range(784)]})).json()
+</code></pre>
+
+<h1 id="train-an-svm-with-pyspark">Train an SVM with PySpark</h1>
+
+<blockquote>
+<p>Note that this code uses the <code>findspark</code> package to import Spark. You can install it with <code>pip install findspark</code>.</p>
+</blockquote>
+
+<pre><code class="language-python">import findspark
+findspark.init()
+from pyspark.mllib.classification import LogisticRegressionWithLBFGS
+from pyspark.mllib.regression import LabeledPoint
+from pyspark.sql import SparkSession
+</code></pre>
+
+<pre><code class="language-python">spark = SparkSession\
+        .builder\
+        .appName(&quot;clipper-pyspark&quot;)\
+        .getOrCreate()
+sc = spark.sparkContext
+
+
+</code></pre>
+
+<pre><code class="language-python">def normalize(x):
+    x = x.astype(np.double)
+    mu = np.mean(x)
+    sigma = np.var(x)
+    if sigma &gt; 0:
+        return (x - mu) / np.sqrt(sigma)
+    else:
+        return 1
+
+def obj(y):
+    if y == 3:
+        return 0
+    else:
+        return 1
+
+def parse(line):
+    fields = line.strip().split(',')
+    return LabeledPoint(obj(int(fields[0])), normalize(np.array(fields[1:])))
+
+train_path = &quot;/Users/crankshaw/model-serving/data/mnist_data/train.data&quot;
+trainRDD = sc.textFile(train_path).map(
+    lambda line: parse(line)).cache()
+</code></pre>
+
+<pre><code class="language-python">model = LogisticRegressionWithLBFGS.train(trainRDD)
+</code></pre>
+
+<pre><code class="language-python">def simple_predict(spark, model, xs):
+    return [str(model.predict(normalize(x))) for x in xs]
+</code></pre>
+
+<pre><code class="language-python">test_point = np.array([np.random.randint(255) for _ in range(784)])
+simple_predict(spark, model, [test_point])
+</code></pre>
+
+<div class="notices note" ><p>You can find <a href="http://docs.clipper.ai/en/latest/#clipper_admin.Clipper.deploy_pyspark_model">method documentation</a>
+and read more about <code>clipper_admin</code> at <a href="docs.clipper.ai">docs.clipper.ai</a>.</p>
+</div>
+
+
+<pre><code class="language-python">clipper_client.deploy_pyspark_model(&quot;pyspark_svm&quot;, 1, simple_predict, model, sc, &quot;ints&quot;)
+</code></pre>
+
+<pre><code class="language-python">requests.post(
+    &quot;http://localhost:1337/digits/predict&quot;,
+    headers=headers,
+    data=json.dumps({&quot;input&quot;: [np.random.randint(255) for _ in range(784)]})).json()
+</code></pre>
 
 
       
-      
-        </div> 
       
       </div>
     </div>
@@ -425,5 +543,4 @@ ga('send', 'pageview');
 
   </body>
 </html>
-
 

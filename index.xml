@@ -46,13 +46,24 @@ Defining your prediction function Prediction functions should take a list of inp
     
     <item>
       <title>Image Classification Tutorial</title>
-      <link>http://clipper.ai/overview/tutorial/</link>
+      <link>http://clipper.ai/examples/tutorial/</link>
       <pubDate>Sat, 20 May 2017 19:16:04 -0700</pubDate>
       
-      <guid>http://clipper.ai/overview/tutorial/</guid>
+      <guid>http://clipper.ai/examples/tutorial/</guid>
       <description>This tutorial will walk you through the process of starting Clipper, creating an application, querying the application, and deploying models to improve application accuracy.
 The tutorial uses the Clipper client management Python library for controlling Clipper. While this is the simplest way to manage Clipper, the client library is simply a convenience wrapper around a standardized management REST interface which can be queried with any REST client.
 Setup The tutorial runs Clipper in Docker containers and orchestrates them with Docker-Compose, so you must have Docker and Docker-Compose installed.</description>
+    </item>
+    
+    <item>
+      <title>Deploy a PySpark Model</title>
+      <link>http://clipper.ai/examples/spark-demo/</link>
+      <pubDate>Mon, 05 Jun 2017 17:31:49 -0700</pubDate>
+      
+      <guid>http://clipper.ai/examples/spark-demo/</guid>
+      <description>Download Jupyter notebook version of this demo
+You can download a Jupyter notebook version of this demo on GitHub
+import sys, os, json, numpy as np, requests headers = {&amp;quot;Content-type&amp;quot;: &amp;quot;application/json&amp;quot;}  Install Clipper Admin $ pip install clipper_admin  from clipper_admin import Clipper  clipper_client = Clipper(&amp;quot;localhost&amp;quot;)  clipper_client.start()  clipper_client.get_all_apps()  # An application in Clipper corresponds to a REST prediction endpoint clipper_client.register_application( &amp;quot;digits&amp;quot;, &amp;quot;pyspark_svm&amp;quot;, &amp;quot;ints&amp;quot;, &amp;quot;-1.0&amp;quot;, 100000)  # Send a test prediction requests.</description>
     </item>
     
     <item>

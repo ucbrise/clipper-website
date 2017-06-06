@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="js csstransforms3d">
   <head>
@@ -10,7 +11,7 @@
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
     
-    <title>Image Classification Tutorial</title>
+    <title>Examples</title>
     <link href="http://clipper.ai//css/nucleus.css" rel="stylesheet">
     <link href="http://clipper.ai//css/font-awesome.min.css" rel="stylesheet">
     <link href="http://clipper.ai//css/hybrid.css" rel="stylesheet">
@@ -25,7 +26,7 @@
     
 
   </head>
-  <body class="" data-url="/overview/tutorial/">
+  <body class="" data-url="/examples/">
     
     <nav id="sidebar">
   <div id="header-wrapper">
@@ -75,7 +76,14 @@
             
           
         
+          
+          
+            
+          
         
+        
+        
+          
         
           
         
@@ -104,11 +112,11 @@
       
       
 
-      <li class="dd-item  parent" data-nav-id="/overview/">
+      <li class="dd-item  " data-nav-id="/overview/">
         <a href="/overview/">
           <span>
             
-              <b>1. </b>
+              
             
              Getting Started
             
@@ -120,12 +128,6 @@
             <li class="dd-item " data-nav-id="/overview/quickstart/">
               <a href="/overview/quickstart/">
                 <span>Quickstart     </i></span>
-              </a>
-            </li>
-          
-            <li class="dd-item active" data-nav-id="/overview/tutorial/">
-              <a href="/overview/tutorial/">
-                <span>Image Classification Tutorial     </i></span>
               </a>
             </li>
           
@@ -150,7 +152,7 @@
         <a href="/querying_clipper/">
           <span>
             
-              <b>2. </b>
+              
             
              Querying Clipper
             
@@ -176,7 +178,7 @@
         <a href="/documentation/">
           <span>
             
-              <b>3. </b>
+              
             
              Documentation
             
@@ -214,11 +216,53 @@
       
       
 
+      <li class="dd-item active parent" data-nav-id="/examples/">
+        <a href="/examples/">
+          <span>
+            
+              
+            
+             Examples
+            
+           </span>
+        </a>
+        
+        <ul>
+          
+            <li class="dd-item " data-nav-id="/examples/tutorial/">
+              <a href="/examples/tutorial/">
+                <span>Image Classification Tutorial     </i></span>
+              </a>
+            </li>
+          
+            <li class="dd-item " data-nav-id="/examples/spark-demo/">
+              <a href="/examples/spark-demo/">
+                <span>Deploy a PySpark Model     </i></span>
+              </a>
+            </li>
+          
+        </ul>
+        
+      </li>
+      
+      
+      
+
+      
+      
+      
+        
+          
+        
+      
+      
+      
+
       <li class="dd-item  " data-nav-id="/contributing/">
         <a href="/contributing/">
           <span>
             
-              <b>4. </b>
+              
             
              Contributing
             
@@ -244,7 +288,7 @@
         <a href="/roadmap/">
           <span>
             
-              <b>5. </b>
+              
             
              Status and Roadmap
             
@@ -270,7 +314,7 @@
         <a href="/design_docs/">
           <span>
             
-              <b>6. </b>
+              
             
              Additional Resources
             
@@ -314,104 +358,35 @@
                       </a>
                   </span>
                 
-                <span id="toc-menu"><a href=""><i class="fa fa-list-alt"></i></a></span>
-                
                 
                   
                   
                   
                     
                     
-                <a href="/overview/" itemprop="url"><span itemprop="title">Getting Started</span></a> <i class="fa fa-angle-right"></i>
-                    
                   
                 
-                <span itemprop="title"> Image Classification Tutorial</span>
+                <span itemprop="title"> Examples</span>
               </div>
-              
-                  <div class="progress">
-    <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#setup">Setup</a></li>
-<li><a href="#running-the-tutorial">Running the tutorial</a></li>
-</ul></li>
-</ul>
-</nav>
-    </div>
-</div>
-
               
 
             </div>
             
+              <div id="chapter">
+            
               <div id="body-inner">
                 
-                <h1>Image Classification Tutorial</h1>
-                
 
 
 
-<p>This tutorial will walk you through the process of starting Clipper,
-creating an application, querying the application, and deploying models
-to improve application accuracy.</p>
+<h1 id="examples">Examples</h1>
 
-<p>The tutorial uses the Clipper client management Python library for controlling
-Clipper. While this is the simplest way to manage Clipper, the client library
-is simply a convenience wrapper around a standardized management REST interface
-which can be queried with any REST client.</p>
-
-<h2 id="setup">Setup</h2>
-
-<p>The tutorial runs Clipper in Docker containers and orchestrates
-them with Docker-Compose, so you must have Docker and Docker-Compose
-installed. The tutorial can be run in two modes, local or remote.</p>
-
-<p>Running in local mode will start Clipper locally on your laptop. Running
-in remote mode will start Clipper on the machine you specify. When
-running the tutorial remotely, you must have SSH access to the machine.
-If running on EC2, you can use AMI <code>ami-3ba0f05b</code>,
-an Ubuntu image that has Docker and Docker-Compose installed.</p>
-
-<p>The tutorial uses Python and Jupyter notebooks to interact with Clipper and
-train models. You can install the Python dependencies needed to run
-the tutorial with:</p>
-
-<pre><code>pip install -r requirements.txt
-</code></pre>
-
-<p>Note these dependencies must be installed for both the local and remote
-versions of the tutorial.</p>
-
-<p>You must also clone or download the <a href="https://github.com/ucbrise/clipper">Clipper repo</a>.</p>
-
-<pre><code class="language-sh">git clone --recursive https://github.com/ucbrise/clipper.git
-</code></pre>
-
-<h2 id="running-the-tutorial">Running the tutorial</h2>
-
-<p>To start the tutorial, go to the tutorial directory
-(<a href="https://github.com/ucbrise/clipper/tree/release-0.1/examples/tutorial"><code>examples/tutorial</code></a>) and start the Jupyter server.</p>
-
-<pre><code>$ jupyter notebook
-</code></pre>
-
-<p>and open the <code>tutorial_part_one.ipynb</code> notebook. The tutorial is self-guided
-from there.</p>
-
-<p>Happy serving!</p>
-
-<div class="notices info" ><p>If you run into any problems or find anything unclear while doing the tutorial,
-please file a <a href="https://github.com/ucbrise/clipper/issues/new">GitHub issue</a>
-or contact us through the Clipper mailing list (<a href="mailto:clipper-dev@googlegroups.com">clipper-dev@googlegroups.com</a>) so we
-can improve it.</p>
-</div>
-
+<p>Examples of training and deploying models to Clipper.</p>
 
 
       
+      
+        </div> 
       
       </div>
     </div>
@@ -450,4 +425,5 @@ ga('send', 'pageview');
 
   </body>
 </html>
+
 

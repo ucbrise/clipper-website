@@ -22,16 +22,5 @@ Dependencies: Before using Clipper, you must install Docker and Docker Compose a
  $ pip install clipper_admin $ python  Once you have the clipper_admin package installed, you can use it to start a Clipper instance and deploy your first model.</description>
     </item>
     
-    <item>
-      <title>Image Classification Tutorial</title>
-      <link>http://clipper.ai/overview/tutorial/</link>
-      <pubDate>Sat, 20 May 2017 19:16:04 -0700</pubDate>
-      
-      <guid>http://clipper.ai/overview/tutorial/</guid>
-      <description>This tutorial will walk you through the process of starting Clipper, creating an application, querying the application, and deploying models to improve application accuracy.
-The tutorial uses the Clipper client management Python library for controlling Clipper. While this is the simplest way to manage Clipper, the client library is simply a convenience wrapper around a standardized management REST interface which can be queried with any REST client.
-Setup The tutorial runs Clipper in Docker containers and orchestrates them with Docker-Compose, so you must have Docker and Docker-Compose installed.</description>
-    </item>
-    
   </channel>
 </rss>

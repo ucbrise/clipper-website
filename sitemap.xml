@@ -27,7 +27,7 @@
   </url>
   
   <url>
-    <loc>http://clipper.ai/overview/tutorial/</loc>
+    <loc>http://clipper.ai/examples/tutorial/</loc>
     <lastmod>2017-05-20T19:16:04-07:00</lastmod>
   </url>
   
@@ -37,13 +37,18 @@
   </url>
   
   <url>
-    <loc>http://clipper.ai/contributing/</loc>
-    <lastmod>2017-05-23T08:59:49-07:00</lastmod>
+    <loc>http://clipper.ai/examples/</loc>
+    <lastmod>2017-06-05T17:31:42-07:00</lastmod>
   </url>
   
   <url>
-    <loc>http://clipper.ai/roadmap/</loc>
-    <lastmod>2017-05-23T09:00:06-07:00</lastmod>
+    <loc>http://clipper.ai/examples/spark-demo/</loc>
+    <lastmod>2017-06-05T17:31:49-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/contributing/</loc>
+    <lastmod>2017-05-23T08:59:49-07:00</lastmod>
   </url>
   
   <url>
@@ -54,6 +59,11 @@
   <url>
     <loc>http://clipper.ai/</loc>
     <lastmod>2017-05-20T17:53:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/roadmap/</loc>
+    <lastmod>2017-05-23T09:00:06-07:00</lastmod>
   </url>
   
   <url>
