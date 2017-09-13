@@ -1,0 +1,90 @@
+<nav id="sidebar" class="{{if $.Site.Params.showVisitedLinks }}showVisitedLinks{{end}}">
+  <div id="header-wrapper">
+    <div id="header">
+      {{ partial "logo.html" . }}
+    </div>
+    {{if not .Site.Params.noSearch}}
+        {{ partial "search.html" . }}
+    {{end}}
+  </div>
+
+
+
+{{ $currentNode := . }}
+{{ $showvisitedlinks := .Site.Params.showVisitedLinks }}
+<div class="highlightable">
+    <ul class="topics">
+        {{ $home := .Site.Home }}
+        {{if not .Site.Params.noHomeIcon}}
+            <li data-nav-id="{{"/" | relURL}}" class="dd-item">
+            <a href="{{"/" | relURL}}"><i class="fa fa-fw fa-home"></i></a>
+            </li>
+        {{end}}
+
+        {{ template "section-tree-nav" dict "sect" $home "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
+
+        {{with .Site.Menus.shortcuts}}
+        <section id="shortcuts">
+            {{ range sort . "Weight" "asc"}}
+                <li class="" role="">
+                    {{.Pre}}
+                    <a href="{{.URL}}">{{safeHTML .Name}}</a>
+                    {{.Post}}
+                </li>
+            {{end}}
+        </section>    
+        
+        {{ if $.Site.Params.showVisitedLinks}}
+            <a class="" href="#" data-clear-history-toggle=""><i class="fa  fa-history"></i> {{T "Clear-History"}}</a>
+        {{ end }}
+
+        {{end}}
+    </ul>
+    
+     
+    <section id="footer">
+      {{ partial "menu-footer.html" . }}
+    </section>
+  </div>
+</nav>
+
+<!-- templates -->
+{{ define "section-tree-nav" }}
+{{ $showvisitedlinks := .showvisitedlinks }}
+{{ $currentNode := .currentnode }}
+{{ range .sect.Sections}}
+
+<li data-nav-id="{{.URL}}" class="dd-item 
+{{if hasPrefix $currentNode.URL .URL }}parent{{end}}
+{{if eq .UniqueID $currentNode.UniqueID}}active{{end}}
+{{if .Params.alwaysopen}}parent{{end}}
+">
+  <a href="{{ .RelPermalink}}">
+    <span>{{safeHTML .Params.Pre}}{{.Title}}{{safeHTML .Params.Post}}</span>
+
+    {{if or ( hasPrefix $currentNode.URL .URL) (.Params.alwaysopen) }}
+    <i class="fa fa-angle-down fa-lg category-icon"></i>
+    {{else}}
+    <i class="fa fa-angle-right fa-lg category-icon"></i>
+    {{end}}
+    
+    {{ if $showvisitedlinks}}<i style="color:grey" class="fa fa-check read-icon"></i>{{end}}
+  </a>
+    <ul>
+        {{ range .Pages }}
+         {{ if not .Params.Hidden }}
+          <li data-nav-id="{{.URL}}" class="dd-item
+         {{if eq .UniqueID $currentNode.UniqueID}}active{{end}}
+          ">
+            <a href="{{ .RelPermalink}}">
+            <span>{{safeHTML .Params.Pre}}{{.Title}}{{safeHTML .Params.Post}}</span> 
+            {{ if $showvisitedlinks}}<i style="color:grey" class="fa fa-check read-icon"></i>{{end}}
+
+            </a></li>
+         {{ end }}
+        {{ end }}
+        {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks }}
+    </ul>
+</li>
+{{ end }}
+{{ end }}

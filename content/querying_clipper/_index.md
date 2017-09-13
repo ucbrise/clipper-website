@@ -27,16 +27,10 @@ set to `application/json` and the body as a JSON string with the following forma
 
 ```json
   {
-   "uid" : 0,
    "input" := [double] | [int] | [byte] | [float] | string 
   }
 ```
 
-{{% notice warning %}}
-The `uid` field must always be set to user 0. Clipper will support personalized predictions
-in the future, but currently does not and requires that all prediction requests be
-associated with user ID 0 (the default user).
-{{% /notice %}}
 
 The `"input"` field requires that the type of the value matches the
 input type specified when registering the application. If you aren't sure what input
