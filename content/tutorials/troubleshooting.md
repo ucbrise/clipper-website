@@ -9,7 +9,7 @@ weight = 4
 Guidance on how to identify and fix some common errors.
 
 
-## Always get default predictions
+### Identifying the cause of default predictions
 
 There are a few reasons why your application may be returning default predictions.
 Your first debugging clue is the "default\_explanation" field in the response body.
@@ -63,21 +63,44 @@ Here are some steps to debug this problem.
 
 #### Failed to retrieve a prediction response within the specified latency SLO
 
-This means that at some point a model container for the specified model successfully
-connected to Clipper, but Clipper cannot get any predictions.
+If you see this message in the "default\_explanation" field, it means that at some point a
+model container for your model successfully connected to Clipper, but Clipper did not receive
+a prediction from the container in time for the current request. Here are some steps to debug this
+problem.
 
 1. *Is your application SLO too low?*
 
+      When you register an application, you set the latency SLO -- the amount of time that Clipper
+      will wait for a prediction from the model container before returning the default response.
+      If you set this value too low, Clipper will return a response before your model is done 
+      rendering a prediction. Each model container logs how long each prediction took, and the Clipper
+      metrics track the latency distribution of each model container. Run the following command to inspect
+      the Clipper metrics:
+
+      ```py
+      clipper_conn.inspect_instance()
+      ```
+      
+      This command will return a JSON object. The "histograms" field includes latency histograms
+      for every application and every model registered in Clipper. Find the relevant histograms for your
+      model and application. If the mean prediction latency for your model is higher than the latency SLO you
+      set, your model is too slow. You can fix this by creating a new application with a higher SLO and
+      linking your model to that application.
+
 2. *Did your model container crash?*
-Wrong output type, wrong output length, errors
 
+      It's possible that your model container initialized without problems and connected to Clipper,
+      but then crashed during actual prediction processing. To determine whether your model container
+      has crashed, repeat step 2 from the previous section to get the number of replicas for a model
+      and inspect the container logs.
 
-3. *
-
-First
-
-If you are able to get Clipper running
-
+      If you determine that your model container has crashed, the container log should have a stack trace
+      that will help you identify the problem. One common reason that model containers crash, especially
+      when deploying using one of the provided [model deployers](http://docs.clipper.ai/en/develop/#model-deployers),
+      is that the prediction function has the wrong interface. Remember, the function must accept a
+      *list of inputs* of the specified input type. And it must return a *list of strings*. A common
+      mistake is to deploy a prediction function that operates on a single input at a time,
+      rather than processsing a list of inputs at a time as a batch.
 
 
 {{% notice info %}}
