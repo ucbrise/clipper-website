@@ -1,7 +1,31 @@
 baseURL = "http://clipper.ai/"
 languageCode = "en-us"
 title = "Clipper"
-theme = "docdock"
+theme = "hugo-theme-learn"
 # PygmentsCodeFences = true
 PygmentsStyle = "monokai"
 googleAnalytics = "UA-99816998-1"
+
+[[menu.shortcuts]]
+pre = "<h3>More</h3>"
+name = "<i class='fa fa-book'></i> API Docs"
+identifier = "apidoc"
+url = "http://docs.clipper.ai"
+weight = 10
+
+# [[menu.shortcuts]]
+# name = "RISE Lab"
+# identifier = "risesite"
+# url = "https://rise.cs.berkeley.edu"
+# weight = 11
+
+[[menu.shortcuts]]
+name = "<i class='fa fa-github'></i> Github repo"
+identifier = "ghrepo"
+url = "https://github.com/ucbrise/clipper"
+weight = 20
+#
+# [[menu.shortcuts]]
+# name = "<i class='fa fa-bullhorn'></i> Credits"
+# url = "/credits"
+# weight = 30

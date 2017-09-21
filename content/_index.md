@@ -7,56 +7,141 @@ chapter = false
 
 +++
 
-## What is Clipper?
+*TODO: Two sentence summary.*
 
-Clipper is a prediction serving system that sits between user-facing applications and a wide range of commonly used machine learning models and frameworks.
+Clipper is a low-latency prediction serving system for machine learning.
+Clipper makes it simple to integrate machine learning into user-facing serving systems.
 
-Clipper is open-source software. [Check out our code on GitHub](https://github.com/ucbrise/clipper).
-
-Keep reading to learn more about Clipper or jump straight to the [Quickstart](overview/quickstart).
-
-## What does Clipper do?
-
-* Clipper **simplifies integration of machine learning techniques** into user facing applications by providing a simple standard REST interface for prediction and feedback across a wide range of commonly used machine learning frameworks.  *Clipper makes product teams happy.*
+<!-- [Learn More]({{< relref "about/_index.md" >}}) -->
 
 
-* Clipper **simplifies model deployment** and **helps reduce common bugs** by using the same tools and libraries used in model development to render live predictions.  *Clipper makes data scientists happy.*
+## Getting Started
+
+The simplest way to start using Clipper is to use the Clipper Admin Python tool to start a local Clipper cluster using Docker.
+Read the [container orchestration guide]({{< relref "tutorials/container_managers.md" >}}) to learn about other ways to run Clipper,
+including on Kubernetes.
+
+### Install Clipper
+
+Before starting Clipper, you must have a recent version of [Docker](https://www.docker.com/) and Python installed.
+We recommend installing Clipper into an Anaconda environment.
+
+#### Python 2
+
+```sh
+pip install clipper_admin
+```
+
+#### Python 3 support coming soon
+
+### Quickstart
+
+First start a Python interpreter session.
+
+```sh
+# Bare Python interpreter
+$ python
+```
+
+```
+# iPython shell
+$ conda install ipython
+$ ipython
+```
+
+From the Python shell, you can start a new Clipper cluster and deploy a simple Python function as your first model.
+
+```sh
+>>> from clipper_admin import ClipperConnection, DockerContainerManager
+>>> clipper_conn = ClipperConnection(DockerContainerManager())
+
+# Start Clipper. Running this command for the first time will
+# download several Docker containers, so it may take some time.
+>>> clipper_conn.start_clipper()
+17-08-30:15:48:41 INFO     [docker_container_manager.py:95] Starting managed Redis instance in Docker
+17-08-30:15:48:43 INFO     [clipper_admin.py:105] Clipper still initializing.
+17-08-30:15:48:44 INFO     [clipper_admin.py:107] Clipper is running
+
+# Register an application called "hello_world". This will create
+# a prediction REST endpoint at http://localhost:1337/hello_world/predict
+>>> clipper_conn.register_application(name="hello-world", input_type="doubles", default_output="-1.0", slo_micros=100000)
+17-08-30:15:51:42 INFO     [clipper_admin.py:182] Application hello-world was successfully registered
+
+# Inspect Clipper to see the registered apps
+>>> clipper_conn.get_all_apps()
+[u'hello_world']
+
+# Define a simple model that just returns the sum of each feature vector.
+# Note that the prediction function takes a list of feature vectors as
+# input and returns a list of strings.
+>>> def feature_sum(xs):
+      return [str(sum(x)) for x in xs]
+
+# Import the python deployer package
+>>> from clipper_admin.deployers import python as python_deployer
+
+# Deploy the "feature_sum" function as a model. Notice that the application and model
+# must have the same input type.
+>>> python_deployer.deploy_python_closure(clipper_conn, name="sum-model", version=1, input_type="doubles", func=feature_sum)
+17-08-30:15:59:56 INFO     [deployer_utils.py:50] Anaconda environment found. Verifying packages.
+17-08-30:16:00:04 INFO     [deployer_utils.py:150] Fetching package metadata .........
+Solving package specifications: .
+
+17-08-30:16:00:04 INFO     [deployer_utils.py:151]
+17-08-30:16:00:04 INFO     [deployer_utils.py:59] Supplied environment details
+17-08-30:16:00:04 INFO     [deployer_utils.py:71] Supplied local modules
+17-08-30:16:00:04 INFO     [deployer_utils.py:77] Serialized and supplied predict function
+17-08-30:16:00:04 INFO     [python.py:127] Python closure saved
+17-08-30:16:00:04 INFO     [clipper_admin.py:375] Building model Docker image with model data from /tmp/python_func_serializations/sum-model
+17-08-30:16:00:05 INFO     [clipper_admin.py:378] Pushing model Docker image to sum-model:1
+17-08-30:16:00:07 INFO     [docker_container_manager.py:204] Found 0 replicas for sum-model:1. Adding 1
+17-08-30:16:00:07 INFO     [clipper_admin.py:519] Successfully registered model sum-model:1
+17-08-30:16:00:07 INFO     [clipper_admin.py:447] Done deploying model sum-model:1.
+
+# Tell Clipper to route requests for the "hello-world" application to the "sum-model"
+>>> clipper_conn.link_model_to_app(app_name="hello-world", model_name="sum-model")
+17-08-30:16:08:50 INFO     [clipper_admin.py:224] Model sum-model is now linked to application hello-world
+
+# Your application is now ready to serve predictions
+```
+
+#### Query Clipper for predictions
 
 
+Now that you've deployed your first model, you can start requesting predictions with your favorite REST client at the endpoint that Clipper created for your application: `http://localhost:1337/hello-world/predict`
 
-* Clipper **improves throughput** and ensures **reliable millisecond latencies** by introducing adaptive batching, caching, and straggler mitigation techniques.  *Clipper makes the infra-team less unhappy.*
+*Directly from the command line with [curl](https://curl.haxx.se/):*
 
-* Clipper **improves prediction accuracy** by introducing state-of-the-art bandit and ensemble methods to intelligently select and combine predictions and achieve real-time personalization across machine learning frameworks.  *Clipper makes users happy.*
+```sh
+$ curl -X POST --header "Content-Type:application/json" -d '{"input": [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello-world/predict
+```
+
+*From a Python interpreter:*
+
+```py
+>>> import requests, json, numpy as np
+>>> headers = {"Content-type": "application/json"}
+>>> requests.post("http://localhost:1337/hello-world/predict", headers=headers, data=json.dumps({"input": list(np.random.random(10))})).json()
+```
+
+#### Clean up
+
+If you closed the Python interpreter session that you used to start Clipper, you will need to start a new Python interpreter session and create another connection to the Clipper cluster. If you still have the interpreter session active from earlier, you can re-use your existing `ClipperConnection` object.
+
+```py
+# If you have still have the Python REPL from earlier,
+# skip directly to clipper_conn.stop_all()
+>>> from clipper_admin import ClipperConnection, DockerContainerManager
+>>> clipper_conn = ClipperConnection(DockerContainerManager())
+>>> clipper_conn.connect()
+
+# Stop all Clipper docker containers
+>>> clipper_conn.stop_all()
+17-08-30:16:15:38 INFO     [clipper_admin.py:1141] Stopped all Clipper cluster and all model containers
+```
 
 
-## Why are we building Clipper?
+## Next steps
 
-We are group of researchers in the UC Berkeley [RISE Lab](https://rise.cs.berkeley.edu/) studying the fundamental challenges around taking machine learning to production.  In collaboration with leading industrial and research organizations ([sponsors](https://rise.cs.berkeley.edu/sponsors/)), we identified model deployment as one of the next big challenges in the wide-scale adoption of AI technologies.
-
-Deploying trained machine-learning models into production today is an ad-hoc, labor-intensive, and error-prone process. This creates an enormous impediment to building and maintaining user-facing applications that incorporate machine-learning.
-
-Clipper is designed to simplify this process by decoupling applications that
-consume predictions from trained models that produce predictions.
-Clipper is a robust, high-performance serving system that can scale to thousands of requests per second and provide 
-responses that meet latency service level objectives on the order of milliseconds.
-As a result, Clipper can be safely incorporated into a production serving stack without negatively
-impacting application latencies.
-
-At the same time, Clipper allows data scientists to easily deploy trained models to production.
-Data science is an iterative process, and simplifying the model deployment process allows
-data scientists to more easily experiment with new features and models to quickly improve
-application accuracy. Data scientists deploy models to Clipper with the same code used for
-training, eliminating a common class of bugs in machine-learning that arise from code duplication.
-And Clipper supports deploying models trained in many machine learning frameworks and implemented
-in a variety of programming languages to support the rich ecosystem of data science tools available today.
-
-
-
-## Key Features
-
-+ Deploy models trained in your choice of framework to Clipper with a few lines of code by using an existing model container or writing your own
-+ Easily update or add models to running applications
-+ Use adversarial bandit algorithms to dynamically select best model for prediction at serving time
-+ Set latency service level objectives for reliable query latencies
-+ Run each model in a separate Docker container for simple cluster management and resource allocation
-+ Deploy models running on CPUs, GPUs, or both in the same application
++ [Browse tutorials]({{< relref "tutorials/_index.md" >}})
++ [Fork the code on GitHub](https://github.com/ucbrise/clipper)
