@@ -59,6 +59,6 @@ in a variety of programming languages to support the rich ecosystem of data scie
 
 + [NSDI'17 Conference Paper](https://www.usenix.org/conference/nsdi17/technical-sessions/presentation/crankshaw)
 + RISE Lab [blog post](https://rise.cs.berkeley.edu/blog/low-latency-model-serving-clipper/)
-+ [Slides](https://www.slideshare.net/dscrankshaw/clipper-at-uc-berkeley-risecamp-2017) from [RISE Camp 2017](https://risecamp.berkeley.edu/)
++ RISE Camp 2017 [[Slides]](https://www.slideshare.net/dscrankshaw/clipper-at-uc-berkeley-risecamp-2017) [[Video]](https://youtu.be/LdQ4mkPIIVM)
 + [Original design document](https://docs.google.com/document/d/1Ghc-CAKXzzRshSa6FlonFa5ttmtHRAqFwMg7vhuJakw/edit?usp=sharing)
 + [Talk at Spark Summit East 2017](https://spark-summit.org/east-2017/events/clipper-a-low-latency-online-prediction-serving-system/) [[Slides]](https://www.slideshare.net/SparkSummit/clipper-a-lowlatency-online-prediction-serving-system-spark-summit-east-talk-by-dan-crankshaw) [[Video]](https://youtu.be/4sdK2dp94Hw)
