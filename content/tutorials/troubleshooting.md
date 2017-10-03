@@ -96,7 +96,7 @@ problem.
 
       If you determine that your model container has crashed, the container log should have a stack trace
       that will help you identify the problem. One common reason that model containers crash, especially
-      when deploying using one of the provided [model deployers](http://docs.clipper.ai/en/develop/#model-deployers),
+      when deploying using one of the provided [model deployers](http://docs.clipper.ai/en/release-0.2/#model-deployers),
       is that the prediction function has the wrong interface. Remember, the function must accept a
       *list of inputs* of the specified input type. And it must return a *list of strings*. A common
       mistake is to deploy a prediction function that operates on a single input at a time,

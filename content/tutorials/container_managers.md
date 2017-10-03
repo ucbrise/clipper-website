@@ -9,9 +9,9 @@ weight = 2
 
 Clipper is built on top of Docker containers. A running Clipper cluster consists of a collection of Docker containers communicating with each other over the network. As you issue commands against Clipper using the admin tool, you are communicating with these containers as well as creating new ones or destroying existing ones.
 
-The main API for interacting with Clipper is exposed via a [`ClipperConnection`](http://docs.clipper.ai/en/develop/#clipper-connection) object. This is your handle to a Clipper cluster. It can be used to start, stop, inspect, and modify the cluster.
+The main API for interacting with Clipper is exposed via a [`ClipperConnection`](http://docs.clipper.ai/en/release-0.2/#clipper-connection) object. This is your handle to a Clipper cluster. It can be used to start, stop, inspect, and modify the cluster.
 
-In order to create a `ClipperConnection` object, you must provide it with a [`ContainerManager`](http://docs.clipper.ai/en/develop/#container-managers).
+In order to create a `ClipperConnection` object, you must provide it with a [`ContainerManager`](http://docs.clipper.ai/en/release-0.2/#container-managers).
 While Docker is becoming an increasingly standard mechanism for deploying applications, there are many different tools for managing Docker containers.
 These tools broadly fall into the category of *Container Orchestration frameworks*.
 Some popular examples are [Kubernetes](https://kubernetes.io/), [Docker Swarm](https://docs.docker.com/engine/swarm/), and [DC/OS](https://dcos.io/).

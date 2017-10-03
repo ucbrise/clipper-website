@@ -49,12 +49,12 @@ The [Container Orchestration]({{< relref "container_managers.md" >}}) user guide
 about picking the right container orchestrator and getting started.
 
 Once you've selected your container orchestration framework by deciding which `ContainerManager` implementation to
-use, you can create a new [`ClipperConnection`](http://docs.clipper.ai/en/develop/#clipper-connection) object.
+use, you can create a new [`ClipperConnection`](http://docs.clipper.ai/en/release-0.2/#clipper-connection) object.
 
 The `ClipperConnection` object is your handle to starting and managing a Clipper cluster.
 
 The first thing to do with your connection is use it to start Clipper:
-[`ClipperConnection.start_clipper()`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.start_clipper)
+[`ClipperConnection.start_clipper()`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.start_clipper)
 
 #### Connecting to a Clipper Cluster
 
@@ -81,8 +81,8 @@ To make the model deployment process even simpler, Clipper provides a library of
 
 Currently, Clipper provides three model deployers for three common types of models:
 
-+ One to deploy arbitrary Python functions (within some constraints): [[Docs]](http://docs.clipper.ai/en/develop/#pure-python-functions)
-+ One to deploy PySpark models along with pre- and post-processing logic: [[Docs]](http://docs.clipper.ai/en/develop/#pyspark-models)
++ One to deploy arbitrary Python functions (within some constraints): [[Docs]](http://docs.clipper.ai/en/release-0.2/#pure-python-functions)
++ One to deploy PySpark models along with pre- and post-processing logic: [[Docs]](http://docs.clipper.ai/en/release-0.2/#pyspark-models)
 + One to deploy R models: [[Install]](https://github.com/ucbrise/clipper/tree/develop/containers/R) [[Docs]](https://github.com/ucbrise/clipper/blob/develop/containers/R/rclipper_user/vignettes/Rclipper.Rmd)
 
 If you are using a model deployer, consult the deployer's documentation on how to deploy a model.
@@ -90,7 +90,7 @@ If you are using a model deployer, consult the deployer's documentation on how t
 If the model you are hoping to deploy cannot use one of these model deployers, you will have to write your own model container. The Clipper GitHub repository contains several [example model container implementations](https://github.com/ucbrise/clipper/tree/develop/containers/python) that you can base your own implementation on.
 
 Once you've written a model container and packaged it into a Docker image along with any dependencies, you can
-deploy it with: [`ClipperConnection.deploy_model`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.deploy_model).
+deploy it with: [`ClipperConnection.deploy_model`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.deploy_model).
 
 
 Clipper deploys each model in its own Docker container. After deploying the model, Clipper uses the
@@ -121,7 +121,7 @@ When you register an application you configure certain elements of the applicati
 + The default output: Clipper will respond with the default output to requests if a real prediction isn't available by the end of the service level objective.
 
 You can register an application with
-[`ClipperConnection.register_application`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.register_application).
+[`ClipperConnection.register_application`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.register_application).
 
 
 When you register an application with Clipper, it creates a REST endpoint for that application:
@@ -138,7 +138,7 @@ Data Params: {"input": <input>}
 
 After you register an application and deploy a model,  you must link an application to a model. This linking step tells Clipper to route requests received by that application's REST endpoint to the specified model for predictions.
 
-You can link a model to an application with [`ClipperConnection.link_model_to_app`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.link_model_to_app).
+You can link a model to an application with [`ClipperConnection.link_model_to_app`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.link_model_to_app).
 
 {{< figure src="/images/link_model.png" >}}
 
@@ -158,7 +158,7 @@ When a new version of a model is deployed (through a call to `deploy_model` or v
 
 #### Model Rollbacks
 
-Sometimes the "new and improved" model is not actually improved. If you deploy a model that isn't working well, you can roll back to any previous version: [`ClipperConnection.set_model_version`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.set_model_version).
+Sometimes the "new and improved" model is not actually improved. If you deploy a model that isn't working well, you can roll back to any previous version: [`ClipperConnection.set_model_version`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.set_model_version).
 
 This just changes which version of the model the application's routes requests to.
 
@@ -169,7 +169,7 @@ This just changes which version of the model the application's routes requests t
 
 Many machine learning models are computationally expensive and a single instance of the model may not meet the throughput demands of a serving workload. To increase prediction throughput, you can add additional replicas of a model. This creates additional Docker containers running the same model. Clipper will act as a load-balancer and distribute incoming requests across the set of available model replicas to provide higher throughput.
 
-You can set the number of replicas of a model with: [`ClipperConnection.set_num_replicas()`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.set_num_replicas).
+You can set the number of replicas of a model with: [`ClipperConnection.set_num_replicas()`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.set_num_replicas).
 
 If there are currently less than the specified number of replicas active, Clipper will launch more. If there are more than the specified number of replicas, Clipper will stop some.
 
@@ -233,10 +233,10 @@ the Clipper repo.
 
 The `ClipperConnection` object has several methods to inspect various aspects of the Clipper cluster.
 
-+ [`ClipperConnection.get_all_apps()`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.get_all_apps): List all of the applications.
-+ [`ClipperConnection.get_all_models()`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.get_all_models): List all of the models.
-+ [`ClipperConnection.inspect_instance()`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.inspect_instance): Clipper tracks several performance metrics that you can inspect at any time.
-+ [`ClipperConnection.get_clipper_logs()`](http://docs.clipper.ai/en/develop/#clipper_admin.ClipperConnection.get_clipper_logs): You can fetch the raw container logs from all of the Clipper docker containers. The command will print the paths to the log files for further examination. You can figure out which logs belong to which container based on the unique Docker container ID in the log filename.
++ [`ClipperConnection.get_all_apps()`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.get_all_apps): List all of the applications.
++ [`ClipperConnection.get_all_models()`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.get_all_models): List all of the models.
++ [`ClipperConnection.inspect_instance()`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.inspect_instance): Clipper tracks several performance metrics that you can inspect at any time.
++ [`ClipperConnection.get_clipper_logs()`](http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.get_clipper_logs): You can fetch the raw container logs from all of the Clipper docker containers. The command will print the paths to the log files for further examination. You can figure out which logs belong to which container based on the unique Docker container ID in the log filename.
 
 
 
