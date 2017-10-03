@@ -31,6 +31,7 @@ This means that you must issue any Clipper admin commands while logged in to the
 
 
 ## Kubernetes Container Manager
+<a name="k8s-container-manager"></a>
 
 The Kubernetes container manager runs Clipper on an existing Kubernetes cluster. This container manager
 creates a separate deployment for the Query Frontend, the Management Frontend, the Redis configuration

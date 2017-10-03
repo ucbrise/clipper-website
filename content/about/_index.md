@@ -3,7 +3,6 @@ title = "About"
 weight = 1
 +++
 
-*TODO: Edit this page*
 
 ## What is Clipper?
 
@@ -15,7 +14,6 @@ Clipper is a prediction serving system that sits between user-facing application
 
 
 * Clipper **simplifies model deployment** and **helps reduce common bugs** by using the same tools and libraries used in model development to render live predictions.  *Clipper makes data scientists happy.*
-
 
 
 * Clipper **improves throughput** and ensures **reliable millisecond latencies** by introducing adaptive batching, caching, and straggler mitigation techniques.  *Clipper makes the infra-team less unhappy.*
@@ -49,8 +47,8 @@ in a variety of programming languages to support the rich ecosystem of data scie
 ## Key Features
 
 + Deploy models trained in your choice of framework to Clipper with a few lines of code by using an existing model container or writing your own
-+ Easily update or add models to running applications
-+ Use adversarial bandit algorithms to dynamically select best model for prediction at serving time
++ Easily update or roll back models in running applications
+<!-- + Use adversarial bandit algorithms to dynamically select best model for prediction at serving time -->
 + Set latency service level objectives for reliable query latencies
 + Run each model in a separate Docker container for simple cluster management and resource allocation
 + Deploy models running on CPUs, GPUs, or both in the same application
@@ -58,7 +56,7 @@ in a variety of programming languages to support the rich ecosystem of data scie
 ## Additional Resources
 
 + [NSDI'17 Conference Paper](https://www.usenix.org/conference/nsdi17/technical-sessions/presentation/crankshaw)
-+ RISE Lab [blog post](https://rise.cs.berkeley.edu/blog/low-latency-model-serving-clipper/)
++ RISE Lab overview [blog post](https://rise.cs.berkeley.edu/blog/low-latency-model-serving-clipper/)
 + RISE Camp 2017 [[Slides]](https://www.slideshare.net/dscrankshaw/clipper-at-uc-berkeley-risecamp-2017) [[Video]](https://youtu.be/LdQ4mkPIIVM)
 + [Original design document](https://docs.google.com/document/d/1Ghc-CAKXzzRshSa6FlonFa5ttmtHRAqFwMg7vhuJakw/edit?usp=sharing)
 + [Talk at Spark Summit East 2017](https://spark-summit.org/east-2017/events/clipper-a-low-latency-online-prediction-serving-system/) [[Slides]](https://www.slideshare.net/SparkSummit/clipper-a-lowlatency-online-prediction-serving-system-spark-summit-east-talk-by-dan-crankshaw) [[Video]](https://youtu.be/4sdK2dp94Hw)

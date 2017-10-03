@@ -7,15 +7,10 @@ chapter = false
 
 +++
 
-*TODO: Two sentence summary.*
+## Getting Started
 
 Clipper is a low-latency prediction serving system for machine learning.
 Clipper makes it simple to integrate machine learning into user-facing serving systems.
-
-<!-- [Learn More]({{< relref "about/_index.md" >}}) -->
-
-
-## Getting Started
 
 The simplest way to start using Clipper is to use the Clipper Admin Python tool to start a local Clipper cluster using Docker.
 Read the [container orchestration guide]({{< relref "tutorials/container_managers.md" >}}) to learn about other ways to run Clipper,
@@ -143,5 +138,5 @@ If you closed the Python interpreter session that you used to start Clipper, you
 
 ## Next steps
 
-+ [Browse tutorials]({{< relref "tutorials/_index.md" >}})
++ [Browse user guides]({{< relref "tutorials/_index.md" >}})
 + [Fork the code on GitHub](https://github.com/ucbrise/clipper)
