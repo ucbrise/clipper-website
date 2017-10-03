@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="generator" content="Hugo 0.27" />
+    <meta name="description" content="">
+
+
+    <title>Troubleshooting :: Clipper</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    <link href="/css/nucleus.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/hybrid.css" rel="stylesheet">
+    <link href="/css/featherlight.min.css" rel="stylesheet">
+    <link href="/css/horsey.css" rel="stylesheet">
+    
+    <link href="/css/theme.css" rel="stylesheet">
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery-2.x.min.js"></script>
+    <style type="text/css">
+      :root #header + #content > #left > #rlblock_left {
+        display:none !important;
+      }
+    </style>
+
+    
+
+    
+
+  </head>
+  <body class="" data-url="/tutorials/troubleshooting/">
+    <nav id="sidebar" class="">
+
+
+
+
+
+<div class="highlightable">
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="http://clipper.ai">
+  <img id="grav-logo" src="/images/clipper-logo.png">
+  </img>
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fa fa-search"></i></label>
+    <input data-search-input id="search-by" type="text" placeholder="Search...">
+    <span data-search-clear=""><i class="fa fa-close"></i></span>
+</div>
+<script type="text/javascript" src="/js/lunr.min.js"></script>
+<script type="text/javascript" src="/js/horsey.js"></script>
+<script type="text/javascript">
+    var baseurl = "http:\/\/clipper.ai\/";
+</script>
+<script type="text/javascript" src="/js/search.js"></script>
+
+    
+  </div>
+
+  
+    <ul class="topics">
+        
+            <li data-nav-id="/" class="dd-item">
+            <a href="/"><i class="fa fa-fw fa-home"></i></a>
+            </li>
+        
+        
+        
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/about/" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/about/">
+        <span>About</span>
+
+        
+        
+
+        
+      </a>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/tutorials/" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="/tutorials/">
+        <span>User Guides</span>
+
+        
+        
+
+          
+            <i class="fa fa-angle-down fa-lg category-icon"></i>
+          
+
+        
+
+        
+      </a>
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/basic_concepts/" class="dd-item
+     
+      ">
+        <a href="/tutorials/basic_concepts/">
+        <span>Basic Concepts</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/container_managers/" class="dd-item
+     
+      ">
+        <a href="/tutorials/container_managers/">
+        <span>Container Orchestration</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/troubleshooting/" class="dd-item
+     active
+      ">
+        <a href="/tutorials/troubleshooting/">
+        <span>Troubleshooting</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/support/" class="dd-item 
+        
+        
+        
+        ">
+      <a href="/support/">
+        <span>Support</span>
+
+        
+        
+
+        
+      </a>
+              
+    </li>
+  
+ 
+
+          
+        
+
+        
+        <section id="shortcuts">
+            
+                <li class="" role="">
+                    <h3>More</h3>
+                    <a href="http://docs.clipper.ai"><i class='fa fa-book'></i> API Docs</a>
+                    
+                </li>
+            
+                <li class="" role="">
+                    
+                    <a href="https://github.com/ucbrise/clipper"><i class='fa fa-github'></i> Github repo</a>
+                    
+                </li>
+            
+        </section>    
+        
+        
+
+        
+    </ul>
+    
+     
+    <section id="footer">
+      <center>
+
+<a class="github-button" href="https://github.com/ucbrise/clipper/archive/master.zip" data-icon="octicon-cloud-download" aria-label="Download ucbrise/clipper on GitHub">Download</a>
+
+
+<a class="github-button" href="https://github.com/ucbrise/clipper" data-icon="octicon-star" data-show-count="false" aria-label="Star ucbrise/clipper on GitHub">Star</a>
+
+
+<a class="github-button" href="https://github.com/ucbrise/clipper/fork" data-icon="octicon-repo-forked" data-show-count="false" aria-label="Fork ucbrise/clipper on GitHub">Fork</a>
+
+</center>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+        
+          <div id="top-bar">
+            
+
+            <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                <span id="sidebar-toggle-span">
+                  <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                    <i class="fa fa-bars"></i>
+                  </a>
+                </span>
+                <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+                <span class="links">
+                
+
+
+
+
+
+
+
+ <a href='/'>Clipper</a> > <a href='/tutorials/'>User Guides</a> > Troubleshooting
+
+ 
+
+ 
+
+   
+                </span>
+            </div>
+            <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#identifying-the-cause-of-default-predictions">Identifying the cause of default predictions</a>
+<ul>
+<li><a href="#no-connected-models-found-for-query">No connected models found for query</a></li>
+<li><a href="#failed-to-retrieve-a-prediction-response-within-the-specified-latency-slo">Failed to retrieve a prediction response within the specified latency SLO</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+          </div>
+        
+        
+        <div id="body-inner">
+          
+            <h1>Troubleshooting</h1>
+          
+
+
+
+
+
+
+<p>Guidance on how to identify and fix some common errors.</p>
+
+<h3 id="identifying-the-cause-of-default-predictions">Identifying the cause of default predictions</h3>
+
+<p>There are a few reasons why your application may be returning default predictions.
+Your first debugging clue is the &ldquo;default_explanation&rdquo; field in the response body.</p>
+
+<h4 id="no-connected-models-found-for-query">No connected models found for query</h4>
+
+<p>This means that Clipper could not find any model containers to route your request to.
+Here are some steps to debug this problem.</p>
+
+<ol>
+<li><p><em>Is your model linked to your application?</em></p>
+
+<p>Run the following command to see whether your application has a model linked to it:</p>
+
+<pre><code class="language-py">  clipper_conn.get_linked_models(app_name=&quot;&lt;your-app-name&gt;&quot;)
+</code></pre>
+
+<p>If you forgot to link your model to your application, you can do so with:</p>
+
+<pre><code class="language-py">  clipper_conn.link_model_to_app(app_name=&quot;&lt;your-app-name&gt;&quot;, model_name=&quot;&lt;your-model-name&gt;&quot;)
+</code></pre></li>
+
+<li><p><em>Is your model container running?</em></p>
+
+<p>As with any code, your model container may have contained
+  a bug which caused it to crash or render it unable to initialize correctly.
+  For example, if you are using the Python model deployer and your deployed Python model referenced a library
+  that the container was unable to resolve, your container will crash due to an uncaught <code>ImportError</code> when it tries
+  to load your model. You can check the number of live Docker containers for your model with this command:</p>
+
+<pre><code class="language-py">  clipper_conn.cm.get_num_replicas(&quot;name&quot;=&quot;&lt;your-model-name&gt;&quot;, version=&quot;&lt;your-model-version&gt;&quot;)
+</code></pre>
+
+<p>If this returns 0, your model container crashed for some reason. To identify why the container crashed, inspect the
+  container logs for an error message about why the container exited.</p>
+
+<p>You can fetch the logs for all Docker containers associated with Clipper
+  (including containers that have crashed) with <code>clipper_conn.get_clipper_logs()</code>. You will need
+  to hunt around in the logs a little bit to identify the right log file, but each log file name includes
+  the Docker container ID of the container it was collected from. If you are running Clipper using the
+  DockerContainerManager, you can use <code>docker ps -a --filter label=ai.clipper.container.label</code> to list
+  all of the Docker containers associated with Clipper. This may help you identify the correct log file more easily.</p></li>
+
+<li><p><em>Has your model container finished initializing?</em></p>
+
+<p>Model containers can take a long time to initialize. For large models, it can take tens of seconds
+  to load and deserialize the model state, and some machine-learning frameworks have non-trivial initialization
+  overheads. If you&rsquo;ve determined that your model container is still running (from step 2), inspect the logs again
+  to see if it has finished initializing. When the container has fully initialized, it will log &ldquo;Serving predictions for
+  <your-input-type> input type&rdquo; (where <your-input-type> will be the actual input type of the container). If you do not
+  see this message logged yet and your container is still running, it is most likely still initializing and will finish
+  soon.</p></li>
+</ol>
+
+<h4 id="failed-to-retrieve-a-prediction-response-within-the-specified-latency-slo">Failed to retrieve a prediction response within the specified latency SLO</h4>
+
+<p>If you see this message in the &ldquo;default_explanation&rdquo; field, it means that at some point a
+model container for your model successfully connected to Clipper, but Clipper did not receive
+a prediction from the container in time for the current request. Here are some steps to debug this
+problem.</p>
+
+<ol>
+<li><p><em>Is your application SLO too low?</em></p>
+
+<p>When you register an application, you set the latency SLO &ndash; the amount of time that Clipper
+  will wait for a prediction from the model container before returning the default response.
+  If you set this value too low, Clipper will return a response before your model is done
+  rendering a prediction. Each model container logs how long each prediction took, and the Clipper
+  metrics track the latency distribution of each model container. Run the following command to inspect
+  the Clipper metrics:</p>
+
+<pre><code class="language-py">  clipper_conn.inspect_instance()
+</code></pre>
+
+<p>This command will return a JSON object. The &ldquo;histograms&rdquo; field includes latency histograms
+  for every application and every model registered in Clipper. Find the relevant histograms for your
+  model and application. If the mean prediction latency for your model is higher than the latency SLO you
+  set, your model is too slow. You can fix this by creating a new application with a higher SLO and
+  linking your model to that application.</p></li>
+
+<li><p><em>Did your model container crash?</em></p>
+
+<p>It&rsquo;s possible that your model container initialized without problems and connected to Clipper,
+  but then crashed during actual prediction processing. To determine whether your model container
+  has crashed, repeat step 2 from the previous section to get the number of replicas for a model
+  and inspect the container logs.</p>
+
+<p>If you determine that your model container has crashed, the container log should have a stack trace
+  that will help you identify the problem. One common reason that model containers crash, especially
+  when deploying using one of the provided <a href="http://docs.clipper.ai/en/develop/#model-deployers">model deployers</a>,
+  is that the prediction function has the wrong interface. Remember, the function must accept a
+  <em>list of inputs</em> of the specified input type. And it must return a <em>list of strings</em>. A common
+  mistake is to deploy a prediction function that operates on a single input at a time,
+  rather than processsing a list of inputs at a time as a batch.</p></li>
+</ol>
+
+<div class="notices info" ><p>The commands to inspect the number of model containers and fetch container logs are just convenience
+wrappers around Docker or Kubernetes commands. If you are comfortable with the <code>docker</code> or <code>kubectl</code>
+command line tools, you can just inspect the containers directly.</p>
+</div>
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+
+
+
+        
+
+      </div>
+    </div>
+
+    
+ 
+    
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+        
+            <a class="nav nav-prev" href="/tutorials/container_managers/" title="Container Orchestration"> <i class="fa fa-chevron-left"></i></a>
+        
+        
+            <a class="nav nav-next" href="/support/" title="Support" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        
+    </div>
+
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>    
+
+    <script src="/js/clipboard.min.js"></script>
+<script src="/js/featherlight.min.js"></script>
+<script src="/js/html5shiv-printshiv.min.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/js/modernizr.custom.71422.js"></script>
+<script src="/js/learn.js"></script>
+<script src="/js/hugo-learn.js"></script>
+
+
+<link href="/mermaid/mermaid.css" type="text/css" rel="stylesheet"/>
+<script src="/mermaid/mermaid.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+    
+
+  </body>
+</html>
+

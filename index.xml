@@ -12,71 +12,34 @@
     
     
     <item>
-      <title>Managing a Clipper Instance</title>
-      <link>http://clipper.ai/documentation/clipper_manager/</link>
-      <pubDate>Tue, 23 May 2017 09:08:41 -0700</pubDate>
+      <title>Basic Concepts</title>
+      <link>http://clipper.ai/tutorials/basic_concepts/</link>
+      <pubDate>Wed, 13 Sep 2017 10:22:11 -0700</pubDate>
       
-      <guid>http://clipper.ai/documentation/clipper_manager/</guid>
-      <description>You can use the Clipper manager Python library to start and manage a Clipper instance.
-The Clipper manager library can be installed with pip. We recommend using Anaconda as your Python installation.
-pip install clipper_admin  A user guide is coming soon. In the meantime, you can check out the API Documentation.</description>
+      <guid>http://clipper.ai/tutorials/basic_concepts/</guid>
+      <description>This tutorial is organized as a tour of the Clipper Admin API. It will walk you through the key concepts needed to understand how to create a Clipper cluster and deploy models to it, explaining each concept as it comes up.
+A Clipper Cluster A running Clipper cluster consists of a collection of Docker containers communicating with each other over the network. As you issue commands against Clipper using the Clipper Admin tool, you are communicating with these containers as well as creating new ones or destroying existing ones.</description>
     </item>
     
     <item>
-      <title>Quickstart</title>
-      <link>http://clipper.ai/overview/quickstart/</link>
-      <pubDate>Sat, 20 May 2017 18:01:34 -0700</pubDate>
+      <title>Container Orchestration</title>
+      <link>http://clipper.ai/tutorials/container_managers/</link>
+      <pubDate>Wed, 13 Sep 2017 10:22:30 -0700</pubDate>
       
-      <guid>http://clipper.ai/overview/quickstart/</guid>
-      <description>The easiest way to get started using Clipper is to install the clipper_admin pip package and use it interactively from a Python REPL. The clipper-admin package contains the Clipper manager which can be used to start and manage a Clipper instance.
-Dependencies: Before using Clipper, you must install Docker and Docker Compose and the Anaconda Python distribution.
- $ pip install clipper_admin $ python  Once you have the clipper_admin package installed, you can use it to start a Clipper instance and deploy your first model.</description>
+      <guid>http://clipper.ai/tutorials/container_managers/</guid>
+      <description>Clipper is built on top of Docker containers. A running Clipper cluster consists of a collection of Docker containers communicating with each other over the network. As you issue commands against Clipper using the admin tool, you are communicating with these containers as well as creating new ones or destroying existing ones.
+The main API for interacting with Clipper is exposed via a ClipperConnection object. This is your handle to a Clipper cluster.</description>
     </item>
     
     <item>
-      <title>Python Model Deployment</title>
-      <link>http://clipper.ai/documentation/python_model_deployment/</link>
-      <pubDate>Tue, 23 May 2017 09:07:44 -0700</pubDate>
+      <title>Troubleshooting</title>
+      <link>http://clipper.ai/tutorials/troubleshooting/</link>
+      <pubDate>Wed, 13 Sep 2017 10:22:56 -0700</pubDate>
       
-      <guid>http://clipper.ai/documentation/python_model_deployment/</guid>
-      <description>Clipper supports a simplified process for deploying arbitrary Python prediction functions as model-containers.
-The Clipper management library supports this functionality through deploy_prediction_func, which consumes a function you want to deploy. All dependencies for the function must be installed with Anaconda or Pip. deploy_prediction_func must be called from within an Anaconda environment that tracks all such dependencies.
-Defining your prediction function Prediction functions should take a list of inputs of type &amp;lt;input-type&amp;gt; and return a Python list of strings (often JSON strings, but JSON is not required).</description>
-    </item>
-    
-    <item>
-      <title>Image Classification Tutorial</title>
-      <link>http://clipper.ai/examples/tutorial/</link>
-      <pubDate>Sat, 20 May 2017 19:16:04 -0700</pubDate>
-      
-      <guid>http://clipper.ai/examples/tutorial/</guid>
-      <description>This tutorial will walk you through the process of starting Clipper, creating an application, querying the application, and deploying models to improve application accuracy.
-The tutorial uses the Clipper client management Python library for controlling Clipper. While this is the simplest way to manage Clipper, the client library is simply a convenience wrapper around a standardized management REST interface which can be queried with any REST client.
-Setup The tutorial runs Clipper in Docker containers and orchestrates them with Docker-Compose, so you must have Docker and Docker-Compose installed.</description>
-    </item>
-    
-    <item>
-      <title>Deploy a PySpark Model</title>
-      <link>http://clipper.ai/examples/spark-demo/</link>
-      <pubDate>Mon, 05 Jun 2017 17:31:49 -0700</pubDate>
-      
-      <guid>http://clipper.ai/examples/spark-demo/</guid>
-      <description>Download Jupyter notebook version of this demo
-First, install the Clipper admin tool with pip.
-$ pip install clipper_admin  Now from a Python REPL:
-First, start a Clipper instance and register an application:
-import sys, os, json, numpy as np, requests headers = {&amp;quot;Content-type&amp;quot;: &amp;quot;application/json&amp;quot;} from clipper_admin import Clipper clipper_client = Clipper(&amp;quot;localhost&amp;quot;) clipper_client.start() clipper_client.get_all_apps() # An application in Clipper corresponds to a REST prediction endpoint clipper_client.register_application( &amp;quot;digits&amp;quot;, &amp;quot;pyspark_svm&amp;quot;, &amp;quot;ints&amp;quot;, &amp;quot;-1.</description>
-    </item>
-    
-    <item>
-      <title>Container Implementation</title>
-      <link>http://clipper.ai/design_docs/container_implementation/</link>
-      <pubDate>Sat, 20 May 2017 18:23:55 -0700</pubDate>
-      
-      <guid>http://clipper.ai/design_docs/container_implementation/</guid>
-      <description>Container Implementation Details The following is relevant for the implementation of model containers in different languages. Model containers must implement functionality consistent with this information.
-Socket Creation  Create a ZeroMQ Dealer socket. This socket can receive requests and send responses asynchronously.
- Python example:   import zmq context = zmq.Context(); socket = context.socket(zmq.DEALER)   Initializing a Connection  Once a ZeroMQ Dealer socket has been created, use it to connect to Clipper.</description>
+      <guid>http://clipper.ai/tutorials/troubleshooting/</guid>
+      <description>Guidance on how to identify and fix some common errors.
+Identifying the cause of default predictions There are a few reasons why your application may be returning default predictions. Your first debugging clue is the &amp;ldquo;default_explanation&amp;rdquo; field in the response body.
+No connected models found for query This means that Clipper could not find any model containers to route your request to. Here are some steps to debug this problem.</description>
     </item>
     
   </channel>
