@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>Clipper :: Clipper</title>
+    <title>Contributing :: Clipper</title>
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
     <link href="/css/nucleus.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     
 
   </head>
-  <body class="" data-url="/">
+  <body class="" data-url="/contributing/">
     <nav id="sidebar" class="">
 
 
@@ -231,8 +231,8 @@
   
     
     <li data-nav-id="/contributing/" class="dd-item 
-        
-        
+        parent
+        active
         
         ">
       <a href="/contributing/">
@@ -300,140 +300,132 @@
         <div id="overlay"></div>
         <div class="padding highlightable">
         
+          <div id="top-bar">
+            
+
+            <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                <span id="sidebar-toggle-span">
+                  <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                    <i class="fa fa-bars"></i>
+                  </a>
+                </span>
+                <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+                <span class="links">
+                
+
+
+
+
+ <a href='/'>Clipper</a> > Contributing
+
+ 
+
+   
+                </span>
+            </div>
+            <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#developing-clipper">Developing Clipper</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+          </div>
+        
         
         <div id="body-inner">
+          
+            <h1>Contributing</h1>
           
 
 
 
 
 
-<h2 id="getting-started">Getting Started</h2>
 
-<p>Clipper is a low-latency prediction serving system for machine learning.
-Clipper makes it simple to integrate machine learning into user-facing serving systems.</p>
+<h3 id="developing-clipper">Developing Clipper</h3>
 
-<p>The simplest way to start using Clipper is to use the Clipper Admin Python tool to start a local Clipper cluster using Docker.
-Read the <a href="/tutorials/container_managers/">container orchestration guide</a> to learn about other ways to run Clipper,
-including on Kubernetes.</p>
+<p>Development of Clipper is coordinated through GitHub.</p>
 
-<h3 id="install-clipper">Install Clipper</h3>
+<p>To get started, clone the <a href="https://github.com/ucbrise/clipper">repository</a>
+including submodules:</p>
 
-<p>Before starting Clipper, you must have a recent version of <a href="https://www.docker.com/">Docker</a> and Python installed.
-We recommend installing Clipper into an Anaconda environment.</p>
-
-<h4 id="python-2">Python 2</h4>
-
-<pre><code class="language-sh">pip install clipper_admin
+<pre><code class="language-sh">git clone --recursive https://github.com/ucbrise/clipper.git
 </code></pre>
 
-<h4 id="python-3-support-coming-soon">Python 3 support coming soon</h4>
+<div class="notices note" ><p>If you&rsquo;ve already cloned the repository at this point without the submodules,
+you can include them by running <code>git submodule update --init --recursive</code> in
+the Clipper repo.</p>
+</div>
 
-<h3 id="quickstart">Quickstart</h3>
 
-<p>First start a Python interpreter session.</p>
-
-<pre><code class="language-sh"># Bare Python interpreter
-$ python
-</code></pre>
-
-<pre><code># iPython shell
-$ conda install ipython
-$ ipython
-</code></pre>
-
-<p>From the Python shell, you can start a new Clipper cluster and deploy a simple Python function as your first model.</p>
-
-<pre><code class="language-sh">&gt;&gt;&gt; from clipper_admin import ClipperConnection, DockerContainerManager
-&gt;&gt;&gt; clipper_conn = ClipperConnection(DockerContainerManager())
-
-# Start Clipper. Running this command for the first time will
-# download several Docker containers, so it may take some time.
-&gt;&gt;&gt; clipper_conn.start_clipper()
-17-08-30:15:48:41 INFO     [docker_container_manager.py:95] Starting managed Redis instance in Docker
-17-08-30:15:48:43 INFO     [clipper_admin.py:105] Clipper still initializing.
-17-08-30:15:48:44 INFO     [clipper_admin.py:107] Clipper is running
-
-# Register an application called &quot;hello_world&quot;. This will create
-# a prediction REST endpoint at http://localhost:1337/hello_world/predict
-&gt;&gt;&gt; clipper_conn.register_application(name=&quot;hello-world&quot;, input_type=&quot;doubles&quot;, default_output=&quot;-1.0&quot;, slo_micros=100000)
-17-08-30:15:51:42 INFO     [clipper_admin.py:182] Application hello-world was successfully registered
-
-# Inspect Clipper to see the registered apps
-&gt;&gt;&gt; clipper_conn.get_all_apps()
-[u'hello_world']
-
-# Define a simple model that just returns the sum of each feature vector.
-# Note that the prediction function takes a list of feature vectors as
-# input and returns a list of strings.
-&gt;&gt;&gt; def feature_sum(xs):
-      return [str(sum(x)) for x in xs]
-
-# Import the python deployer package
-&gt;&gt;&gt; from clipper_admin.deployers import python as python_deployer
-
-# Deploy the &quot;feature_sum&quot; function as a model. Notice that the application and model
-# must have the same input type.
-&gt;&gt;&gt; python_deployer.deploy_python_closure(clipper_conn, name=&quot;sum-model&quot;, version=1, input_type=&quot;doubles&quot;, func=feature_sum)
-17-08-30:15:59:56 INFO     [deployer_utils.py:50] Anaconda environment found. Verifying packages.
-17-08-30:16:00:04 INFO     [deployer_utils.py:150] Fetching package metadata .........
-Solving package specifications: .
-
-17-08-30:16:00:04 INFO     [deployer_utils.py:151]
-17-08-30:16:00:04 INFO     [deployer_utils.py:59] Supplied environment details
-17-08-30:16:00:04 INFO     [deployer_utils.py:71] Supplied local modules
-17-08-30:16:00:04 INFO     [deployer_utils.py:77] Serialized and supplied predict function
-17-08-30:16:00:04 INFO     [python.py:127] Python closure saved
-17-08-30:16:00:04 INFO     [clipper_admin.py:375] Building model Docker image with model data from /tmp/python_func_serializations/sum-model
-17-08-30:16:00:05 INFO     [clipper_admin.py:378] Pushing model Docker image to sum-model:1
-17-08-30:16:00:07 INFO     [docker_container_manager.py:204] Found 0 replicas for sum-model:1. Adding 1
-17-08-30:16:00:07 INFO     [clipper_admin.py:519] Successfully registered model sum-model:1
-17-08-30:16:00:07 INFO     [clipper_admin.py:447] Done deploying model sum-model:1.
-
-# Tell Clipper to route requests for the &quot;hello-world&quot; application to the &quot;sum-model&quot;
-&gt;&gt;&gt; clipper_conn.link_model_to_app(app_name=&quot;hello-world&quot;, model_name=&quot;sum-model&quot;)
-17-08-30:16:08:50 INFO     [clipper_admin.py:224] Model sum-model is now linked to application hello-world
-
-# Your application is now ready to serve predictions
-</code></pre>
-
-<h4 id="query-clipper-for-predictions">Query Clipper for predictions</h4>
-
-<p>Now that you&rsquo;ve deployed your first model, you can start requesting predictions with your favorite REST client at the endpoint that Clipper created for your application: <code>http://localhost:1337/hello-world/predict</code></p>
-
-<p><em>Directly from the command line with <a href="https://curl.haxx.se/">curl</a>:</em></p>
-
-<pre><code class="language-sh">$ curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello-world/predict
-</code></pre>
-
-<p><em>From a Python interpreter:</em></p>
-
-<pre><code class="language-py">&gt;&gt;&gt; import requests, json, numpy as np
-&gt;&gt;&gt; headers = {&quot;Content-type&quot;: &quot;application/json&quot;}
-&gt;&gt;&gt; requests.post(&quot;http://localhost:1337/hello-world/predict&quot;, headers=headers, data=json.dumps({&quot;input&quot;: list(np.random.random(10))})).json()
-</code></pre>
-
-<h4 id="clean-up">Clean up</h4>
-
-<p>If you closed the Python interpreter session that you used to start Clipper, you will need to start a new Python interpreter session and create another connection to the Clipper cluster. If you still have the interpreter session active from earlier, you can re-use your existing <code>ClipperConnection</code> object.</p>
-
-<pre><code class="language-py"># If you have still have the Python REPL from earlier,
-# skip directly to clipper_conn.stop_all()
-&gt;&gt;&gt; from clipper_admin import ClipperConnection, DockerContainerManager
-&gt;&gt;&gt; clipper_conn = ClipperConnection(DockerContainerManager())
-&gt;&gt;&gt; clipper_conn.connect()
-
-# Stop all Clipper docker containers
-&gt;&gt;&gt; clipper_conn.stop_all()
-17-08-30:16:15:38 INFO     [clipper_admin.py:1141] Stopped all Clipper cluster and all model containers
-</code></pre>
-
-<h2 id="next-steps">Next steps</h2>
+<p><strong>Build Dependencies:</strong></p>
 
 <ul>
-<li><a href="/tutorials/">Browse user guides</a></li>
-<li><a href="https://github.com/ucbrise/clipper">Fork the code on GitHub</a></li>
+<li>Boost</li>
+<li>cmake &gt;= 3.2</li>
+<li>zeromq &gt;= 4.1.0</li>
+<li>hiredis</li>
+<li>libev</li>
+<li>redis-server &gt;= 3.2</li>
+<li><a href="https://github.com/facebook/folly">Facebook Folly</a></li>
 </ul>
+
+<p><strong>Building Clipper:</strong></p>
+
+<p>First generate the CMake files with <code>./configure</code>. This generates an out-of-source build directory called <code>debug</code>.
+Go into this directory and then run <code>make</code> to actually
+compile the code. You should only need to re-run the configuration script if you change one of the <code>CMakeLists.txt</code> files.
+To build for release, run <code>./configure --release</code> which generates the <code>release</code> build directory instead of debug.
+If you want to clean everything up, you can run <code>./configure --cleanup</code> (if you get tired of being prompted, you can run <code>./configure --cleanup-quiet</code> to force cleanup without prompting).</p>
+
+<div class="notices note" ><p>Redis must be installed and on your path to run both the query REST frontend and the unit-tests.
+You can test this with <code>redis-server --version</code>.</p>
+</div>
+
+
+<p>For example:</p>
+
+<pre><code class="language-sh">cd $CLIPPER_ROOT_DIR
+./configure
+cd debug
+make
+
+# write some code and compile it
+make
+
+# build and run unit tests with googletest
+../bin/run_unittests.sh
+</code></pre>
+
+<p>Clipper has been tested on OSX 10.12 and on Debian stretch/sid and Ubuntu 12.04 and 16.04. It does not support Windows.</p>
+
+<p>To file a bug or request a feature, please file a GitHub issue. Pull requests are welcome.</p>
+
+<p>Before filing a pull request, make sure that C++ and Java code conforms to the project&rsquo;s Clang-Format style file and Python code conforms to the PEP 8 style. To automatically format your code before submitting a pull request, you can use
+the provided formatting script:</p>
+
+<pre><code class="language-sh">./bin/format_code.sh
+</code></pre>
+
+<!-- Development planning and progress is tracked with the [Clipper Jira](https://clipper.atlassian.net/projects/CLIPPER/issues). -->
+
+
+<footer class=" footline" >
+	
+</footer>
+
+
+
 
 
 
@@ -570,6 +562,7 @@ Solving package specifications: .
             
                 
                     
+                    
                 
                 
 
@@ -587,6 +580,8 @@ Solving package specifications: .
         
 
 
+        
+            <a class="nav nav-prev" href="/support/" title="Support"> <i class="fa fa-chevron-left"></i></a>
         
         
             <a class="nav nav-next" href="/about/" title="About" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
@@ -615,4 +610,3 @@ Solving package specifications: .
 
   </body>
 </html>
-

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Contributing on Clipper</title>
+    <link>http://clipper.ai/contributing/</link>
+    <description>Recent content in Contributing on Clipper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 23 May 2017 08:59:49 -0700</lastBuildDate>
+    
+	<atom:link href="http://clipper.ai/contributing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>
