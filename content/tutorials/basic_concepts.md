@@ -224,10 +224,19 @@ to the model.
   }
 ```
 
+For querying Clipper with an image, you must send the image as a Base64 encoded string
+
+```python
+data = json.dumps({
+                   "input": base64.b64encode(open(filename, "rb").read())
+                  })
+```
+
 You can find examples of querying Clipper in the `examples/` directory of
 the Clipper repo.
 
 + [A simple example](https://github.com/ucbrise/clipper/blob/develop/examples/basic_query/example_client.py)
++ [An image query example](https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example_client.py)
 
 ## Inspecting Cluster Configuration
 
