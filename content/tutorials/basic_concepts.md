@@ -179,7 +179,7 @@ If there are currently less than the specified number of replicas active, Clippe
 ## Querying Clipper
 
 Clipper exposes a REST prediction endpoint for each application you register in Clipper that you
-can use to request predictions.
+can use to request predictions. You may query Clipper in a single request or in batches.
 
 The REST endpoint for an application is located at
 
@@ -202,7 +202,17 @@ set to `application/json` and the body as a JSON string with the following forma
   }
 ```
 
-The "input" field requires that the type of the value matches the
+or 
+
+```json
+  {
+   "input_batch" := [[double] | [int] | [byte] | [float] | string]
+  }
+```
+
+when requesting predictions in batches.
+
+The "input" field (or "input_batch") requires that the type of the value matches the
 input type specified when registering the application.
 
 For example, if you set the input type of your application to "doubles", the following would be a valid
@@ -214,6 +224,14 @@ request body:
   }
 ```
 
+and the following for batching:
+
+```json
+  {
+   "input_batch": [[1.1, 2.2, 3.3], [10.1, 20.2, 30.3]]
+  }
+```
+
 If the input type of your application is "strings", you must supply a single string as the value for the
 "input" key. This string may itself be JSON, and Clipper will ensure that it is properly escaped and propagated
 to the model.
@@ -221,6 +239,12 @@ to the model.
 ```json
   {
    "input": "Hello world. This is a string."
+  }
+```
+
+```json
+  {
+   "input_batch": ["Hello world. This is a string.", "This is also a string."]
   }
 ```
 
