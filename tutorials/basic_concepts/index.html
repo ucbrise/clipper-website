@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.27" />
+    <meta name="generator" content="Hugo 0.30.2" />
     <meta name="description" content="">
 
 
@@ -599,7 +599,7 @@ to Clipper cannot be updated or changed. Clipper just treats versions as unique 
 <h2 id="querying-clipper">Querying Clipper</h2>
 
 <p>Clipper exposes a REST prediction endpoint for each application you register in Clipper that you
-can use to request predictions.</p>
+can use to request predictions. You may query Clipper in a single request or in batches.</p>
 
 <p>The REST endpoint for an application is located at</p>
 
@@ -619,7 +619,16 @@ set to <code>application/json</code> and the body as a JSON string with the foll
   }
 </code></pre>
 
-<p>The &ldquo;input&rdquo; field requires that the type of the value matches the
+<p>or</p>
+
+<pre><code class="language-json">  {
+   &quot;input_batch&quot; := [[double] | [int] | [byte] | [float] | string]
+  }
+</code></pre>
+
+<p>when requesting predictions in batches.</p>
+
+<p>The &ldquo;input&rdquo; field (or &ldquo;input_batch&rdquo;) requires that the type of the value matches the
 input type specified when registering the application.</p>
 
 <p>For example, if you set the input type of your application to &ldquo;doubles&rdquo;, the following would be a valid
@@ -630,12 +639,24 @@ request body:</p>
   }
 </code></pre>
 
+<p>and the following for batching:</p>
+
+<pre><code class="language-json">  {
+   &quot;input_batch&quot;: [[1.1, 2.2, 3.3], [10.1, 20.2, 30.3]]
+  }
+</code></pre>
+
 <p>If the input type of your application is &ldquo;strings&rdquo;, you must supply a single string as the value for the
 &ldquo;input&rdquo; key. This string may itself be JSON, and Clipper will ensure that it is properly escaped and propagated
 to the model.</p>
 
 <pre><code class="language-json">  {
    &quot;input&quot;: &quot;Hello world. This is a string.&quot;
+  }
+</code></pre>
+
+<pre><code class="language-json">  {
+   &quot;input_batch&quot;: [&quot;Hello world. This is a string.&quot;, &quot;This is also a string.&quot;]
   }
 </code></pre>
 
