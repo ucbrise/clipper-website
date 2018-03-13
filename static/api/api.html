@@ -1,0 +1,2764 @@
+<!DOCTYPE doctype html>
+<html class="no-js" lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Clipper API | API Reference
+  </title>
+  <link href="stylesheets/foundation.min.css" rel="stylesheet"/>
+  <link href="stylesheets/spectacle.min.css" rel="stylesheet"/>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js">
+  </script>
+  <!-- <script src="javascripts/foundation.js"></script> -->
+  <script src="javascripts/spectacle.min.js">
+  </script>
+<style>
+ #spectacle article .definition dl dd {
+   font-weight: normal;
+   }
+   #spectacle .json-property-enum-item {
+   font-weight: normal;
+   font-size: small;
+   }
+</style>
+ </head>
+ <body id="spectacle">
+  <div class="drawer-layout drawer-slide-right-large" id="page">
+   <div id="sidebar">
+    <button aria-label="Close menu" class="close-button" data-drawer-close="" type="button">
+     <span aria-hidden="true">
+      ×
+     </span>
+    </button>
+    <nav id="nav" role="navigation">
+     <h5>
+      API Reference
+     </h5>
+     <a href="#introduction">
+      Introduction
+     </a>
+     <h5>
+      Operations
+     </h5>
+     <section>
+      <a href="#tag-admin_addr">
+       admin_addr
+      </a>
+      <ul>
+       <li>
+        <a href="#operation--admin-add_app-post">
+         add_app
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-add_model-post">
+         add_model
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-add_model_links-post">
+         add_model_links
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-get_all_applications-post">
+         get_all_applications
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-get_all_containers-post">
+         get_all_containers
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-get_all_models-post">
+         get_all_models
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-get_application-post">
+         get_application
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-get_container-post">
+         get_container
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-get_linked_models-post">
+         get_linked_models
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-get_model-post">
+         get_model
+        </a>
+       </li>
+       <li>
+        <a href="#operation--admin-set_model_version-post">
+         set_model_version
+        </a>
+       </li>
+      </ul>
+     </section>
+     <section>
+      <a href="#tag-query_addr">
+       query_addr
+      </a>
+      <ul>
+       <li>
+        <a href="#operation--query_addr--application_name--predict-post">
+         predict
+        </a>
+       </li>
+      </ul>
+     </section>
+     <h5>
+      Schema Definitions
+     </h5>
+     <a href="#definition-App-Name">
+      App Name
+     </a>
+     <a href="#definition-Application">
+      Application
+     </a>
+     <a href="#definition-Link">
+      Link
+     </a>
+     <a href="#definition-Model">
+      Model
+     </a>
+     <a href="#definition-Model-Container">
+      Model Container
+     </a>
+     <a href="#definition-Model-Version">
+      Model Version
+     </a>
+     <a href="#definition-Name">
+      Name
+     </a>
+     <a href="#definition-Query-Input">
+      Query Input
+     </a>
+     <a href="#definition-Query-Result">
+      Query Result
+     </a>
+     <a href="#definition-Verbosity">
+      Verbosity
+     </a>
+    </nav>
+   </div>
+   <div class="row collapse expanded drawer" data-drawer="" id="docs">
+    <button class="floating-menu-icon" data-drawer-slide="right" type="button">
+     <span class="hamburger">
+     </span>
+    </button>
+    <div class="example-box doc-content">
+    </div>
+    <article>
+     <div data-traverse-target="introduction" id="introduction">
+      <h1 class="doc-title">
+       Clipper API
+       <span>
+        API Reference
+       </span>
+      </h1>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <p>
+         REST API for instrumenting with Clipper.
+        </p>
+        <p>
+         There are two frontend avaliable for query.
+        </p>
+        <ul>
+         <li>
+          In admin frontend, you can manage your applications and models.
+         </li>
+         <li>
+          In query frontend, you can send query to depolyed models.
+         </li>
+        </ul>
+        <p>
+         The admin address can be obtained from querying
+         <code>
+          ClipperConnection.cm.get_admin_addr()
+         </code>
+         .
+        </p>
+        <p>
+         The query address can be obtained from querying
+         <code>
+          ClipperConnection.cm.get_query_addr()
+         </code>
+         .
+        </p>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Content-Types:
+          <span>
+           application/json
+          </span>
+         </h5>
+         <h5>
+          Response Content-Types:
+          <span>
+           application/json
+          </span>
+         </h5>
+         <h5>
+          Version:
+          <span>
+           0.2.0
+          </span>
+         </h5>
+        </section>
+       </div>
+      </div>
+     </div>
+     <h1 class="swagger-summary-tag" data-traverse-target="tag-admin_addr" id="tag-admin_addr">
+      admin_addr
+     </h1>
+     <div class="tag-description doc-row">
+      <div class="doc-copy">
+       <p>
+        Admin Address
+       </p>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-add_app-post" id="operation--admin-add_app-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        add_app
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/add_app
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Register a new application with Clipper.
+         </p>
+         <p>
+          An application in Clipper corresponds to a named REST endpoint that can be used to request predictions. This command will attempt to create a new endpoint with the provided name. Application names must be unique. This command will fail if an application with the provided name already exists.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Application">
+              Application
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"default_output"</span>: <span class="hljs-string">"[42.0]"</span>,
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"latency_slo_micros"</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"simple-app"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            OK
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-add_model-post" id="operation--admin-add_model-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        add_model
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/add_model
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Registers a new model version with Clipper.
+         </p>
+         <p>
+          This method does not launch any model containers, it only registers the model description (metadata such as name, version, and input type) with Clipper. A model must be registered with Clipper before it can be linked to an application.
+         </p>
+         <p>
+          You should rarely have to use this method directly. Using one the Clipper deployer methods in
+          <code>
+           clipper_admin.deployers
+          </code>
+          or calling
+          <code>
+           build_and_deploy_model
+          </code>
+          or
+          <code>
+           deploy_model
+          </code>
+          will automatically register your model with Clipper.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Model">
+              Model
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"batch_size"</span>: <span class="hljs-number">10</span>,
+  <span class="hljs-attr">"container_name"</span>: <span class="hljs-string">"clipper/example-container"</span>,
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"labels"</span>: [
+    <span class="hljs-string">"Team: DevOps"</span>
+  ],
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"sum-model"</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            OK
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-add_model_links-post" id="operation--admin-add_model_links-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        add_model_links
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/add_model_links
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Routes requests from the specified app to be evaluted by the specified model.
+         </p>
+         <p>
+          Note:
+         </p>
+         <p>
+          Both the specified model and application must be registered with Clipper, and they must have the same input type. If the application has previously been linked to a different model, this command will fail.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Link">
+              Link
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"app_name"</span>: <span class="hljs-string">"sum-application"</span>,
+  <span class="hljs-attr">"model_names"</span>: [
+    <span class="hljs-string">"basic-sum-1"</span>
+  ]
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            OK
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-get_all_applications-post" id="operation--admin-get_all_applications-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        get_all_applications
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/get_all_applications
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Gets information about all applications registered with Clipper.
+         </p>
+         <p>
+          If 'verbose' is set to False, the returned list contains the apps' names; if 'verbose' set to True, the list contains application info dictionaries. These dictionaries have the same attribute name-value pairs that were provided to
+          <code>
+           clipper_admin.ClipperConnection.register_application
+          </code>
+          .
+         </p>
+         <p>
+          Returns a list of information about all apps registered to Clipper. If no apps are registered with Clipper, an empty list is returned.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Verbosity">
+              Verbosity
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"verbose"</span>: <span class="hljs-string">"true"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+           <div class="prop-ref">
+            <span class="json-schema-ref-array">
+             <a class="json-schema-ref" href="#/definitions/Application">
+              Application
+             </a>
+            </span>
+           </div>
+           <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+          </div>
+          <div class="prop-value">
+           <p>
+            Success
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Response Example
+          <span>
+           (200 OK)
+          </span>
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">[
+  {
+    <span class="hljs-attr">"default_output"</span>: <span class="hljs-string">"[42.0]"</span>,
+    <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+    <span class="hljs-attr">"latency_slo_micros"</span>: <span class="hljs-number">100000</span>,
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"simple-app"</span>
+  }
+]
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-get_all_containers-post" id="operation--admin-get_all_containers-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        get_all_containers
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/get_all_containers
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Gets information about all model containers registered with Clipper.
+         </p>
+         <p>
+          If 'verbose' is set to False, the returned list contains the apps' names. If 'verbose' is set to True, the list contains container info dictionaries.
+         </p>
+         <p>
+          Returns a list of information about all model containers known to Clipper. If no containers are registered with Clipper, an empty list is returned.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Verbosity">
+              Verbosity
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"verbose"</span>: <span class="hljs-string">"true"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+           <div class="prop-ref">
+            <span class="json-schema-ref-array">
+             <a class="json-schema-ref" href="#/definitions/Model Container">
+              Model Container
+             </a>
+            </span>
+           </div>
+           <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+          </div>
+          <div class="prop-value">
+           <p>
+            Success
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Response Example
+          <span>
+           (200 OK)
+          </span>
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">[
+  {
+    <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+    <span class="hljs-attr">"model_id"</span>: <span class="hljs-string">"simple-example:1"</span>,
+    <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"simple-example"</span>,
+    <span class="hljs-attr">"model_replica_id"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+  }
+]
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-get_all_models-post" id="operation--admin-get_all_models-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        get_all_models
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/get_all_models
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Gets information about all models registered with Clipper.
+         </p>
+         <p>
+          If 'verbose' is set to False, the returned list contains the models' names. If 'verbose' set to True, the list contains model info dictionaries.
+         </p>
+         <p>
+          Returns a list of information about all apps registered to Clipper. If no models are registered with Clipper, an empty list is returned.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Verbosity">
+              Verbosity
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"verbose"</span>: <span class="hljs-string">"true"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+           <div class="prop-ref">
+            <span class="json-schema-ref-array">
+             <a class="json-schema-ref" href="#/definitions/Model">
+              Model
+             </a>
+            </span>
+           </div>
+           <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+          </div>
+          <div class="prop-value">
+           <p>
+            Success
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Response Example
+          <span>
+           (200 OK)
+          </span>
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">[
+  {
+    <span class="hljs-attr">"batch_size"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-attr">"container_name"</span>: <span class="hljs-string">"clipper/example-container"</span>,
+    <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+    <span class="hljs-attr">"labels"</span>: [
+      <span class="hljs-string">"Team: DevOps"</span>
+    ],
+    <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"sum-model"</span>,
+    <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+  }
+]
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-get_application-post" id="operation--admin-get_application-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        get_application
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/get_application
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Gets detailed information about a registered application.
+         </p>
+         <p>
+          'name' parameter is the name of the application to look up.
+         </p>
+         <p>
+          Returns a dictionary with the specified application's info. This will contain the attribute name-value pairs that were provided to
+          <code>
+           clipper_admin.ClipperConnection.register_application
+          </code>
+          . If no application with name
+          <code>
+           name
+          </code>
+          is registered with Clipper, None is returned.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Name">
+              Name
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"simple-example"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+           <div class="prop-ref">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Application">
+              Application
+             </a>
+            </span>
+           </div>
+           <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+          </div>
+          <div class="prop-value">
+           <p>
+            Success
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Response Example
+          <span>
+           (200 OK)
+          </span>
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"default_output"</span>: <span class="hljs-string">"[42.0]"</span>,
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"latency_slo_micros"</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"simple-app"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-get_container-post" id="operation--admin-get_container-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        get_container
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/get_container
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Gets detailed information about a registered container.
+         </p>
+         <p>
+          'name' is the name of the container to look up
+         </p>
+         <p>
+          'version' is the version of the container to look up
+         </p>
+         <p>
+          'replica_id' is the container replica to look up
+         </p>
+         <p>
+          Returns a dictionary with the specified container's info. If no corresponding container is registered with Clipper, None is returned.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Model Container">
+              Model Container
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"model_id"</span>: <span class="hljs-string">"simple-example:1"</span>,
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"simple-example"</span>,
+  <span class="hljs-attr">"model_replica_id"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+           <div class="prop-ref">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Model Container">
+              Model Container
+             </a>
+            </span>
+           </div>
+           <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+          </div>
+          <div class="prop-value">
+           <p>
+            Success
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Response Example
+          <span>
+           (200 OK)
+          </span>
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"model_id"</span>: <span class="hljs-string">"simple-example:1"</span>,
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"simple-example"</span>,
+  <span class="hljs-attr">"model_replica_id"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-get_linked_models-post" id="operation--admin-get_linked_models-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        get_linked_models
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/get_linked_models
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Retrieves the models linked to the specified application.
+         </p>
+         <p>
+          'app_name' parameter is the name of the application
+         </p>
+         <p>
+          Returns a list of the names of models linked to the app. If no models are linked to the specified app, None is returned.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/App Name">
+              App Name
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"app_name"</span>: <span class="hljs-string">"simple-example"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+           <div class="prop-ref">
+           </div>
+           <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+          </div>
+          <div class="prop-value">
+           <p>
+            Success
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Response Example
+          <span>
+           (200 OK)
+          </span>
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">[
+  <span class="hljs-string">"Model Name"</span>
+]
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-get_model-post" id="operation--admin-get_model-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        get_model
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/get_model
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Gets detailed information about a registered model.
+         </p>
+         <p>
+          'model_name' is the name of the model to look up
+         </p>
+         <p>
+          'model_version' is the version of the model to look up
+         </p>
+         <p>
+          Returns a dictionary with the specified model's info. If no model with name
+          <code>
+           model_name@model_version
+          </code>
+          is registered with Clipper, None is returned.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Model Version">
+              Model Version
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"sum_model"</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+           <div class="prop-ref">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Model">
+              Model
+             </a>
+            </span>
+           </div>
+           <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+          </div>
+          <div class="prop-value">
+           <p>
+            Success
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Response Example
+          <span>
+           (200 OK)
+          </span>
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"batch_size"</span>: <span class="hljs-number">10</span>,
+  <span class="hljs-attr">"container_name"</span>: <span class="hljs-string">"clipper/example-container"</span>,
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"labels"</span>: [
+    <span class="hljs-string">"Team: DevOps"</span>
+  ],
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"sum-model"</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="operation panel" data-traverse-target="operation--admin-set_model_version-post" id="operation--admin-set_model_version-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-admin_addr">
+        admin_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        set_model_version
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /admin/set_model_version
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Changes the current model version to "model_version".
+         </p>
+         <p>
+          This method can be used to perform model roll-back and roll-forward. The version can be set to any previously deployed version of the model.
+         </p>
+         <p>
+          Note:
+         </p>
+         <p>
+          Model versions automatically get updated when
+          <code>
+           clipper_admin.ClipperConnection.deploy_model()
+          </code>
+          is called. There is no need to manually update the version after deploying a new model.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Model Version">
+              Model Version
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"sum_model"</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            OK
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+       </div>
+      </div>
+     </div>
+     <h1 class="swagger-summary-tag" data-traverse-target="tag-query_addr" id="tag-query_addr">
+      query_addr
+     </h1>
+     <div class="operation panel" data-traverse-target="operation--query_addr--application_name--predict-post" id="operation--query_addr--application_name--predict-post">
+      <!-- <section class="operation-tags row"> -->
+      <!-- <div class="doc-copy"> -->
+      <div class="operation-tags">
+       <a class="label" href="#tag-query_addr">
+        query_addr
+       </a>
+       <!-- -->
+      </div>
+      <!-- </div> -->
+      <!-- </section> -->
+      <h2 class="operation-title">
+       <span class="operation-summary">
+        predict
+       </span>
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-path">
+         <span class="operation-method">
+          POST
+         </span>
+         <span class="operation-path">
+          /query_addr/{application_name}/predict
+         </span>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-operation-description">
+         <p>
+          Submit a new query to application. The application name needs to specified in the path; and data needs to be submitted via a POST Json request.
+         </p>
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-request-body">
+         <div class="prop-row">
+          <div class="prop-name">
+           <div class="swagger-request-model">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Query Input">
+              Query Input
+             </a>
+            </span>
+           </div>
+          </div>
+          <div class="prop-value columns small-6">
+           <!-- <div class="swagger-request-description"> -->
+           
+           <!-- </div> -->
+          </div>
+         </div>
+        </section>
+        <section class="swagger-request-params">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            application_name
+           </div>
+           <span class="json-property-required">
+           </span>
+          </div>
+          <div class="prop-value">
+           <p>
+            The name of appplication to query.
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-inner">
+          <div class="prop-name param-label">
+           type
+          </div>
+          <div class="prop-value">
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+          </div>
+         </div>
+         <div class="prop-row prop-inner">
+          <div class="prop-name param-label">
+           in
+          </div>
+          <div class="prop-value">
+           path
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Request Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"input"</span>: [
+    <span class="hljs-number">2.3</span>
+  ]
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="swagger-responses">
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            200 OK
+           </div>
+           <div class="prop-ref">
+            <span class="">
+             <a class="json-schema-ref" href="#/definitions/Query Result">
+              Query Result
+             </a>
+            </span>
+           </div>
+           <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+          </div>
+          <div class="prop-value">
+           <p>
+            Success
+           </p>
+          </div>
+         </div>
+         <div class="prop-row prop-group">
+          <div class="prop-name">
+           <div class="prop-title">
+            400 Bad Request
+           </div>
+          </div>
+          <div class="prop-value">
+           <p>
+            Bad Request
+           </p>
+          </div>
+         </div>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Response Example
+          <span>
+           (200 OK)
+          </span>
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"default"</span>: <span class="hljs-string">"false"</span>,
+  <span class="hljs-attr">"output"</span>: <span class="hljs-number">2.2</span>,
+  <span class="hljs-attr">"query_id"</span>: <span class="hljs-number">42</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <h1>
+      Schema Definitions
+     </h1>
+     <div class="definition panel" data-traverse-target="definition-App-Name" id="definition-App-Name">
+      <h2 class="panel-title">
+       <a name="/definitions/App Name">
+       </a>
+       App Name: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="app_name">
+           <span class="json-property-name">
+            app_name:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            Exact name of app
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"app_name"</span>: <span class="hljs-string">"simple-example"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Application" id="definition-Application">
+      <h2 class="panel-title">
+       <a name="/definitions/Application">
+       </a>
+       Application: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="default_output">
+           <span class="json-property-name">
+            default_output:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The default output for the application. The default output will be returned whenever an application is unable to receive a response from a model within the specified query latency SLO (service level objective). The reason the default output was returned is always provided as part of the prediction response object.
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="input_type">
+           <span class="json-property-name">
+            input_type:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-enum" title="Possible values">
+            <span class="json-property-enum-item">
+             integers
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             floats
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             doubles
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             bytes
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             strings
+            </span>
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The type of the request data this endpoint can process. Input type can be one of "integers", "floats", "doubles", "bytes", or "strings".
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="latency_slo_micros">
+           <span class="json-property-name">
+            latency_slo_micros:
+           </span>
+           <span class="json-property-type">
+            integer
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The query latency objective for the application in microseconds. This is the processing latency between Clipper receiving a request and sending a response. It does not account for network latencies before a request is received or after a response is sent. If Clipper cannot process a query within the latency objective, the default output is returned. Therefore, it is recommended that he SLO not be set aggressively low unless absolutely necessary. 100000 (100ms) is a good starting value, but the optimal latency objective will vary depending on the application.
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="name">
+           <span class="json-property-name">
+            name:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The unique name of the application.
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"default_output"</span>: <span class="hljs-string">"[42.0]"</span>,
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"latency_slo_micros"</span>: <span class="hljs-number">100000</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"simple-app"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Link" id="definition-Link">
+      <h2 class="panel-title">
+       <a name="/definitions/Link">
+       </a>
+       Link: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="app_name">
+           <span class="json-property-name">
+            app_name:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The name of the application
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="model_names">
+           <span class="json-property-name">
+            model_names:
+           </span>
+           <span class="json-property-type">
+            string[]
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            List of The name of the model to link to the application
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"app_name"</span>: <span class="hljs-string">"sum-application"</span>,
+  <span class="hljs-attr">"model_names"</span>: [
+    <span class="hljs-string">"basic-sum-1"</span>
+  ]
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Model" id="definition-Model">
+      <h2 class="panel-title">
+       <a name="/definitions/Model">
+       </a>
+       Model: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="batch_size">
+           <span class="json-property-name">
+            batch_size:
+           </span>
+           <span class="json-property-type">
+            integer
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The user-defined query batch size for the model. Replicas of the model will attempt to process at most
+            <code>
+             batch_size
+            </code>
+            queries simultaneously. They may process smaller batches if
+            <code>
+             batch_size
+            </code>
+            queries are not immediately available. If the default value of -1 is used, Clipper will adaptively calculate the batch size for individual replicas of this model.
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="container_name">
+           <span class="json-property-name">
+            container_name:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            A docker image name. If provided, the image will be recorded as part of the model descrtipin in Clipper when registering the model but this method will make no attempt to launch any containers with this image.
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="input_type">
+           <span class="json-property-name">
+            input_type:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-enum" title="Possible values">
+            <span class="json-property-enum-item">
+             integers
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             floats
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             doubles
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             bytes
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             strings
+            </span>
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The type of the request data this endpoint can process. Input type can be one of "integers", "floats", "doubles", "bytes", or "strings". See the
+            <a href="http://clipper.ai/tutorials/basic_concepts/#input-types">
+             http://clipper.ai/tutorials/basic_concepts/#input-types
+            </a>
+            for more details on picking the right input type for your application.
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="labels">
+           <span class="json-property-name">
+            labels:
+           </span>
+           <span class="json-property-type">
+            string[]
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            A list of strings annotating the model. These are ignored by Clipper and used purely for user annotations.
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="model_name">
+           <span class="json-property-name">
+            model_name:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The name of the deployed model. The model name must be valid DNS-1123 subdomains. Each must consist of lower case alphanumeric characters, ‘-‘ or ‘.’, and must start and end with an alphanumeric character (e.g. ‘example.com’, regex used for validation is
+            <code>
+             [a-z0-9]([-a-z0-9]*[a-z0-9])?\Z
+            </code>
+            .
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="model_version">
+           <span class="json-property-name">
+            model_version:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The version to assign this model. Versions must be unique on a per-model basis, but may be re-used across different models. The model version must be valid DNS-1123 subdomains. Each must consist of lower case alphanumeric characters, ‘-‘ or ‘.’, and must start and end with an alphanumeric character (e.g. ‘example.com’, regex used for validation is
+            <code>
+             [a-z0-9]([-a-z0-9]*[a-z0-9])?\Z
+            </code>
+            .
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"batch_size"</span>: <span class="hljs-number">10</span>,
+  <span class="hljs-attr">"container_name"</span>: <span class="hljs-string">"clipper/example-container"</span>,
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"labels"</span>: [
+    <span class="hljs-string">"Team: DevOps"</span>
+  ],
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"sum-model"</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Model-Container" id="definition-Model-Container">
+      <h2 class="panel-title">
+       <a name="/definitions/Model Container">
+       </a>
+       Model Container: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="input_type">
+           <span class="json-property-name">
+            input_type:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-enum" title="Possible values">
+            <span class="json-property-enum-item">
+             integers
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             floats
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             doubles
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             bytes
+            </span>
+            ,
+            <span class="json-property-enum-item">
+             strings
+            </span>
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The type of the request data this endpoint can process. Input type can be one of "integers", "floats", "doubles", "bytes", or "strings". See the
+            <a href="http://clipper.ai/tutorials/basic_concepts/#input-types">
+             http://clipper.ai/tutorials/basic_concepts/#input-types
+            </a>
+            for more details on picking the right input type for your application.
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="model_id">
+           <span class="json-property-name">
+            model_id:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            Automatically assigned model id
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="model_name">
+           <span class="json-property-name">
+            model_name:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The name of the deployed model. The model name must be valid DNS-1123 subdomains. Each must consist of lower case alphanumeric characters, ‘-‘ or ‘.’, and must start and end with an alphanumeric character (e.g. ‘example.com’, regex used for validation is
+            <code>
+             [a-z0-9]([-a-z0-9]*[a-z0-9])?\Z
+            </code>
+            .
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="model_replica_id">
+           <span class="json-property-name">
+            model_replica_id:
+           </span>
+           <span class="json-property-type">
+            integer
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            Automatically Assgined Replica ID
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="model_version">
+           <span class="json-property-name">
+            model_version:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The version to assign this model. Versions must be unique on a per-model basis, but may be re-used across different models. The model version must be valid DNS-1123 subdomains. Each must consist of lower case alphanumeric characters, ‘-‘ or ‘.’, and must start and end with an alphanumeric character (e.g. ‘example.com’, regex used for validation is
+            <code>
+             [a-z0-9]([-a-z0-9]*[a-z0-9])?\Z
+            </code>
+            .
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"input_type"</span>: <span class="hljs-string">"doubles"</span>,
+  <span class="hljs-attr">"model_id"</span>: <span class="hljs-string">"simple-example:1"</span>,
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"simple-example"</span>,
+  <span class="hljs-attr">"model_replica_id"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Model-Version" id="definition-Model-Version">
+      <h2 class="panel-title">
+       <a name="/definitions/Model Version">
+       </a>
+       Model Version: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="model_name">
+           <span class="json-property-name">
+            model_name:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The name of the model
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="model_version">
+           <span class="json-property-name">
+            model_version:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            str | obj with
+            <strong>
+             str
+            </strong>
+            representation. The version of the model. Note that
+            <code>
+             version
+            </code>
+            must be a model version that has already been deployed.
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"model_name"</span>: <span class="hljs-string">"sum_model"</span>,
+  <span class="hljs-attr">"model_version"</span>: <span class="hljs-string">"1"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Name" id="definition-Name">
+      <h2 class="panel-title">
+       <a name="/definitions/Name">
+       </a>
+       Name: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="name">
+           <span class="json-property-name">
+            name:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            Exact name of app
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"simple-example"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Query-Input" id="definition-Query-Input">
+      <h2 class="panel-title">
+       <a name="/definitions/Query Input">
+       </a>
+       Query Input: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="input">
+           <span class="json-property-name">
+            input:
+           </span>
+           <span class="json-property-type">
+            object[]
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The query input as list.
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"input"</span>: [
+    <span class="hljs-number">2.3</span>
+  ]
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Query-Result" id="definition-Query-Result">
+      <h2 class="panel-title">
+       <a name="/definitions/Query Result">
+       </a>
+       Query Result: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="default">
+           <span class="json-property-name">
+            default:
+           </span>
+           <span class="json-property-type">
+            boolean
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            Whether or not this result is default response due to SLO
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="output">
+           <span class="json-property-name">
+            output:
+           </span>
+           <span class="json-property-type">
+            object
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            The prediction output.
+           </p>
+          </dd>
+          <dt data-property-name="query_id">
+           <span class="json-property-name">
+            query_id:
+           </span>
+           <span class="json-property-type">
+            integer
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+          </dt>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"default"</span>: <span class="hljs-string">"false"</span>,
+  <span class="hljs-attr">"output"</span>: <span class="hljs-number">2.2</span>,
+  <span class="hljs-attr">"query_id"</span>: <span class="hljs-number">42</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="definition panel" data-traverse-target="definition-Verbosity" id="definition-Verbosity">
+      <h2 class="panel-title">
+       <a name="/definitions/Verbosity">
+       </a>
+       Verbosity: object
+       <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+      </h2>
+      <div class="doc-row">
+       <div class="doc-copy">
+        <section class="json-schema-properties">
+         <dl>
+          <dt class="has-description" data-property-name="verbose">
+           <span class="json-property-name">
+            verbose:
+           </span>
+           <span class="json-property-type">
+            boolean
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+           <span class="json-property-required">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            If False, only necessary values like names will be returned; if True, more information will be provided.
+           </p>
+          </dd>
+         </dl>
+        </section>
+       </div>
+       <div class="doc-examples">
+        <section>
+         <h5>
+          Example
+         </h5>
+         <!-- <div class="hljs"> -->
+         <pre><code class="hljs lang-json">{
+  <span class="hljs-attr">"verbose"</span>: <span class="hljs-string">"true"</span>
+}
+</code></pre>
+         <!-- </div> -->
+        </section>
+       </div>
+      </div>
+     </div>
+     <div class="doc-row no-margin">
+      <div class="doc-copy doc-separator">
+       <a class="powered-by" href="https://sourcey.com/spectacle">
+        Documentation by
+        <span>
+         Spectacle
+        </span>
+       </a>
+      </div>
+     </div>
+    </article>
+   </div>
+  </div>
+ </body>
+</html>
