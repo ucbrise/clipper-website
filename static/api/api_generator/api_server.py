@@ -424,7 +424,7 @@ class Metric(Resource):
         """predict
 
         Submit a new query to application. The application name needs to specified in 
-        the path; and data needs to be submitted via a POST Json request. 
+        the path; and data needs to be submitted via a POST JSON request. 
         """
         pass
 
