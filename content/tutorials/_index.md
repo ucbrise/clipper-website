@@ -13,4 +13,5 @@ If there is a guide that doesn't exist yet that you would like to see, please fi
 + [Container Orchestration with Clipper]({{< relref "container_managers.md" >}})
       + [Kubernetes]({{< relref "container_managers.md#kubernetes-container-manager" >}})
 + [Troubleshooting]({{< relref "troubleshooting.md" >}})
++ [Metric Monitoring]({{< relref "metrics.md" >}})
 
