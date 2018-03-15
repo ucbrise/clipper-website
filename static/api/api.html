@@ -1731,6 +1731,9 @@
          <p>
           Submit a new query to application. The application name needs to specified in the path; and data needs to be submitted via a POST JSON request.
          </p>
+         <p>
+          Response will contains either the data returned by model or the default response. This can be distinguished by the default field. If the default field is True, there will be another field present called "default_explanation" whose value is a string describing the reason that a default response was returned. This field is not present if default is False.
+         </p>
         </section>
        </div>
       </div>
@@ -1854,7 +1857,8 @@
          </h5>
          <!-- <div class="hljs"> -->
          <pre><code class="hljs lang-json">{
-  <span class="hljs-attr">"default"</span>: <span class="hljs-string">"false"</span>,
+  <span class="hljs-attr">"default"</span>: <span class="hljs-string">"true"</span>,
+  <span class="hljs-attr">"default_explanation"</span>: <span class="hljs-string">"Failed to retrieve a prediction response within the specified latency SLO"</span>,
   <span class="hljs-attr">"output"</span>: <span class="hljs-number">2.2</span>,
   <span class="hljs-attr">"query_id"</span>: <span class="hljs-number">42</span>
 }
@@ -2649,7 +2653,22 @@
           </dt>
           <dd>
            <p>
-            Whether or not this result is default response due to SLO
+            Whether or not this result is default response. The reason for default is given in the default_explanation field.
+           </p>
+          </dd>
+          <dt class="has-description" data-property-name="default_explanation">
+           <span class="json-property-name">
+            default_explanation:
+           </span>
+           <span class="json-property-type">
+            string
+           </span>
+           <span class="json-property-range" title="Value limits">
+           </span>
+          </dt>
+          <dd>
+           <p>
+            Explanation for returning the default response. This field is only present when default is true.
            </p>
           </dd>
           <dt class="has-description" data-property-name="output">
@@ -2667,7 +2686,7 @@
             The prediction output.
            </p>
           </dd>
-          <dt data-property-name="query_id">
+          <dt class="has-description" data-property-name="query_id">
            <span class="json-property-name">
             query_id:
            </span>
@@ -2677,6 +2696,11 @@
            <span class="json-property-range" title="Value limits">
            </span>
           </dt>
+          <dd>
+           <p>
+            The query id by application
+           </p>
+          </dd>
          </dl>
         </section>
        </div>
@@ -2687,7 +2711,8 @@
          </h5>
          <!-- <div class="hljs"> -->
          <pre><code class="hljs lang-json">{
-  <span class="hljs-attr">"default"</span>: <span class="hljs-string">"false"</span>,
+  <span class="hljs-attr">"default"</span>: <span class="hljs-string">"true"</span>,
+  <span class="hljs-attr">"default_explanation"</span>: <span class="hljs-string">"Failed to retrieve a prediction response within the specified latency SLO"</span>,
   <span class="hljs-attr">"output"</span>: <span class="hljs-number">2.2</span>,
   <span class="hljs-attr">"query_id"</span>: <span class="hljs-number">42</span>
 }

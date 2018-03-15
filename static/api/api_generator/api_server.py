@@ -168,8 +168,8 @@ input_field = query.model(
 query_response_field = query.model(
     'Query Result', {
         'default': fields.Boolean(
-            example='false',
-            description='Whether or not this result is default response due to SLO'
+            example='true',
+            description='Whether or not this result is default response. The reason for default is given in the default_explanation field.'
         ), 
         'output': fields.Raw(
             example=2.2,
@@ -177,10 +177,15 @@ query_response_field = query.model(
         ),
         'query_id': fields.Integer(
             example=42,
-            descriptions='The query id by application'
+            description='The query id by application'
+        ),
+        'default_explanation': fields.String(
+            example="Failed to retrieve a prediction response within the specified latency SLO",
+            description='Explanation for returning the default response. This field is only present when default is true.'
         )
     }
 )
+
 
 @api.route('/dump')
 @api.hide
@@ -273,7 +278,7 @@ class AddModel(Resource):
 
 
 @api.route('/admin/get_all_applications')
-class GETAllAPP(Resource):
+class GetAllApp(Resource):
     @api.expect(verbose_field)
     @api.marshal_list_with(application_fields)
     @api.response(400, 'Bad Request')
@@ -416,7 +421,7 @@ class GetContainer(Resource):
 
 @query.route('/<string:application_name>/predict')
 @query.param('application_name', 'The name of appplication to query.')
-class Metric(Resource):
+class Prediect(Resource):
     @query.expect(input_field)
     @query.marshal_with(query_response_field)
     @query.response(400, 'Bad Request')
@@ -425,6 +430,12 @@ class Metric(Resource):
 
         Submit a new query to application. The application name needs to specified in 
         the path; and data needs to be submitted via a POST JSON request. 
+
+        Response will contains either the data returned by model or the default response. 
+        This can be distinguished by the default field.
+        If the default field is True, there will be another field present called "default_explanation" 
+        whose value is a string describing the reason that a default response was returned. 
+        This field is not present if default is False. 
         """
         pass
 
