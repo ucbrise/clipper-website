@@ -5,7 +5,7 @@ description = ""
 draft= false
 +++
 
-In starting Clipper v0.3.x, Clipper reports metrics to a Prometheus server
+In starting Clipper v0.3.x, Clipper reports metrics to a [Prometheus](https://prometheus.io/) server
 
 ## Prometheus Server
 We use prometheus as the metric tracking system. Once you spin up a clipper query frontend and a model containers.
