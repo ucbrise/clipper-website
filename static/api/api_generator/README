@@ -1,0 +1,6 @@
+1. Download spectacle using `download_spectacle.sh`
+2. Run the flask API server via `python api_server.py`
+3. Visit the web interface at localhost:5000/dump to dump the new swagger json
+4. Follow the spectacle readme to install spectacle to render html
+5. Before publish, run `python post_processing.py`
+6. The generated html should be in `public/clipper_index.html`
