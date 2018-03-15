@@ -5,7 +5,7 @@ description = ""
 draft= false
 +++
 
-In starting Clipper v0.3.0, Clipper report its metrics to a prometheus server. 
+In starting Clipper v0.3.x, Clipper reports metrics to a Prometheus server
 
 ## Prometheus Server
 We use prometheus as the metric tracking system. Once you spin up a clipper query frontend and a model containers.
@@ -14,5 +14,5 @@ If you are using `KubernetesContainerManager`, You can query the metric address 
 
 Please note that Prometheus UI is for debug purpose only. You can view certain metric and graph the timeseries. But for better visualization, we recommend [Grafana](https://grafana.com/). Grafana has default support for Prometheus Client. Feel free to checkout `examples/monitoring` for example of displaying Clipper metrics in Grafana.
 
-## Avaliable Metrics
+## Available Metrics
 So far, you will be able to view latency metrics for each model container as well as overall latency and throughput broken down by applications. 
