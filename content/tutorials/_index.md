@@ -15,4 +15,5 @@ If there is a guide that doesn't exist yet that you would like to see, please fi
 + [Troubleshooting]({{< relref "troubleshooting.md" >}})
 + [Clipper REST API](/api/api.html)
 + [Metric Monitoring]({{< relref "metrics.md" >}})
++ [XGBoost Deployment]({{< relref "xgboost_deployment.md" >}})
 

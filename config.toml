@@ -13,6 +13,12 @@ identifier = "apidoc"
 url = "http://docs.clipper.ai"
 weight = 10
 
+[[menu.shortcuts]]
+name = "<i class='fa fa-book'></i> REST API"
+identifier = "restapidoc"
+url = "http://clipper.ai/api/api.html"
+weight = 15
+
 # [[menu.shortcuts]]
 # name = "RISE Lab"
 # identifier = "risesite"
@@ -24,6 +30,7 @@ name = "<i class='fa fa-github'></i> Github repo"
 identifier = "ghrepo"
 url = "https://github.com/ucbrise/clipper"
 weight = 20
+
 #
 # [[menu.shortcuts]]
 # name = "<i class='fa fa-bullhorn'></i> Credits"
