@@ -3,7 +3,7 @@ title= "Troubleshooting"
 date= 2017-09-13T10:22:56-07:00
 description = ""
 draft= false
-weight = 4
+weight = 20
 +++
 
 Guidance on how to identify and fix some common errors.
