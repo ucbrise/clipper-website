@@ -19,15 +19,12 @@ including on Kubernetes.
 ### Install Clipper
 
 Before starting Clipper, you must have a recent version of [Docker](https://www.docker.com/) and Python installed.
-We recommend installing Clipper into an Anaconda environment.
+We recommend installing Clipper into an Anaconda environment. Clipper currently supports Python 2, 3.5, 3.6.
 
-#### Python 2
 
 ```sh
 pip install clipper_admin
 ```
-
-#### Python 3 support coming soon
 
 ### Quickstart
 
@@ -46,59 +43,108 @@ $ ipython
 
 From the Python shell, you can start a new Clipper cluster and deploy a simple Python function as your first model.
 
-```sh
->>> from clipper_admin import ClipperConnection, DockerContainerManager
->>> clipper_conn = ClipperConnection(DockerContainerManager())
 
-# Start Clipper. Running this command for the first time will
-# download several Docker containers, so it may take some time.
->>> clipper_conn.start_clipper()
-17-08-30:15:48:41 INFO     [docker_container_manager.py:95] Starting managed Redis instance in Docker
-17-08-30:15:48:43 INFO     [clipper_admin.py:105] Clipper still initializing.
-17-08-30:15:48:44 INFO     [clipper_admin.py:107] Clipper is running
-
-# Register an application called "hello_world". This will create
-# a prediction REST endpoint at http://localhost:1337/hello_world/predict
->>> clipper_conn.register_application(name="hello-world", input_type="doubles", default_output="-1.0", slo_micros=100000)
-17-08-30:15:51:42 INFO     [clipper_admin.py:182] Application hello-world was successfully registered
-
-# Inspect Clipper to see the registered apps
->>> clipper_conn.get_all_apps()
-[u'hello_world']
-
-# Define a simple model that just returns the sum of each feature vector.
-# Note that the prediction function takes a list of feature vectors as
-# input and returns a list of strings.
->>> def feature_sum(xs):
-      return [str(sum(x)) for x in xs]
-
-# Import the python deployer package
->>> from clipper_admin.deployers import python as python_deployer
-
-# Deploy the "feature_sum" function as a model. Notice that the application and model
-# must have the same input type.
->>> python_deployer.deploy_python_closure(clipper_conn, name="sum-model", version=1, input_type="doubles", func=feature_sum)
-17-08-30:15:59:56 INFO     [deployer_utils.py:50] Anaconda environment found. Verifying packages.
-17-08-30:16:00:04 INFO     [deployer_utils.py:150] Fetching package metadata .........
-Solving package specifications: .
-
-17-08-30:16:00:04 INFO     [deployer_utils.py:151]
-17-08-30:16:00:04 INFO     [deployer_utils.py:59] Supplied environment details
-17-08-30:16:00:04 INFO     [deployer_utils.py:71] Supplied local modules
-17-08-30:16:00:04 INFO     [deployer_utils.py:77] Serialized and supplied predict function
-17-08-30:16:00:04 INFO     [python.py:127] Python closure saved
-17-08-30:16:00:04 INFO     [clipper_admin.py:375] Building model Docker image with model data from /tmp/python_func_serializations/sum-model
-17-08-30:16:00:05 INFO     [clipper_admin.py:378] Pushing model Docker image to sum-model:1
-17-08-30:16:00:07 INFO     [docker_container_manager.py:204] Found 0 replicas for sum-model:1. Adding 1
-17-08-30:16:00:07 INFO     [clipper_admin.py:519] Successfully registered model sum-model:1
-17-08-30:16:00:07 INFO     [clipper_admin.py:447] Done deploying model sum-model:1.
-
-# Tell Clipper to route requests for the "hello-world" application to the "sum-model"
->>> clipper_conn.link_model_to_app(app_name="hello-world", model_name="sum-model")
-17-08-30:16:08:50 INFO     [clipper_admin.py:224] Model sum-model is now linked to application hello-world
-
-# Your application is now ready to serve predictions
+```python
+from clipper_admin import ClipperConnection, DockerContainerManager
 ```
+
+
+```python
+clipper_conn = ClipperConnection(DockerContainerManager())
+```
+
+Start Clipper. Running this command for the first time will
+download several Docker containers, so it may take some time.
+
+
+```python
+clipper_conn.start_clipper()
+```
+
+```pycon
+18-05-21:12:18:46 INFO     [docker_container_manager.py:109] Starting managed Redis instance in Docker
+18-05-21:12:18:50 INFO     [clipper_admin.py:125] Clipper is running
+```
+
+Register an application called "hello_world". This will create
+a prediction REST endpoint at http://localhost:1337/hello_world/predict
+
+
+```python
+clipper_conn.register_application(name="hello-world", input_type="doubles", default_output="-1.0", slo_micros=100000)
+```
+
+```pycon
+18-05-21:12:19:02 INFO     [clipper_admin.py:200] Application hello-world was successfully registered
+```
+
+Inspect Clipper to see the registered apps
+
+
+```python
+clipper_conn.get_all_apps()
+```
+```pycon
+['hello-world']
+```
+
+
+Define a simple model that just returns the sum of each feature vector.
+Note that the prediction function takes a list of feature vectors as
+input and returns a list of strings.
+
+
+```python
+def feature_sum(xs):
+    return [str(sum(x)) for x in xs]
+```
+
+Import the python deployer package
+
+
+```python
+from clipper_admin.deployers import python as python_deployer
+```
+
+Deploy the "feature_sum" function as a model. Notice that the application and model
+must have the same input type.
+
+
+```python
+python_deployer.deploy_python_closure(clipper_conn, name="sum-model", version=1, input_type="doubles", func=feature_sum)
+```
+```pycon
+18-05-21:12:19:59 INFO     [deployer_utils.py:44] Saving function to /tmp/clipper/tmpx6d_zqeq
+18-05-21:12:19:59 INFO     [deployer_utils.py:54] Serialized and supplied predict function
+18-05-21:12:19:59 INFO     [python.py:192] Python closure saved
+18-05-21:12:19:59 INFO     [python.py:206] Using Python 3.6 base image
+18-05-21:12:19:59 INFO     [clipper_admin.py:451] Building model Docker image with model data from /tmp/clipper/tmpx6d_zqeq
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': 'Step 1/2 : FROM clipper/python36-closure-container:develop'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': '\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': ' ---> 1aaddfa3945e\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': 'Step 2/2 : COPY /tmp/clipper/tmpx6d_zqeq /model/'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': '\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': ' ---> b7c29f531d2e\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'aux': {'ID': 'sha256:b7c29f531d2eaf59dd39579dbe512538be398dcb5fdd182db14e4d58770d2055'}}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': 'Successfully built b7c29f531d2e\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': 'Successfully tagged sum-model:1\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:457] Pushing model Docker image to sum-model:1
+18-05-21:12:20:02 INFO     [docker_container_manager.py:247] Found 0 replicas for sum-model:1. Adding 1
+18-05-21:12:20:09 INFO     [clipper_admin.py:634] Successfully registered model sum-model:1
+18-05-21:12:20:09 INFO     [clipper_admin.py:552] Done deploying model sum-model:1.
+```
+
+Tell Clipper to route requests for the "hello-world" application to the "sum-model"
+
+
+```python
+clipper_conn.link_model_to_app(app_name="hello-world", model_name="sum-model")
+```
+```pycon
+18-05-21:12:20:19 INFO     [clipper_admin.py:262] Model sum-model is now linked to application hello-world
+```
+
+Your application is now ready to serve predictions
 
 #### Query Clipper for predictions
 
@@ -108,33 +154,36 @@ Now that you've deployed your first model, you can start requesting predictions 
 *Directly from the command line with [curl](https://curl.haxx.se/):*
 
 ```sh
-$ curl -X POST --header "Content-Type:application/json" -d '{"input": [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello-world/predict
+curl -X POST --header "Content-Type:application/json" -d '{"input": [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello-world/predict
 ```
 
 *From a Python interpreter:*
 
-```py
->>> import requests, json, numpy as np
->>> headers = {"Content-type": "application/json"}
->>> requests.post("http://localhost:1337/hello-world/predict", headers=headers, data=json.dumps({"input": list(np.random.random(10))})).json()
+```python
+import requests, json, numpy as np
+headers = {"Content-type": "application/json"}
+requests.post("http://localhost:1337/hello-world/predict", headers=headers, data=json.dumps({"input": list(np.random.random(10))})).json()
 ```
 
 #### Clean up
 
 If you closed the Python interpreter session that you used to start Clipper, you will need to start a new Python interpreter session and create another connection to the Clipper cluster. If you still have the interpreter session active from earlier, you can re-use your existing `ClipperConnection` object.
 
-```py
-# If you have still have the Python REPL from earlier,
-# skip directly to clipper_conn.stop_all()
->>> from clipper_admin import ClipperConnection, DockerContainerManager
->>> clipper_conn = ClipperConnection(DockerContainerManager())
->>> clipper_conn.connect()
-
-# Stop all Clipper docker containers
->>> clipper_conn.stop_all()
-17-08-30:16:15:38 INFO     [clipper_admin.py:1141] Stopped all Clipper cluster and all model containers
+If you have still have the Python REPL from earlier,
+skip directly to clipper_conn.stop_all()
+```python
+from clipper_admin import ClipperConnection, DockerContainerManager
+clipper_conn = ClipperConnection(DockerContainerManager())
+clipper_conn.connect()
 ```
 
+Stop all Clipper docker containers
+```python
+clipper_conn.stop_all()
+```
+```pycon
+17-08-30:16:15:38 INFO     [clipper_admin.py:1141] Stopped all Clipper cluster and all model containers
+```
 
 ## Next steps
 
