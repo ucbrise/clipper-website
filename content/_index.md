@@ -65,8 +65,8 @@ clipper_conn.start_clipper()
 18-05-21:12:18:50 INFO     [clipper_admin.py:125] Clipper is running
 ```
 
-Register an application called "hello_world". This will create
-a prediction REST endpoint at http://localhost:1337/hello_world/predict
+Register an application called "hello-world". This will create
+a prediction REST endpoint at http://localhost:1337/hello-world/predict
 
 
 ```python
