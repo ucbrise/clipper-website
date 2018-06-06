@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>User Guides :: Clipper</title>
+    <title>R Deployment :: Clipper</title>
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
     <link href="/css/nucleus.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     
 
   </head>
-  <body class="" data-url="/tutorials/">
+  <body class="" data-url="/tutorials/r-deployment/">
     <nav id="sidebar" class="">
 
 
@@ -106,7 +106,7 @@
     
     <li data-nav-id="/tutorials/" class="dd-item 
         parent
-        active
+        
         
         ">
       <a href="/tutorials/">
@@ -219,7 +219,7 @@
   
     
       <li data-nav-id="/tutorials/r-deployment/" class="dd-item
-     
+     active
       ">
         <a href="/tutorials/r-deployment/">
         <span>R Deployment</span> 
@@ -442,7 +442,12 @@
 
 
 
- <a href='/'>Clipper</a> > User Guides
+
+
+
+ <a href='/'>Clipper</a> > <a href='/tutorials/'>User Guides</a> > R Deployment
+
+ 
 
  
 
@@ -455,11 +460,20 @@
 <ul>
 <li>
 <ul>
-<li>
+<li><a href="#rclipper">Rclipper</a></li>
+<li><a href="#dependencies">Dependencies</a></li>
+<li><a href="#importing-rclipper">Importing Rclipper</a></li>
+<li><a href="#writing-an-api-compatible-r-prediction-function">Writing an API-compatible R prediction function</a></li>
+<li><a href="#building-a-model">Building a model</a></li>
+<li><a href="#deploying-a-model">Deploying a model</a></li>
+<li><a href="#querying-a-model">Querying a model</a></li>
+<li><a href="#example">Example</a>
 <ul>
-<li><a href="#clipper-basics">Clipper Basics</a></li>
-<li><a href="#instrumenting-with-clipper">Instrumenting with Clipper</a></li>
-<li><a href="#troubleshotting">Troubleshotting</a></li>
+<li><a href="#import-rclipper">Import Rclipper</a></li>
+<li><a href="#define-an-api-compatible-prediction-function">Define an API-compatible prediction function</a></li>
+<li><a href="#build-a-model">Build a model</a></li>
+<li><a href="#deploy-and-link-the-model">Deploy and link the model</a></li>
+<li><a href="#query-the-model">Query the model</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -472,7 +486,7 @@
         
         <div id="body-inner">
           
-            <h1>User Guides</h1>
+            <h1>R Deployment</h1>
           
 
 
@@ -480,43 +494,238 @@
 
 
 
-<p>Explore the guides to learn how to take full advantage of Clipper.
-If there is a guide that doesn&rsquo;t exist yet that you would like to see, please file an issue on Github.</p>
+<h2 id="rclipper">Rclipper</h2>
 
-<h3 id="clipper-basics">Clipper Basics</h3>
+<p>Rclipper is a package for building serveable Clipper models from R
+functions. Given an API-compatible R function, Rclipper’s
+<strong>build_model</strong> function builds a Docker image for a Clipper model.
+This model can then be deployed to Clipper via the <a href="https://pypi.python.org/pypi/clipper_admin">Python
+clipper_admin package</a>.</p>
+
+<h2 id="dependencies">Dependencies</h2>
+
+<p>Rclipper depends on the <a href="https://pypi.python.org/pypi/clipper_admin">Python clipper_admin
+package</a> for building and
+deploying models. In order to use this admin package, <a href="https://pypi.python.org/pypi/docker/">Docker for
+Python</a> must also be installed.</p>
+
+<h2 id="importing-rclipper">Importing Rclipper</h2>
+
+<p><strong>It is very important that Rclipper be imported before a prediction
+function or its dependencies are defined</strong>. Rclipper makes use of the
+<a href="https://cran.r-project.org/web/packages/histry/index.html">histry
+package</a> to
+statically analyze dependency definitions. In order to locate these
+definition expressions during function serialization, histry must be
+imported before the expressions are executed.</p>
+
+<h2 id="writing-an-api-compatible-r-prediction-function">Writing an API-compatible R prediction function</h2>
+
+<p>An API-compatible prediction function must accept a type-homogeneous
+<strong>list</strong> of inputs of one of the following types:</p>
 
 <ul>
-<li><a href="/tutorials/basic_concepts/">Basic Concepts</a></li>
-<li><a href="/tutorials/xgboost_deployment/">Example: XGBoost Deployment</a></li>
-<li><a href="/tutorials/image_query/">Example: Image Query</a></li>
-<li><a href="/tutorials/container_managers/">Container Orchestration with Clipper</a>
-
-<ul>
-<li><a href="/tutorials/container_managers/#kubernetes-container-manager">Kubernetes</a></li>
-</ul></li>
-<li><a href="/tutorials/r-deployment/">R Deployment</a></li>
-<li><a href="/tutorials/custom_model_container/">Custom Model Containers </a></li>
+<li>Raw Vector</li>
+<li>Integer Vector</li>
+<li>Numeric Vector</li>
+<li>String (length-1 character vector)</li>
+<li>Data Frame</li>
+<li>Matrix</li>
+<li>Array</li>
+<li>List</li>
 </ul>
 
-<h3 id="instrumenting-with-clipper">Instrumenting with Clipper</h3>
+<p>Additionally, <strong>given a list of inputs</strong> of length <em>N</em>, a prediction
+function <strong>must return a list of outputs</strong> of length <em>N</em>. All elements
+of the output list must be of the same type.</p>
 
-<ul>
-<li><a href="/tutorials/metrics/">Creating and Using Clipper Metrics</a></li>
-<li><a href="/tutorials/rest/">Clipper&rsquo;s REST API</a></li>
-</ul>
+<p><strong>Note:</strong> If a prediction function returns a list of string (length-1
+character vector) objects, each output will be returned as-is, without
+any additional serialization. Otherwise, all non-string outputs will be
+string-serialized via the <a href="https://cran.r-project.org/web/packages/jsonlite/index.html">jsonlite
+package</a>,
+and their serialized representations will be returned.</p>
 
-<h3 id="troubleshotting">Troubleshotting</h3>
+<h2 id="building-a-model">Building a model</h2>
 
-<ul>
-<li><a href="/tutorials/troubleshooting/">Troubleshooting</a></li>
-</ul>
+<p>Once you’ve written an API-compatible prediction function, you can build
+a Clipper model with it via the <strong>build_model</strong> function:</p>
+
+<pre><code>#' @param model_name character vector of length 1. The name to assign to the model image.
+#' @param model_version character vector of length 1. The version tag to assign to the model image.
+#' @param prediction_function function. This should accept a type-homogeneous list of 
+#' inputs and return a list of outputs of the same length. If the elements of the output list
+#' are not character vectors of length 1, they will be converted to a serialized
+#' string representation via 'jsonlite'.
+#' @param sample_input For a prediction function that accepts a list of inputs of type X,
+#' this should be a single input of type X. This is used to validate the compatability
+#' of the function with Clipper and to determine the Clipper data type (bytes, ints, strings, etc)
+#' to associate with the model.
+#' @param model_registry character vector of length 1. The name of the image registry
+#' to which to upload the model image. If NULL, the image will not be uploaded to a registry.
+
+Rclipper::build_model(model_name, model_version, prediction_function, sample_input, model_registry = NULL)
+</code></pre>
+
+<p>This will build a Docker image with the tag:
+<em>model_registry</em>/<em>model_name</em>:<em>model_version</em>. If no registry was
+specified, the image will have the tag: <em>model_name</em>:<em>model_version</em>.
+Additonally, this function will output a command that you can execute
+within an interactive Python environment to deploy the model with the
+<a href="https://pypi.python.org/pypi/clipper_admin">clipper_admin package</a>.</p>
+
+<h2 id="deploying-a-model">Deploying a model</h2>
+
+<p>Once you’ve built a model, use the provided command to deploy it with
+the <a href="https://pypi.python.org/pypi/clipper_admin">clipper_admin
+package</a>. For information
+about how to register the model with an application so that it can be
+queried, please consult the <a href="http://docs.clipper.ai/en/">clipper_admin API
+documentation</a>.</p>
+
+<h2 id="querying-a-model">Querying a model</h2>
+
+<p>After you’ve built a model, deployed the model, and registered the model
+with an application, you can query it with input data of the correct
+type. The following table maps the input type of your model’s prediction
+function to the Clipper input type associated with your deployed model:</p>
+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">R input type</th>
+<th style="text-align: left;">Clipper Input Type</th>
+<th style="text-align: center;">JSON Format</th>
+<th style="text-align: center;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Raw Vector</td>
+<td style="text-align: left;">Bytes</td>
+<td style="text-align: center;">Base64-encoded string</td>
+<td style="text-align: center;">Y2xpcHBlciB0ZXh0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Integer Vector</td>
+<td style="text-align: left;">Ints</td>
+<td style="text-align: center;">Integer array</td>
+<td style="text-align: center;">[1,2,3,4]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Numeric Vector</td>
+<td style="text-align: left;">Doubles</td>
+<td style="text-align: center;">Floating point array</td>
+<td style="text-align: center;">[1.0,2.0,3.0.,4.0]</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Character Vector</td>
+<td style="text-align: left;">Strings</td>
+<td style="text-align: center;">String</td>
+<td style="text-align: center;">“input text”</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Data Frame</td>
+<td style="text-align: left;">Strings</td>
+<td style="text-align: center;">String</td>
+<td style="text-align: center;"><code>jsonlite::toJSON(mtcars)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Matrix</td>
+<td style="text-align: left;">Strings</td>
+<td style="text-align: center;">String</td>
+<td style="text-align: center;"><code>jsonlite::toJSON(diag(3))</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">Array</td>
+<td style="text-align: left;">Strings</td>
+<td style="text-align: center;">String</td>
+<td style="text-align: center;"><code>jsonlite::toJSON(array(1:4))</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">List</td>
+<td style="text-align: left;">Strings</td>
+<td style="text-align: center;">String</td>
+<td style="text-align: center;"><code>jsonlite::toJSON(list(1:4))</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="example">Example</h2>
+
+<h3 id="import-rclipper">Import Rclipper</h3>
+
+<pre><code>library(Rclipper)
+
+## Loading required package: CodeDepends
+
+## Loading required package: histry
+</code></pre>
+
+<h3 id="define-an-api-compatible-prediction-function">Define an API-compatible prediction function</h3>
+
+<pre><code>#' Given a list of vector inputs,
+#' outputs a list containing the
+#' length of each input vector as a string
+pred_fn = function(inputs) {
+return(lapply(inputs, function(input) {
+return(as.character(length(input)))
+}))
+}
+
+print(pred_fn(list(c(1,2), c(3))))
+
+## [[1]]
+## [1] &quot;2&quot;
+## 
+## [[2]]
+## [1] &quot;1&quot;
+</code></pre>
+
+<h3 id="build-a-model">Build a model</h3>
+
+<pre><code># Specify that the prediction function expects integer vectors
+# by supplying an integer vector as the sample input
+Rclipper::build_model(&quot;test-model&quot;, &quot;1&quot;, pred_fn, sample_input = as.integer(c(1,2,3)))
+
+## [1] &quot;Serialized list of dependent libraries: Rclipper: knitr: histry: CodeDepends: stats: graphics: grDevices: utils: datasets: methods: base&quot;
+## [1] &quot;Serialized model function!&quot;
+## [1] &quot;Done!&quot;
+## To deploy this model, execute the following command from a connected ClipperConnection object `conn`:
+## conn.deploy_model(&quot;test-model&quot;, &quot;1&quot;, &quot;ints&quot;, &quot;test-model:1&quot;, num_replicas=&lt;num_container_replicas&gt;)
+</code></pre>
+
+<h3 id="deploy-and-link-the-model">Deploy and link the model</h3>
+
+<p>This assumes that a Clipper cluster is running on <em>localhost</em> with a
+registered application that has the name <em>app1</em>. In a Python interactive
+environment:</p>
+
+<pre><code>from clipper_admin import DockerContainerManager, ClipperConnection
+cm = DockerContainerManager()
+conn = ClipperConnection(cm)
+conn.connect()
+
+# Deploy a single replica of the model
+conn.deploy_model(name=&quot;test-model&quot;, version=&quot;1&quot;, input_type=&quot;ints&quot;, image=&quot;test-model:1&quot;, replicas=1)
+
+conn.link_model_to_app(app_name=&quot;app1&quot;, model_name=&quot;test-model&quot;)
+</code></pre>
+
+<h3 id="query-the-model">Query the model</h3>
+
+<p>You can now query the model from any HTTP client. For example, directly
+from the command line with <a href="https://github.com/curl/curl">cURL</a>:</p>
+
+<pre><code>$ curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;input&quot;: [1,2,3,4]}' 127.0.0.1:1337/app1/predict
+
+$ {&quot;query_id&quot;:2,&quot;output&quot;:4,&quot;default&quot;:false}
+</code></pre>
 
 
 <footer class=" footline" >
 	
 </footer>
-
-
 
 
 
@@ -655,6 +864,26 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
             
                 
                     
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
                 
                 
 
@@ -714,22 +943,6 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
             
         
                     
@@ -772,10 +985,10 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
 
 
         
-            <a class="nav nav-prev" href="/about/" title="About"> <i class="fa fa-chevron-left"></i></a>
+            <a class="nav nav-prev" href="/tutorials/container_managers/" title="Container Orchestration"> <i class="fa fa-chevron-left"></i></a>
         
         
-            <a class="nav nav-next" href="/tutorials/basic_concepts/" title="Basic Concepts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+            <a class="nav nav-next" href="/tutorials/metrics/" title="Monitoring Clipper Metrics" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
         
     </div>
 
@@ -801,3 +1014,4 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
 
   </body>
 </html>
+

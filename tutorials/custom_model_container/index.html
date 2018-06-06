@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>User Guides :: Clipper</title>
+    <title>Creating a Custom Model Container :: Clipper</title>
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
     <link href="/css/nucleus.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     
 
   </head>
-  <body class="" data-url="/tutorials/">
+  <body class="" data-url="/tutorials/custom_model_container/">
     <nav id="sidebar" class="">
 
 
@@ -106,7 +106,7 @@
     
     <li data-nav-id="/tutorials/" class="dd-item 
         parent
-        active
+        
         
         ">
       <a href="/tutorials/">
@@ -279,7 +279,7 @@
   
     
       <li data-nav-id="/tutorials/custom_model_container/" class="dd-item
-     
+     active
       ">
         <a href="/tutorials/custom_model_container/">
         <span>Creating a Custom Model Container</span> 
@@ -442,7 +442,12 @@
 
 
 
- <a href='/'>Clipper</a> > User Guides
+
+
+
+ <a href='/'>Clipper</a> > <a href='/tutorials/'>User Guides</a> > Creating a Custom Model Container
+
+ 
 
  
 
@@ -455,12 +460,11 @@
 <ul>
 <li>
 <ul>
-<li>
+<li><a href="#installing-custom-python-packages">Installing Custom Python Packages</a>
 <ul>
-<li><a href="#clipper-basics">Clipper Basics</a></li>
-<li><a href="#instrumenting-with-clipper">Instrumenting with Clipper</a></li>
-<li><a href="#troubleshotting">Troubleshotting</a></li>
+<li><a href="#optional-push-the-image-to-a-docker-registry">Optional: Push the image to a Docker registry</a></li>
 </ul></li>
+<li><a href="#writing-your-own-container-implementation">Writing your own container implementation</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -472,7 +476,7 @@
         
         <div id="body-inner">
           
-            <h1>User Guides</h1>
+            <h1>Creating a Custom Model Container</h1>
           
 
 
@@ -480,43 +484,82 @@
 
 
 
-<p>Explore the guides to learn how to take full advantage of Clipper.
-If there is a guide that doesn&rsquo;t exist yet that you would like to see, please file an issue on Github.</p>
+<p>If none of the provided <a href="http://docs.clipper.ai/en/latest/#model-deployers">model deployers</a> meet your needs, you will need to create your own model container. In this tutorial, we will walk through two common use cases for creating your own model containers.</p>
 
-<h3 id="clipper-basics">Clipper Basics</h3>
+<ol>
+<li>Your prediction function can still be pickled (see the <a href="https://github.com/cloudpipe/cloudpickle">cloudpickle documentation</a> to determine whether your function can be pickled), but requires custom packages
+that are not available via Pip.</li>
+<li>Your prediction function cannot be pickled, and you want to hardcode the model inside the container.</li>
+</ol>
+
+<h2 id="installing-custom-python-packages">Installing Custom Python Packages</h2>
+
+<p>If the only reason you cannot use one of the pre-existing model deployers is because your function relies
+on custom Python packages that cannot be installed via pip, creating a custom model container is straightforward. You will create a new Docker image to serve as the base image for the Python closure
+deployer. To create this image, create a Dockerfile with the following contents.</p>
+
+<p>First, start with the Python deployers base image as the base image for your new Docker image:</p>
 
 <ul>
-<li><a href="/tutorials/basic_concepts/">Basic Concepts</a></li>
-<li><a href="/tutorials/xgboost_deployment/">Example: XGBoost Deployment</a></li>
-<li><a href="/tutorials/image_query/">Example: Image Query</a></li>
-<li><a href="/tutorials/container_managers/">Container Orchestration with Clipper</a>
-
-<ul>
-<li><a href="/tutorials/container_managers/#kubernetes-container-manager">Kubernetes</a></li>
-</ul></li>
-<li><a href="/tutorials/r-deployment/">R Deployment</a></li>
-<li><a href="/tutorials/custom_model_container/">Custom Model Containers </a></li>
+<li>Python 2.7: <code>FROM clipper/python-closure-container:0.3</code></li>
+<li>Python 3.5: <code>FROM clipper/python35-closure-container:0.3</code></li>
+<li>Python 3.6: <code>FROM clipper/python36-closure-container:0.3</code></li>
 </ul>
 
-<h3 id="instrumenting-with-clipper">Instrumenting with Clipper</h3>
+<p>Next, install the custom Python packages into the Docker container.
+If they are local modules that need to be copied, use the <a href="https://docs.docker.com/engine/reference/builder/#copy">COPY</a> command. If you need to download or compile anything, use the <a href="https://docs.docker.com/engine/reference/builder/#run">RUN</a> command.</p>
 
-<ul>
-<li><a href="/tutorials/metrics/">Creating and Using Clipper Metrics</a></li>
-<li><a href="/tutorials/rest/">Clipper&rsquo;s REST API</a></li>
-</ul>
+<p>For example, to create a custom model container for Python 3.6 that includes some local Python modules,
+you would write the following Dockerfile:</p>
 
-<h3 id="troubleshotting">Troubleshotting</h3>
+<pre><code class="language-docker">FROM clipper/python36-closure-container:0.3
 
-<ul>
-<li><a href="/tutorials/troubleshooting/">Troubleshooting</a></li>
-</ul>
+# Create a directory to copy the local module into
+RUN mkdir -p /python-deps
+
+# Copy the module from your local filesystem into the Docker image
+COPY /path/to/local/module /python-deps/
+
+# Add the module to your PYTHONPATH so the Python interpreter
+# can find it
+ENV PYTHONPATH=&quot;$PYTHONPATH:/python-deps/
+</code></pre>
+
+<p>Once you have create the Dockerfile, you must build it to create a Docker image. From the
+directory where the Dockerfile is saved, run the following command:</p>
+
+<pre><code class="language-console">docker build -t custom-model-image .
+</code></pre>
+
+<div class="notices note" ><p>All files referenced in COPY or ADD commands must be inside the <em>context</em> of the build command,
+and that it will recursively copy entire directory trees.</p>
+</div>
+
+
+<p>Once you&rsquo;ve successfully built your custom base image, specify it as the base image in
+the Python closure deployer. For example, to use your custom base image to deploy a
+Python function called <code>myfunc</code> as a model
+named &ldquo;custom-model&rdquo; with version 1 that takes strings as input, you would issue the following command:</p>
+
+<pre><code class="language-python">deploy_python_closure(clipper_conn, &quot;custom-model&quot;, 1,
+            &quot;strings&quot;, myfunc, base_image='custom-model-image')
+</code></pre>
+
+<h3 id="optional-push-the-image-to-a-docker-registry">Optional: Push the image to a Docker registry</h3>
+
+<p>If you want to be able to use the Docker image on other machines, push it to a Docker registry
+using the <a href="https://docs.docker.com/engine/reference/commandline/push/"><code>docker push</code></a> command.</p>
+
+<h2 id="writing-your-own-container-implementation">Writing your own container implementation</h2>
+
+<p>If your prediction function cannot be pickled, you will need to explicitly package the function in the container.</p>
+
+<p>A more complete guide will be coming soon. In the meantime, you can look at the model deployer <a href="https://github.com/ucbrise/clipper/tree/develop/containers/python">container implementations</a> and <a href="https://github.com/ucbrise/clipper/tree/develop/dockerfiles">Dockerfiles</a> to see some examples of implementing your own model container.</p>
 
 
 <footer class=" footline" >
 	
 </footer>
-
-
 
 
 
@@ -703,6 +746,45 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
             
                 
                     
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
                 
                 
 
@@ -732,50 +814,15 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
                     
             
         
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
         
         
 
 
         
-            <a class="nav nav-prev" href="/about/" title="About"> <i class="fa fa-chevron-left"></i></a>
+            <a class="nav nav-prev" href="/tutorials/rest/" title="REST API Documentation"> <i class="fa fa-chevron-left"></i></a>
         
         
-            <a class="nav nav-next" href="/tutorials/basic_concepts/" title="Basic Concepts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+            <a class="nav nav-next" href="/tutorials/troubleshooting/" title="Troubleshooting" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
         
     </div>
 
@@ -801,3 +848,4 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
 
   </body>
 </html>
+

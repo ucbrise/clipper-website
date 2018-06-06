@@ -12,8 +12,13 @@
   </url>
   
   <url>
-    <loc>http://clipper.ai/tutorials/container_managers/</loc>
-    <lastmod>2017-09-13T10:22:30-07:00</lastmod>
+    <loc>http://clipper.ai/tutorials/xgboost_deployment/</loc>
+    <lastmod>2018-03-12T17:08:30-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/tutorials/image_query/</loc>
+    <lastmod>2018-03-12T17:08:30-07:00</lastmod>
   </url>
   
   <url>
@@ -27,8 +32,13 @@
   </url>
   
   <url>
-    <loc>http://clipper.ai/tutorials/troubleshooting/</loc>
-    <lastmod>2017-09-13T10:22:56-07:00</lastmod>
+    <loc>http://clipper.ai/tutorials/container_managers/</loc>
+    <lastmod>2017-09-13T10:22:30-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/tutorials/r-deployment/</loc>
+    <lastmod>2017-09-13T10:23:21-07:00</lastmod>
   </url>
   
   <url>
@@ -39,6 +49,26 @@
   <url>
     <loc>http://clipper.ai/</loc>
     <lastmod>2017-05-20T17:53:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/tutorials/metrics/</loc>
+    <lastmod>2018-03-13T10:23:10-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/tutorials/rest/</loc>
+    <lastmod>2017-09-12T23:45:24-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/tutorials/custom_model_container/</loc>
+    <lastmod>2018-03-13T10:23:10-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://clipper.ai/tutorials/troubleshooting/</loc>
+    <lastmod>2017-09-13T10:22:56-07:00</lastmod>
   </url>
   
   <url>

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.37.1" />
-    <meta name="description" content="">
+    <meta name="description" content="Guide to deploy XGBoost Models.">
 
 
-    <title>User Guides :: Clipper</title>
+    <title>Example: XGBoost Deployment :: Clipper</title>
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
     <link href="/css/nucleus.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     
 
   </head>
-  <body class="" data-url="/tutorials/">
+  <body class="" data-url="/tutorials/xgboost_deployment/">
     <nav id="sidebar" class="">
 
 
@@ -106,7 +106,7 @@
     
     <li data-nav-id="/tutorials/" class="dd-item 
         parent
-        active
+        
         
         ">
       <a href="/tutorials/">
@@ -159,7 +159,7 @@
   
     
       <li data-nav-id="/tutorials/xgboost_deployment/" class="dd-item
-     
+     active
       ">
         <a href="/tutorials/xgboost_deployment/">
         <span>Example: XGBoost Deployment</span> 
@@ -442,7 +442,12 @@
 
 
 
- <a href='/'>Clipper</a> > User Guides
+
+
+
+ <a href='/'>Clipper</a> > <a href='/tutorials/'>User Guides</a> > Example: XGBoost Deployment
+
+ 
 
  
 
@@ -455,12 +460,7 @@
 <ul>
 <li>
 <ul>
-<li>
-<ul>
-<li><a href="#clipper-basics">Clipper Basics</a></li>
-<li><a href="#instrumenting-with-clipper">Instrumenting with Clipper</a></li>
-<li><a href="#troubleshotting">Troubleshotting</a></li>
-</ul></li>
+<li><a href="#a-guide-to-deploy-xgboost-models">A guide to deploy XGBoost Models</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -472,7 +472,7 @@
         
         <div id="body-inner">
           
-            <h1>User Guides</h1>
+            <h1>Example: XGBoost Deployment</h1>
           
 
 
@@ -480,43 +480,102 @@
 
 
 
-<p>Explore the guides to learn how to take full advantage of Clipper.
-If there is a guide that doesn&rsquo;t exist yet that you would like to see, please file an issue on Github.</p>
+<h2 id="a-guide-to-deploy-xgboost-models">A guide to deploy XGBoost Models</h2>
 
-<h3 id="clipper-basics">Clipper Basics</h3>
+<div class="notices warning" ><p>This tutorial will assume that you have already installed <code>clipper_admin</code> and its dependencies.</p>
+</div>
 
-<ul>
-<li><a href="/tutorials/basic_concepts/">Basic Concepts</a></li>
-<li><a href="/tutorials/xgboost_deployment/">Example: XGBoost Deployment</a></li>
-<li><a href="/tutorials/image_query/">Example: Image Query</a></li>
-<li><a href="/tutorials/container_managers/">Container Orchestration with Clipper</a>
 
-<ul>
-<li><a href="/tutorials/container_managers/#kubernetes-container-manager">Kubernetes</a></li>
-</ul></li>
-<li><a href="/tutorials/r-deployment/">R Deployment</a></li>
-<li><a href="/tutorials/custom_model_container/">Custom Model Containers </a></li>
-</ul>
+<p>In order to keep the base images small, containers limit the packages they come with default; however, Clipper also supports the installation of additional packages onto model containers using pip. Packages such as XGBoost can be installed and deployed in this way.</p>
 
-<h3 id="instrumenting-with-clipper">Instrumenting with Clipper</h3>
+<p>The following tutorial is written in Python. First, we start Clipper.</p>
 
-<ul>
-<li><a href="/tutorials/metrics/">Creating and Using Clipper Metrics</a></li>
-<li><a href="/tutorials/rest/">Clipper&rsquo;s REST API</a></li>
-</ul>
+<pre><code class="language-python">import logging, xgboost as xgb, numpy as np
+from clipper_admin import ClipperConnection, DockerContainerManager
+cl = ClipperConnection(DockerContainerManager())
+</code></pre>
 
-<h3 id="troubleshotting">Troubleshotting</h3>
+<p>Next, we must register our application</p>
 
-<ul>
-<li><a href="/tutorials/troubleshooting/">Troubleshooting</a></li>
-</ul>
+<pre><code class="language-python"># We will register it to deploy an xgboost model.
+cl.register_application('xgboost-test', 'integers', 'default_pred', 100000)
+</code></pre>
+
+<p>Now we need to get some training data. For the purposes of this example, we will just use randomly generated data.</p>
+
+<pre><code class="language-python">def get_test_point():
+    return [np.random.randint(255) for _ in range(784)]
+</code></pre>
+
+<p>We then create an XGBoost model. (These steps will guide you to create a generic model).</p>
+
+<pre><code class="language-python"># Create a training matrix.
+dtrain = xgb.DMatrix(get_test_point(), label=[0])
+# We then create parameters, watchlist, and specify the number of rounds
+# This is code that we use to build our XGBoost Model, and your code may differ.
+param = {'max_depth': 2, 'eta': 1, 'silent': 1, 'objective': 'binary:logistic'}
+watchlist = [(dtrain, 'train')]
+num_round = 2
+bst = xgb.train(param, dtrain, num_round, watchlist)
+</code></pre>
+
+<p>We also must define our predict function for our model. In order to deploy the XGBoost model to Clipper, we define a closure that references the XGBoost model. Clipper&rsquo;s model deployer will automatically track down everything that is referenced in the closure (including the XGBoost model), and include it in the model container.</p>
+
+<pre><code class="language-python">def predict(xs):
+    return [str(bst.predict(xgb.DMatrix(xs)))]
+</code></pre>
+
+<p>Now that we have a model, as well as a predict function, we must deploy our model container. We will use a <code>python_closure_container</code>, and install the <code>xgboost</code> module using <code>pip</code>.</p>
+
+<pre><code class="language-python">from clipper_admin.deployers import python as python_deployer
+# We specify which packages to install in the pkgs_to_install arg.
+# For example, if we wanted to install xgboost and psycopg2, we would use
+# pkgs_to_install = ['xgboost', 'psycopg2']
+python_deployer.deploy_python_closure(cl, name='xgboost-model', version=1,
+     input_type=&quot;integers&quot;, func=predict, pkgs_to_install=['xgboost'])
+</code></pre>
+
+<p>The next step is to link the model container to our app, so that Clipper can route requests for the &ldquo;xgboost-test&rdquo; application to the &ldquo;xgboost-model&rdquo; container.</p>
+
+<pre><code class="language-python">cl.link_model_to_app('xgboost-test', 'xgboost-model')
+</code></pre>
+
+<p>Now your application is ready to serve predictions. Let&rsquo;s try one!</p>
+
+<pre><code class="language-python">import requests, json
+# Get Address
+addr = cl.get_query_addr()
+# Post Query
+response = requests.post(
+     &quot;http://%s/%s/predict&quot; % (addr, 'xgboost-test'),
+     headers={&quot;Content-type&quot;: &quot;application/json&quot;},
+     data=json.dumps({
+         'input': get_test_point()
+     }))
+result = response.json()
+if response.status_code == requests.codes.ok and result[&quot;default&quot;]:
+     print('A default prediction was returned.')
+     elif response.status_code != requests.codes.ok:
+         print(result)
+         raise BenchmarkException(response.text)
+     else:
+         print('Prediction Returned:', result)
+</code></pre>
+
+<p>You should see something like the following output:</p>
+
+<pre><code class="language-python">('Prediction Returned:', {u'default': False, u'output': [0.5], u'query_id': 26})
+</code></pre>
+
+<p>And finally, we stop Clipper</p>
+
+<pre><code class="language-python">cl.stop_all()
+</code></pre>
 
 
 <footer class=" footline" >
 	
 </footer>
-
-
 
 
 
@@ -607,6 +666,26 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
             
                 
                     
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
                 
                 
 
@@ -714,22 +793,6 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
             
         
                     
@@ -772,10 +835,10 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
 
 
         
-            <a class="nav nav-prev" href="/about/" title="About"> <i class="fa fa-chevron-left"></i></a>
+            <a class="nav nav-prev" href="/tutorials/basic_concepts/" title="Basic Concepts"> <i class="fa fa-chevron-left"></i></a>
         
         
-            <a class="nav nav-next" href="/tutorials/basic_concepts/" title="Basic Concepts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+            <a class="nav nav-next" href="/tutorials/image_query/" title="Example: Querying Clipper with Images" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
         
     </div>
 
@@ -801,3 +864,4 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
 
   </body>
 </html>
+

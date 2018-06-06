@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.37.1" />
-    <meta name="description" content="">
+    <meta name="description" content="Guide to working with image models in Clipper.">
 
 
-    <title>User Guides :: Clipper</title>
+    <title>Example: Querying Clipper with Images :: Clipper</title>
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
     <link href="/css/nucleus.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     
 
   </head>
-  <body class="" data-url="/tutorials/">
+  <body class="" data-url="/tutorials/image_query/">
     <nav id="sidebar" class="">
 
 
@@ -106,7 +106,7 @@
     
     <li data-nav-id="/tutorials/" class="dd-item 
         parent
-        active
+        
         
         ">
       <a href="/tutorials/">
@@ -179,7 +179,7 @@
   
     
       <li data-nav-id="/tutorials/image_query/" class="dd-item
-     
+     active
       ">
         <a href="/tutorials/image_query/">
         <span>Example: Querying Clipper with Images</span> 
@@ -442,7 +442,12 @@
 
 
 
- <a href='/'>Clipper</a> > User Guides
+
+
+
+ <a href='/'>Clipper</a> > <a href='/tutorials/'>User Guides</a> > Example: Querying Clipper with Images
+
+ 
 
  
 
@@ -451,19 +456,7 @@
             </div>
             <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#clipper-basics">Clipper Basics</a></li>
-<li><a href="#instrumenting-with-clipper">Instrumenting with Clipper</a></li>
-<li><a href="#troubleshotting">Troubleshotting</a></li>
-</ul></li>
-</ul></li>
-</ul>
-</nav>
+
     </div>
 </div>
 
@@ -472,51 +465,23 @@
         
         <div id="body-inner">
           
-            <h1>User Guides</h1>
+            <h1>Example: Querying Clipper with Images</h1>
           
 
 
 
 
-
-
-<p>Explore the guides to learn how to take full advantage of Clipper.
-If there is a guide that doesn&rsquo;t exist yet that you would like to see, please file an issue on Github.</p>
-
-<h3 id="clipper-basics">Clipper Basics</h3>
+<p>Please checkout <a href="https://github.com/ucbrise/clipper/blob/develop/examples/image_query/example.md">examples/image_query</a> for two image scenarios:</p>
 
 <ul>
-<li><a href="/tutorials/basic_concepts/">Basic Concepts</a></li>
-<li><a href="/tutorials/xgboost_deployment/">Example: XGBoost Deployment</a></li>
-<li><a href="/tutorials/image_query/">Example: Image Query</a></li>
-<li><a href="/tutorials/container_managers/">Container Orchestration with Clipper</a>
-
-<ul>
-<li><a href="/tutorials/container_managers/#kubernetes-container-manager">Kubernetes</a></li>
-</ul></li>
-<li><a href="/tutorials/r-deployment/">R Deployment</a></li>
-<li><a href="/tutorials/custom_model_container/">Custom Model Containers </a></li>
-</ul>
-
-<h3 id="instrumenting-with-clipper">Instrumenting with Clipper</h3>
-
-<ul>
-<li><a href="/tutorials/metrics/">Creating and Using Clipper Metrics</a></li>
-<li><a href="/tutorials/rest/">Clipper&rsquo;s REST API</a></li>
-</ul>
-
-<h3 id="troubleshotting">Troubleshotting</h3>
-
-<ul>
-<li><a href="/tutorials/troubleshooting/">Troubleshooting</a></li>
+<li>Encode images as bytes</li>
+<li>Embed images in serialized json and send the query as strings</li>
 </ul>
 
 
 <footer class=" footline" >
 	
 </footer>
-
-
 
 
 
@@ -623,6 +588,26 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
             
                 
                     
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
                 
                 
 
@@ -714,22 +699,6 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
             
         
                     
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
             
         
                     
@@ -772,10 +741,10 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
 
 
         
-            <a class="nav nav-prev" href="/about/" title="About"> <i class="fa fa-chevron-left"></i></a>
+            <a class="nav nav-prev" href="/tutorials/xgboost_deployment/" title="Example: XGBoost Deployment"> <i class="fa fa-chevron-left"></i></a>
         
         
-            <a class="nav nav-next" href="/tutorials/basic_concepts/" title="Basic Concepts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+            <a class="nav nav-next" href="/tutorials/container_managers/" title="Container Orchestration" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
         
     </div>
 
@@ -801,3 +770,4 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
 
   </body>
 </html>
+

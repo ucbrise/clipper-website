@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.30.2" />
+    <meta name="generator" content="Hugo 0.37.1" />
     <meta name="description" content="">
 
 
@@ -158,11 +158,131 @@
  
   
     
+      <li data-nav-id="/tutorials/xgboost_deployment/" class="dd-item
+     
+      ">
+        <a href="/tutorials/xgboost_deployment/">
+        <span>Example: XGBoost Deployment</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/image_query/" class="dd-item
+     
+      ">
+        <a href="/tutorials/image_query/">
+        <span>Example: Querying Clipper with Images</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
       <li data-nav-id="/tutorials/container_managers/" class="dd-item
      
       ">
         <a href="/tutorials/container_managers/">
         <span>Container Orchestration</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/r-deployment/" class="dd-item
+     
+      ">
+        <a href="/tutorials/r-deployment/">
+        <span>R Deployment</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/metrics/" class="dd-item
+     
+      ">
+        <a href="/tutorials/metrics/">
+        <span>Monitoring Clipper Metrics</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/rest/" class="dd-item
+     
+      ">
+        <a href="/tutorials/rest/">
+        <span>REST API Documentation</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/custom_model_container/" class="dd-item
+     
+      ">
+        <a href="/tutorials/custom_model_container/">
+        <span>Creating a Custom Model Container</span> 
         
         </a></li>
      
@@ -257,6 +377,12 @@
                 <li class="" role="">
                     <h3>More</h3>
                     <a href="http://docs.clipper.ai"><i class='fa fa-book'></i> API Docs</a>
+                    
+                </li>
+            
+                <li class="" role="">
+                    
+                    <a href="http://clipper.ai/api/api.html"><i class='fa fa-book'></i> REST API</a>
                     
                 </li>
             
@@ -394,36 +520,34 @@ As you issue commands against Clipper using the Clipper Admin tool, you are comm
 these containers as well as creating new ones or destroying existing ones. As new commands are introduced
 throughout this guide, we have illustrated how they affect the cluster state.</p>
 
-<p>The core of a Clipper cluster consists of three components: the query frontend, the management frontend,
-and the configuration database.</p>
+<p>The core of a Clipper cluster consists of four components: the query frontend, the management frontend, the metric server, and the configuration database.</p>
 
 
-<figure >
+<figure>
     
-        <img src="/images/start_clipper.png" />
+        <img src="/images/clipper-structure.png" />
     
     
 </figure>
 
 
 <ul>
-<li><p><em>Query frontend:</em>
+<li><em>Query frontend:</em>
   Listens for incoming prediction requests and schedules and routes them to
   deployed models. When you query Clipper&rsquo;s REST prediction interface, you are sending requests
-  to the query frontend.</p></li>
-
-<li><p><em>Management frontend:</em>
+  to the query frontend.</li>
+<li><em>Management frontend:</em>
   Manages and updates Clipper&rsquo;s internal configuration state. When you change
   the Clipper cluster&rsquo;s configuration, such as by registering new applications or deploying new models,
-  you are issuing commands against the management frontend&rsquo;s admin REST interface.</p></li>
-
-<li><p><em>Configuration database:</em>
+  you are issuing commands against the management frontend&rsquo;s admin REST interface.</li>
+<li>Metric server: Collect metrics from query frontend and individual model containers into a <a href="https://prometheus.io/docs/prometheus/latest/getting_started/">Prometheus</a> server, so you can query the latency and throughput of your application in different level of granularity. You can also add your own metrics about the model. (See more at <a href="/tutorials/metrics">metics tutorial</a>)</li>
+<li><em>Configuration database:</em>
   A Redis instance used to persistently store Clipper&rsquo;s internal
   configuration state. Changes to Clipper&rsquo;s internal configuration are propogated from the management
   frontend to Redis so that they are stored persistently. The query frontend watches for changes to the
   configuration database and updates its state appropriately when a change is detected. By storing all
   configuration state in a persistent database, the query frontend and management frontend can remain
-  completely stateless, simplifying their implementations and deferring fault-tolerance to Redis.</p></li>
+  completely stateless, simplifying their implementations and deferring fault-tolerance to Redis.</li>
 </ul>
 
 <h4 id="creating-a-clipper-cluster">Creating a Clipper Cluster</h4>
@@ -480,7 +604,7 @@ deploy it with: <a href="http://docs.clipper.ai/en/release-0.2/#clipper_admin.Cl
 container manager you provided to start a container for this model and create an RPC connection with the Clipper query frontend, as illustrated below (the changes to the cluster state are highlighted in red).</p>
 
 
-<figure >
+<figure>
     
         <img src="/images/deploy_model.png" />
     
@@ -520,7 +644,7 @@ Data Params: {&quot;input&quot;: &lt;input&gt;}
 </code></pre>
 
 
-<figure >
+<figure>
     
         <img src="/images/register_app.png" />
     
@@ -535,7 +659,7 @@ Data Params: {&quot;input&quot;: &lt;input&gt;}
 <p>You can link a model to an application with <a href="http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.link_model_to_app"><code>ClipperConnection.link_model_to_app</code></a>.</p>
 
 
-<figure >
+<figure>
     
         <img src="/images/link_model.png" />
     
@@ -556,7 +680,7 @@ to Clipper cannot be updated or changed. Clipper just treats versions as unique 
 <p>When a new version of a model is deployed (through a call to <code>deploy_model</code> or via using one of the model deployers), Clipper will automatically start routing requests to the new version.</p>
 
 
-<figure >
+<figure>
     
         <img src="/images/update_model.png" />
     
@@ -571,7 +695,7 @@ to Clipper cannot be updated or changed. Clipper just treats versions as unique 
 <p>This just changes which version of the model the application&rsquo;s routes requests to.</p>
 
 
-<figure >
+<figure>
     
         <img src="/images/rollback_version.png" />
     
@@ -588,7 +712,7 @@ to Clipper cannot be updated or changed. Clipper just treats versions as unique 
 <p>If there are currently less than the specified number of replicas active, Clipper will launch more. If there are more than the specified number of replicas, Clipper will stop some.</p>
 
 
-<figure >
+<figure>
     
         <img src="/images/add_replicas.png" />
     
@@ -813,6 +937,102 @@ some common problems.</p>
             
         
                     
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
             
         
                     
@@ -858,7 +1078,7 @@ some common problems.</p>
             <a class="nav nav-prev" href="/tutorials/" title="User Guides"> <i class="fa fa-chevron-left"></i></a>
         
         
-            <a class="nav nav-next" href="/tutorials/container_managers/" title="Container Orchestration" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+            <a class="nav nav-next" href="/tutorials/xgboost_deployment/" title="Example: XGBoost Deployment" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
         
     </div>
 

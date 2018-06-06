@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.30.2" />
+    <meta name="generator" content="Hugo 0.37.1" />
     <meta name="description" content="">
 
 
@@ -158,11 +158,131 @@
  
   
     
+      <li data-nav-id="/tutorials/xgboost_deployment/" class="dd-item
+     
+      ">
+        <a href="/tutorials/xgboost_deployment/">
+        <span>Example: XGBoost Deployment</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/image_query/" class="dd-item
+     
+      ">
+        <a href="/tutorials/image_query/">
+        <span>Example: Querying Clipper with Images</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
       <li data-nav-id="/tutorials/container_managers/" class="dd-item
      
       ">
         <a href="/tutorials/container_managers/">
         <span>Container Orchestration</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/r-deployment/" class="dd-item
+     
+      ">
+        <a href="/tutorials/r-deployment/">
+        <span>R Deployment</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/metrics/" class="dd-item
+     
+      ">
+        <a href="/tutorials/metrics/">
+        <span>Monitoring Clipper Metrics</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/rest/" class="dd-item
+     
+      ">
+        <a href="/tutorials/rest/">
+        <span>REST API Documentation</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/custom_model_container/" class="dd-item
+     
+      ">
+        <a href="/tutorials/custom_model_container/">
+        <span>Creating a Custom Model Container</span> 
         
         </a></li>
      
@@ -262,6 +382,12 @@
             
                 <li class="" role="">
                     
+                    <a href="http://clipper.ai/api/api.html"><i class='fa fa-book'></i> REST API</a>
+                    
+                </li>
+            
+                <li class="" role="">
+                    
                     <a href="https://github.com/ucbrise/clipper"><i class='fa fa-github'></i> Github repo</a>
                     
                 </li>
@@ -332,6 +458,7 @@
 <li>
 <ul>
 <li><a href="#developing-clipper">Developing Clipper</a></li>
+<li><a href="#clipper-dev-docker-image">Clipper Dev Docker Image</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -417,6 +544,16 @@ the provided formatting script:</p>
 <pre><code class="language-sh">./bin/format_code.sh
 </code></pre>
 
+<h3 id="clipper-dev-docker-image">Clipper Dev Docker Image</h3>
+
+<p>We packaged all dev dependency in Docker Image as well. You can use the following to avoid set up local environment and use Docker instead:</p>
+
+<pre><code class="language-sh">docker run -it --network=host -v &lt;LOCAL_PATH_TO_CLIPPER&gt;:/clipper -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp clipper/dev:develop
+</code></pre>
+
+<pre><code class="language-sh">docker run -it --network=host -v /home/ubuntu/clipper:/clipper -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp clipper/py35-dev:develop
+</code></pre>
+
 <!-- Development planning and progress is tracked with the [Clipper Jira](https://clipper.atlassian.net/projects/CLIPPER/issues). -->
 
 
@@ -489,6 +626,102 @@ the provided formatting script:</p>
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
                         
             

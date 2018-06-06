@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>User Guides :: Clipper</title>
+    <title>REST API Documentation :: Clipper</title>
     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
     <link href="/css/nucleus.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     
 
   </head>
-  <body class="" data-url="/tutorials/">
+  <body class="" data-url="/tutorials/rest/">
     <nav id="sidebar" class="">
 
 
@@ -106,7 +106,7 @@
     
     <li data-nav-id="/tutorials/" class="dd-item 
         parent
-        active
+        
         
         ">
       <a href="/tutorials/">
@@ -259,7 +259,7 @@
   
     
       <li data-nav-id="/tutorials/rest/" class="dd-item
-     
+     active
       ">
         <a href="/tutorials/rest/">
         <span>REST API Documentation</span> 
@@ -442,7 +442,12 @@
 
 
 
- <a href='/'>Clipper</a> > User Guides
+
+
+
+ <a href='/'>Clipper</a> > <a href='/tutorials/'>User Guides</a> > REST API Documentation
+
+ 
 
  
 
@@ -451,19 +456,7 @@
             </div>
             <div class="progress">
     <div class="wrapper">
-<nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li>
-<ul>
-<li><a href="#clipper-basics">Clipper Basics</a></li>
-<li><a href="#instrumenting-with-clipper">Instrumenting with Clipper</a></li>
-<li><a href="#troubleshotting">Troubleshotting</a></li>
-</ul></li>
-</ul></li>
-</ul>
-</nav>
+
     </div>
 </div>
 
@@ -472,51 +465,22 @@
         
         <div id="body-inner">
           
-            <h1>User Guides</h1>
+            <h1>REST API Documentation</h1>
           
 
 
 
 
+<p>Both Clipper&rsquo;s management and query interfaces expose a REST API. While we provide the Clipper Admin
+client library as a convenient Python wrapper around the management functionality, you can also use the REST
+API directly, or create your own client libraries in other languages. You can find the full REST documentation below. If you create a client library in another language (e.g. several users have expressed interest in a Go implementation), consider contributing it back to the project as an official client library.</p>
 
-
-<p>Explore the guides to learn how to take full advantage of Clipper.
-If there is a guide that doesn&rsquo;t exist yet that you would like to see, please file an issue on Github.</p>
-
-<h3 id="clipper-basics">Clipper Basics</h3>
-
-<ul>
-<li><a href="/tutorials/basic_concepts/">Basic Concepts</a></li>
-<li><a href="/tutorials/xgboost_deployment/">Example: XGBoost Deployment</a></li>
-<li><a href="/tutorials/image_query/">Example: Image Query</a></li>
-<li><a href="/tutorials/container_managers/">Container Orchestration with Clipper</a>
-
-<ul>
-<li><a href="/tutorials/container_managers/#kubernetes-container-manager">Kubernetes</a></li>
-</ul></li>
-<li><a href="/tutorials/r-deployment/">R Deployment</a></li>
-<li><a href="/tutorials/custom_model_container/">Custom Model Containers </a></li>
-</ul>
-
-<h3 id="instrumenting-with-clipper">Instrumenting with Clipper</h3>
-
-<ul>
-<li><a href="/tutorials/metrics/">Creating and Using Clipper Metrics</a></li>
-<li><a href="/tutorials/rest/">Clipper&rsquo;s REST API</a></li>
-</ul>
-
-<h3 id="troubleshotting">Troubleshotting</h3>
-
-<ul>
-<li><a href="/tutorials/troubleshooting/">Troubleshooting</a></li>
-</ul>
+<p><a href="/api/api.html">Clipper&rsquo;s REST API Documentation</a></p>
 
 
 <footer class=" footline" >
 	
 </footer>
-
-
 
 
 
@@ -687,6 +651,7 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
             
                 
                     
+                    
                 
                 
 
@@ -694,6 +659,44 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
                     
                     
 
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
             
         
@@ -732,50 +735,15 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
                     
             
         
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
         
         
 
 
         
-            <a class="nav nav-prev" href="/about/" title="About"> <i class="fa fa-chevron-left"></i></a>
+            <a class="nav nav-prev" href="/tutorials/metrics/" title="Monitoring Clipper Metrics"> <i class="fa fa-chevron-left"></i></a>
         
         
-            <a class="nav nav-next" href="/tutorials/basic_concepts/" title="Basic Concepts" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+            <a class="nav nav-next" href="/tutorials/custom_model_container/" title="Creating a Custom Model Container" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
         
     </div>
 
@@ -801,3 +769,4 @@ If there is a guide that doesn&rsquo;t exist yet that you would like to see, ple
 
   </body>
 </html>
+

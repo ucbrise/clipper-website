@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.30.2" />
+    <meta name="generator" content="Hugo 0.37.1" />
     <meta name="description" content="">
 
 
@@ -158,11 +158,131 @@
  
   
     
+      <li data-nav-id="/tutorials/xgboost_deployment/" class="dd-item
+     
+      ">
+        <a href="/tutorials/xgboost_deployment/">
+        <span>Example: XGBoost Deployment</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/image_query/" class="dd-item
+     
+      ">
+        <a href="/tutorials/image_query/">
+        <span>Example: Querying Clipper with Images</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
       <li data-nav-id="/tutorials/container_managers/" class="dd-item
      
       ">
         <a href="/tutorials/container_managers/">
         <span>Container Orchestration</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/r-deployment/" class="dd-item
+     
+      ">
+        <a href="/tutorials/r-deployment/">
+        <span>R Deployment</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/metrics/" class="dd-item
+     
+      ">
+        <a href="/tutorials/metrics/">
+        <span>Monitoring Clipper Metrics</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/rest/" class="dd-item
+     
+      ">
+        <a href="/tutorials/rest/">
+        <span>REST API Documentation</span> 
+        
+        </a></li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/tutorials/custom_model_container/" class="dd-item
+     
+      ">
+        <a href="/tutorials/custom_model_container/">
+        <span>Creating a Custom Model Container</span> 
         
         </a></li>
      
@@ -262,6 +382,12 @@
             
                 <li class="" role="">
                     
+                    <a href="http://clipper.ai/api/api.html"><i class='fa fa-book'></i> REST API</a>
+                    
+                </li>
+            
+                <li class="" role="">
+                    
                     <a href="https://github.com/ucbrise/clipper"><i class='fa fa-github'></i> Github repo</a>
                     
                 </li>
@@ -320,14 +446,10 @@ including on Kubernetes.</p>
 <h3 id="install-clipper">Install Clipper</h3>
 
 <p>Before starting Clipper, you must have a recent version of <a href="https://www.docker.com/">Docker</a> and Python installed.
-We recommend installing Clipper into an Anaconda environment.</p>
-
-<h4 id="python-2">Python 2</h4>
+We recommend installing Clipper into an Anaconda environment. Clipper currently supports Python 2, 3.5, 3.6.</p>
 
 <pre><code class="language-sh">pip install clipper_admin
 </code></pre>
-
-<h4 id="python-3-support-coming-soon">Python 3 support coming soon</h4>
 
 <h3 id="quickstart">Quickstart</h3>
 
@@ -344,58 +466,87 @@ $ ipython
 
 <p>From the Python shell, you can start a new Clipper cluster and deploy a simple Python function as your first model.</p>
 
-<pre><code class="language-sh">&gt;&gt;&gt; from clipper_admin import ClipperConnection, DockerContainerManager
-&gt;&gt;&gt; clipper_conn = ClipperConnection(DockerContainerManager())
-
-# Start Clipper. Running this command for the first time will
-# download several Docker containers, so it may take some time.
-&gt;&gt;&gt; clipper_conn.start_clipper()
-17-08-30:15:48:41 INFO     [docker_container_manager.py:95] Starting managed Redis instance in Docker
-17-08-30:15:48:43 INFO     [clipper_admin.py:105] Clipper still initializing.
-17-08-30:15:48:44 INFO     [clipper_admin.py:107] Clipper is running
-
-# Register an application called &quot;hello_world&quot;. This will create
-# a prediction REST endpoint at http://localhost:1337/hello_world/predict
-&gt;&gt;&gt; clipper_conn.register_application(name=&quot;hello-world&quot;, input_type=&quot;doubles&quot;, default_output=&quot;-1.0&quot;, slo_micros=100000)
-17-08-30:15:51:42 INFO     [clipper_admin.py:182] Application hello-world was successfully registered
-
-# Inspect Clipper to see the registered apps
-&gt;&gt;&gt; clipper_conn.get_all_apps()
-[u'hello_world']
-
-# Define a simple model that just returns the sum of each feature vector.
-# Note that the prediction function takes a list of feature vectors as
-# input and returns a list of strings.
-&gt;&gt;&gt; def feature_sum(xs):
-      return [str(sum(x)) for x in xs]
-
-# Import the python deployer package
-&gt;&gt;&gt; from clipper_admin.deployers import python as python_deployer
-
-# Deploy the &quot;feature_sum&quot; function as a model. Notice that the application and model
-# must have the same input type.
-&gt;&gt;&gt; python_deployer.deploy_python_closure(clipper_conn, name=&quot;sum-model&quot;, version=1, input_type=&quot;doubles&quot;, func=feature_sum)
-17-08-30:15:59:56 INFO     [deployer_utils.py:50] Anaconda environment found. Verifying packages.
-17-08-30:16:00:04 INFO     [deployer_utils.py:150] Fetching package metadata .........
-Solving package specifications: .
-
-17-08-30:16:00:04 INFO     [deployer_utils.py:151]
-17-08-30:16:00:04 INFO     [deployer_utils.py:59] Supplied environment details
-17-08-30:16:00:04 INFO     [deployer_utils.py:71] Supplied local modules
-17-08-30:16:00:04 INFO     [deployer_utils.py:77] Serialized and supplied predict function
-17-08-30:16:00:04 INFO     [python.py:127] Python closure saved
-17-08-30:16:00:04 INFO     [clipper_admin.py:375] Building model Docker image with model data from /tmp/python_func_serializations/sum-model
-17-08-30:16:00:05 INFO     [clipper_admin.py:378] Pushing model Docker image to sum-model:1
-17-08-30:16:00:07 INFO     [docker_container_manager.py:204] Found 0 replicas for sum-model:1. Adding 1
-17-08-30:16:00:07 INFO     [clipper_admin.py:519] Successfully registered model sum-model:1
-17-08-30:16:00:07 INFO     [clipper_admin.py:447] Done deploying model sum-model:1.
-
-# Tell Clipper to route requests for the &quot;hello-world&quot; application to the &quot;sum-model&quot;
-&gt;&gt;&gt; clipper_conn.link_model_to_app(app_name=&quot;hello-world&quot;, model_name=&quot;sum-model&quot;)
-17-08-30:16:08:50 INFO     [clipper_admin.py:224] Model sum-model is now linked to application hello-world
-
-# Your application is now ready to serve predictions
+<pre><code class="language-python">from clipper_admin import ClipperConnection, DockerContainerManager
 </code></pre>
+
+<pre><code class="language-python">clipper_conn = ClipperConnection(DockerContainerManager())
+</code></pre>
+
+<p>Start Clipper. Running this command for the first time will
+download several Docker containers, so it may take some time.</p>
+
+<pre><code class="language-python">clipper_conn.start_clipper()
+</code></pre>
+
+<pre><code class="language-pycon">18-05-21:12:18:46 INFO     [docker_container_manager.py:109] Starting managed Redis instance in Docker
+18-05-21:12:18:50 INFO     [clipper_admin.py:125] Clipper is running
+</code></pre>
+
+<p>Register an application called &ldquo;hello_world&rdquo;. This will create
+a prediction REST endpoint at <a href="http://localhost:1337/hello_world/predict">http://localhost:1337/hello_world/predict</a></p>
+
+<pre><code class="language-python">clipper_conn.register_application(name=&quot;hello-world&quot;, input_type=&quot;doubles&quot;, default_output=&quot;-1.0&quot;, slo_micros=100000)
+</code></pre>
+
+<pre><code class="language-pycon">18-05-21:12:19:02 INFO     [clipper_admin.py:200] Application hello-world was successfully registered
+</code></pre>
+
+<p>Inspect Clipper to see the registered apps</p>
+
+<pre><code class="language-python">clipper_conn.get_all_apps()
+</code></pre>
+
+<pre><code class="language-pycon">['hello-world']
+</code></pre>
+
+<p>Define a simple model that just returns the sum of each feature vector.
+Note that the prediction function takes a list of feature vectors as
+input and returns a list of strings.</p>
+
+<pre><code class="language-python">def feature_sum(xs):
+    return [str(sum(x)) for x in xs]
+</code></pre>
+
+<p>Import the python deployer package</p>
+
+<pre><code class="language-python">from clipper_admin.deployers import python as python_deployer
+</code></pre>
+
+<p>Deploy the &ldquo;feature_sum&rdquo; function as a model. Notice that the application and model
+must have the same input type.</p>
+
+<pre><code class="language-python">python_deployer.deploy_python_closure(clipper_conn, name=&quot;sum-model&quot;, version=1, input_type=&quot;doubles&quot;, func=feature_sum)
+</code></pre>
+
+<pre><code class="language-pycon">18-05-21:12:19:59 INFO     [deployer_utils.py:44] Saving function to /tmp/clipper/tmpx6d_zqeq
+18-05-21:12:19:59 INFO     [deployer_utils.py:54] Serialized and supplied predict function
+18-05-21:12:19:59 INFO     [python.py:192] Python closure saved
+18-05-21:12:19:59 INFO     [python.py:206] Using Python 3.6 base image
+18-05-21:12:19:59 INFO     [clipper_admin.py:451] Building model Docker image with model data from /tmp/clipper/tmpx6d_zqeq
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': 'Step 1/2 : FROM clipper/python36-closure-container:develop'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': '\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': ' ---&gt; 1aaddfa3945e\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': 'Step 2/2 : COPY /tmp/clipper/tmpx6d_zqeq /model/'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': '\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': ' ---&gt; b7c29f531d2e\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'aux': {'ID': 'sha256:b7c29f531d2eaf59dd39579dbe512538be398dcb5fdd182db14e4d58770d2055'}}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': 'Successfully built b7c29f531d2e\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:455] {'stream': 'Successfully tagged sum-model:1\n'}
+18-05-21:12:20:00 INFO     [clipper_admin.py:457] Pushing model Docker image to sum-model:1
+18-05-21:12:20:02 INFO     [docker_container_manager.py:247] Found 0 replicas for sum-model:1. Adding 1
+18-05-21:12:20:09 INFO     [clipper_admin.py:634] Successfully registered model sum-model:1
+18-05-21:12:20:09 INFO     [clipper_admin.py:552] Done deploying model sum-model:1.
+</code></pre>
+
+<p>Tell Clipper to route requests for the &ldquo;hello-world&rdquo; application to the &ldquo;sum-model&rdquo;</p>
+
+<pre><code class="language-python">clipper_conn.link_model_to_app(app_name=&quot;hello-world&quot;, model_name=&quot;sum-model&quot;)
+</code></pre>
+
+<pre><code class="language-pycon">18-05-21:12:20:19 INFO     [clipper_admin.py:262] Model sum-model is now linked to application hello-world
+</code></pre>
+
+<p>Your application is now ready to serve predictions</p>
 
 <h4 id="query-clipper-for-predictions">Query Clipper for predictions</h4>
 
@@ -403,29 +554,34 @@ Solving package specifications: .
 
 <p><em>Directly from the command line with <a href="https://curl.haxx.se/">curl</a>:</em></p>
 
-<pre><code class="language-sh">$ curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello-world/predict
+<pre><code class="language-sh">curl -X POST --header &quot;Content-Type:application/json&quot; -d '{&quot;input&quot;: [1.1, 2.2, 3.3]}' 127.0.0.1:1337/hello-world/predict
 </code></pre>
 
 <p><em>From a Python interpreter:</em></p>
 
-<pre><code class="language-py">&gt;&gt;&gt; import requests, json, numpy as np
-&gt;&gt;&gt; headers = {&quot;Content-type&quot;: &quot;application/json&quot;}
-&gt;&gt;&gt; requests.post(&quot;http://localhost:1337/hello-world/predict&quot;, headers=headers, data=json.dumps({&quot;input&quot;: list(np.random.random(10))})).json()
+<pre><code class="language-python">import requests, json, numpy as np
+headers = {&quot;Content-type&quot;: &quot;application/json&quot;}
+requests.post(&quot;http://localhost:1337/hello-world/predict&quot;, headers=headers, data=json.dumps({&quot;input&quot;: list(np.random.random(10))})).json()
 </code></pre>
 
 <h4 id="clean-up">Clean up</h4>
 
 <p>If you closed the Python interpreter session that you used to start Clipper, you will need to start a new Python interpreter session and create another connection to the Clipper cluster. If you still have the interpreter session active from earlier, you can re-use your existing <code>ClipperConnection</code> object.</p>
 
-<pre><code class="language-py"># If you have still have the Python REPL from earlier,
-# skip directly to clipper_conn.stop_all()
-&gt;&gt;&gt; from clipper_admin import ClipperConnection, DockerContainerManager
-&gt;&gt;&gt; clipper_conn = ClipperConnection(DockerContainerManager())
-&gt;&gt;&gt; clipper_conn.connect()
+<p>If you have still have the Python REPL from earlier,
+skip directly to clipper_conn.stop_all()</p>
 
-# Stop all Clipper docker containers
-&gt;&gt;&gt; clipper_conn.stop_all()
-17-08-30:16:15:38 INFO     [clipper_admin.py:1141] Stopped all Clipper cluster and all model containers
+<pre><code class="language-python">from clipper_admin import ClipperConnection, DockerContainerManager
+clipper_conn = ClipperConnection(DockerContainerManager())
+clipper_conn.connect()
+</code></pre>
+
+<p>Stop all Clipper docker containers</p>
+
+<pre><code class="language-python">clipper_conn.stop_all()
+</code></pre>
+
+<pre><code class="language-pycon">17-08-30:16:15:38 INFO     [clipper_admin.py:1141] Stopped all Clipper cluster and all model containers
 </code></pre>
 
 <h2 id="next-steps">Next steps</h2>
@@ -497,6 +653,102 @@ Solving package specifications: .
                     
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
                         
             
