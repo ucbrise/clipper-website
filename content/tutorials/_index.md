@@ -16,10 +16,11 @@ If there is a guide that doesn't exist yet that you would like to see, please fi
 + [Container Orchestration with Clipper]({{< relref "container_managers.md" >}})
       + [Kubernetes]({{< relref "container_managers.md#kubernetes-container-manager" >}})
 + [R Deployment]({{< relref "r-deployment.md" >}})
++ [Custom Model Containers ]({{< relref "custom_model_container.md" >}})
 
 ### Instrumenting with Clipper
-+ [Metric Monitoring]({{< relref "metrics.md" >}})
-+ [Clipper REST API]({{< relref "rest.md" >}})
++ [Creating and Using Clipper Metrics]({{< relref "metrics.md" >}})
++ [Clipper's REST API]({{< relref "rest.md" >}})
 
 ### Troubleshotting
 + [Troubleshooting]({{< relref "troubleshooting.md" >}})

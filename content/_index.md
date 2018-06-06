@@ -12,13 +12,6 @@ chapter = false
 Clipper is a low-latency prediction serving system for machine learning.
 Clipper makes it simple to integrate machine learning into user-facing serving systems.
 
-Clipper packages arbitrary python function and/or your pre-trained machine learning models into a Docker container and serve it for prediction by exposing a REST endpoint. Currently, Clipper provide out-of-the-box support for:
-
-- Arbitrary pure python function
-- Python ML Libraries: Scikit-Learn, PySpark, XGBoost
-- Python Deep Learning Libraries: PyTorch, Tensorflow, MXNet
-- R models
-
 The simplest way to start using Clipper is to use the Clipper Admin Python tool to start a local Clipper cluster using Docker.
 Read the [container orchestration guide]({{< relref "tutorials/container_managers.md" >}}) to learn about other ways to run Clipper,
 including on Kubernetes.
@@ -27,7 +20,6 @@ including on Kubernetes.
 
 Before starting Clipper, you must have a recent version of [Docker](https://www.docker.com/) and Python installed.
 We recommend installing Clipper into an Anaconda environment. Clipper currently supports Python 2, 3.5, 3.6.
-
 
 ```sh
 pip install clipper_admin
