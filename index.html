@@ -482,8 +482,8 @@ download several Docker containers, so it may take some time.</p>
 18-05-21:12:18:50 INFO     [clipper_admin.py:125] Clipper is running
 </code></pre>
 
-<p>Register an application called &ldquo;hello_world&rdquo;. This will create
-a prediction REST endpoint at <a href="http://localhost:1337/hello_world/predict">http://localhost:1337/hello_world/predict</a></p>
+<p>Register an application called &ldquo;hello-world&rdquo;. This will create
+a prediction REST endpoint at <a href="http://localhost:1337/hello-world/predict">http://localhost:1337/hello-world/predict</a></p>
 
 <pre><code class="language-python">clipper_conn.register_application(name=&quot;hello-world&quot;, input_type=&quot;doubles&quot;, default_output=&quot;-1.0&quot;, slo_micros=100000)
 </code></pre>
