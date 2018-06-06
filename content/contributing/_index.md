@@ -76,5 +76,16 @@ the provided formatting script:
 ./bin/format_code.sh
 ```
 
+### Clipper Dev Docker Image
+
+We packaged all dev dependency in Docker Image as well. You can use the following to avoid set up local environment and use Docker instead:
+
+```sh
+docker run -it --network=host -v <LOCAL_PATH_TO_CLIPPER>:/clipper -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp clipper/dev:develop
+```
+```sh
+docker run -it --network=host -v /home/ubuntu/clipper:/clipper -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp clipper/py35-dev:develop
+```
+
 <!-- Development planning and progress is tracked with the [Clipper Jira](https://clipper.atlassian.net/projects/CLIPPER/issues). -->
 

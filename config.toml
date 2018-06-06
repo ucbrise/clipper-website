@@ -16,6 +16,7 @@ weight = 10
 [[menu.shortcuts]]
 name = "<i class='fa fa-book'></i> REST API"
 identifier = "restapidoc"
+# url = "http://clipper.ai/api/api.html"
 url = "http://clipper.ai/api/api.html"
 weight = 15
 

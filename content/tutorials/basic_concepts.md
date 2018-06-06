@@ -19,21 +19,19 @@ As you issue commands against Clipper using the Clipper Admin tool, you are comm
 these containers as well as creating new ones or destroying existing ones. As new commands are introduced 
 throughout this guide, we have illustrated how they affect the cluster state.
 
-The core of a Clipper cluster consists of three components: the query frontend, the management frontend,
-and the configuration database.
+The core of a Clipper cluster consists of four components: the query frontend, the management frontend, the metric server, and the configuration database.
 
-{{< figure src="/images/start_clipper.png" >}}
+{{< figure src="/images/clipper-structure.png" >}}
 
 + *Query frontend:*
       Listens for incoming prediction requests and schedules and routes them to
       deployed models. When you query Clipper's REST prediction interface, you are sending requests
       to the query frontend.
-
 + *Management frontend:*
       Manages and updates Clipper's internal configuration state. When you change
       the Clipper cluster's configuration, such as by registering new applications or deploying new models,
       you are issuing commands against the management frontend's admin REST interface.
-
++ Metric server: Collect metrics from query frontend and individual model containers into a [Prometheus](https://prometheus.io/docs/prometheus/latest/getting_started/) server, so you can query the latency and throughput of your application in different level of granularity. You can also add your own metrics about the model. (See more at [metics tutorial](/tutorials/metrics))
 + *Configuration database:*
       A Redis instance used to persistently store Clipper's internal
       configuration state. Changes to Clipper's internal configuration are propogated from the management

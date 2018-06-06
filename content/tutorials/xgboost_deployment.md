@@ -1,8 +1,9 @@
 +++
-title= "XGBoost Deployment"
+title= "Example: XGBoost Deployment"
 date= 2018-03-12T17:08:30-07:00
 description = "Guide to deploy XGBoost Models."
 draft= false
+weight = 2
 +++
 ## A guide to deploy XGBoost Models
 {{% notice warning %}}
