@@ -12,6 +12,7 @@ If there is a guide that doesn't exist yet that you would like to see, please fi
 ### Clipper Basics
 + [Basic Concepts]({{< relref "basic_concepts.md" >}})
 + [Example: XGBoost Deployment]({{< relref "xgboost_deployment.md" >}})
++ [Example: Image Query]({{< relref "image_query.md" >}})
 + [Container Orchestration with Clipper]({{< relref "container_managers.md" >}})
       + [Kubernetes]({{< relref "container_managers.md#kubernetes-container-manager" >}})
 + [R Deployment]({{< relref "r-deployment.md" >}})

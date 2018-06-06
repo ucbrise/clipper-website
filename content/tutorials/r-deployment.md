@@ -3,7 +3,7 @@ title= "R Deployment"
 date= 2017-09-13T10:23:21-07:00
 description = ""
 draft= false
-weight = 4
+weight = 5
 +++
 
 Rclipper
