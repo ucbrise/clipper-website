@@ -39,7 +39,7 @@ watchlist = [(dtrain, 'train')]
 num_round = 2
 bst = xgb.train(param, dtrain, num_round, watchlist)
 ```
-We also must define our predict function for our model. In order to deploy the XGBoost model to Clipper, we define a closure that references the XGBoost model. Clipper's model deployer will automatically track down everything that is referenced in the closure (including the XGBoost model), and include it in the model container. We loop through every element in the batch to account for Clipper's adaptive batching, which adds duplicates of requests to batches to figure out the optimal batch size for a model container.
+We also must define our predict function for our model. In order to deploy the XGBoost model to Clipper, we define a closure that references the XGBoost model. Clipper's model deployer will automatically track down everything that is referenced in the closure (including the XGBoost model), and include it in the model container. We loop through every element in the batch to account for Clipper's adaptive batching, which may add duplicates of requests to batches to figure out the optimal batch size for a model container. (For more info on adaptive batching, check out this [link](https://docs.google.com/presentation/d/12FLuE6HRnindJOxK_iy7pf8piC6SKR3KwDy-eNP0vlg/edit?usp=sharing))
 ```python
 def predict(xs):
     return [str(bst.predict(xgb.DMatrix(x))) for x in xs]
