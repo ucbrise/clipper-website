@@ -439,7 +439,7 @@ class Prediect(Resource):
         whose value is a string describing the reason that a default response was returned. 
         This field is not present if default is False.
 
-        Starting 0.3.0, we also have batch prediction interface, see more at: clipper.ai/tutorials/batch_predict/
+        Starting 0.3.0, we also have batch prediction interface, see more at: http://clipper.ai/tutorials
         """
         pass
 
