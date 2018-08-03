@@ -15,6 +15,17 @@ functions. Given an API-compatible R function, Rclipper’s
 This model can then be deployed to Clipper via the [Python
 clipper\_admin package](https://pypi.python.org/pypi/clipper_admin).
 
+Installation
+------------
+You can install rclipper package by cloning Clipper repository
+and run `R CMD INSTALL`:
+```bash
+git clone https://github.com/ucbrise/clipper.git
+cd clipper/containers/R
+R CMD INSTALL rclipper_user
+```
+
+
 Dependencies
 ------------
 
