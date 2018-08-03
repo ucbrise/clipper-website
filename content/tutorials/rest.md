@@ -3,7 +3,7 @@ title= "REST API Documentation"
 date= 2017-09-12T23:45:24-07:00
 description = ""
 toc = false
-weight = 11
+weight = 22
 +++
 
 Both Clipper's management and query interfaces expose a REST API. While we provide the Clipper Admin

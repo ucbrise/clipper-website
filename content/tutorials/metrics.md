@@ -3,7 +3,7 @@ title= "Monitoring Clipper Metrics"
 date= 2018-03-13T10:23:10-07:00
 description = ""
 draft= false
-weight = 10
+weight = 21
 +++
 
 Starting in Clipper v0.3.x, Clipper reports metrics to a [Prometheus](https://prometheus.io/) server.
