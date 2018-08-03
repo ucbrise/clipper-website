@@ -11,7 +11,7 @@ api = Api(
     description=descriptions.api['description'],
     default='admin_addr',
     default_label='Admin Address',
-    version='0.2.0')
+    version='0.3.0')
 query = api.namespace('query_addr')
 
 application_fields = api.model(
@@ -160,8 +160,10 @@ replica_field = api.model(
 
 input_field = query.model(
     'Query Input', {
-        'input': fields.List(fields.Raw(
-                        example=2.3), description='The query input as list.', required=True)
+        'input [OR]': fields.List(fields.Raw(
+                        example=2.3), description='The query input as single string OR list of primitive.', required=True),
+        'input_batch': fields.List(fields.List(fields.Raw(
+                        example=2.3), description='The query input as list of string OR 2d list of primitive.', required=True)),
     }
 )
 
@@ -435,7 +437,9 @@ class Prediect(Resource):
         This can be distinguished by the default field.
         If the default field is True, there will be another field present called "default_explanation" 
         whose value is a string describing the reason that a default response was returned. 
-        This field is not present if default is False. 
+        This field is not present if default is False.
+
+        Starting 0.3.0, we also have batch prediction interface, see more at: clipper.ai/tutorials/batch_predict/
         """
         pass
 
