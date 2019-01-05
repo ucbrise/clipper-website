@@ -17,6 +17,6 @@ For bug reports, feature and documentation requests, general project feedback.
 
 Subscribe for major announcements, project discussion, questions about use cases, and conversation with other users.
 
-## [Request a Slack Invite](mailto:dscrankshaw+clipperslackinvite@gmail.com)
+## [Request a Slack Invite](mailto:xmo@berkeley.edu)
 
 Higher bandwidth discussion for contributors and core development team.
