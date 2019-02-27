@@ -17,6 +17,7 @@ The following tutorial is written in Python. First, we start Clipper.
 import logging, xgboost as xgb, numpy as np
 from clipper_admin import ClipperConnection, DockerContainerManager
 cl = ClipperConnection(DockerContainerManager())
+cl.start_clipper()
 ```
 Next, we must register our application
 ```python
@@ -72,11 +73,11 @@ response = requests.post(
 result = response.json()
 if response.status_code == requests.codes.ok and result["default"]:
      print('A default prediction was returned.')
-     elif response.status_code != requests.codes.ok:
-         print(result)
-         raise BenchmarkException(response.text)
-     else:
-         print('Prediction Returned:', result)
+elif response.status_code != requests.codes.ok:
+    print(result)
+    raise BenchmarkException(response.text)
+else:
+    print('Prediction Returned:', result)
 ```
 You should see something like the following output:
 ```python
