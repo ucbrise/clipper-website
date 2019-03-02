@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.54.0" />
     <meta name="description" content="Guide to deploy XGBoost Models.">
 
 
@@ -493,6 +493,7 @@
 <pre><code class="language-python">import logging, xgboost as xgb, numpy as np
 from clipper_admin import ClipperConnection, DockerContainerManager
 cl = ClipperConnection(DockerContainerManager())
+cl.start_clipper()
 </code></pre>
 
 <p>Next, we must register our application</p>
@@ -555,11 +556,11 @@ response = requests.post(
 result = response.json()
 if response.status_code == requests.codes.ok and result[&quot;default&quot;]:
      print('A default prediction was returned.')
-     elif response.status_code != requests.codes.ok:
-         print(result)
-         raise BenchmarkException(response.text)
-     else:
-         print('Prediction Returned:', result)
+elif response.status_code != requests.codes.ok:
+    print(result)
+    raise BenchmarkException(response.text)
+else:
+    print('Prediction Returned:', result)
 </code></pre>
 
 <p>You should see something like the following output:</p>

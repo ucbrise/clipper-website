@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.54.0" />
     <meta name="description" content="">
 
 
@@ -522,12 +522,8 @@ throughout this guide, we have illustrated how they affect the cluster state.</p
 
 <p>The core of a Clipper cluster consists of four components: the query frontend, the management frontend, the metric server, and the configuration database.</p>
 
-
 <figure>
-    
-        <img src="/images/clipper-structure.png" />
-    
-    
+    <img src="/images/clipper-structure.png"/> 
 </figure>
 
 
@@ -603,12 +599,8 @@ deploy it with: <a href="http://docs.clipper.ai/en/release-0.2/#clipper_admin.Cl
 <p>Clipper deploys each model in its own Docker container. After deploying the model, Clipper uses the
 container manager you provided to start a container for this model and create an RPC connection with the Clipper query frontend, as illustrated below (the changes to the cluster state are highlighted in red).</p>
 
-
 <figure>
-    
-        <img src="/images/deploy_model.png" />
-    
-    
+    <img src="/images/deploy_model.png"/> 
 </figure>
 
 
@@ -643,12 +635,8 @@ Method: POST
 Data Params: {&quot;input&quot;: &lt;input&gt;}
 </code></pre>
 
-
 <figure>
-    
-        <img src="/images/register_app.png" />
-    
-    
+    <img src="/images/register_app.png"/> 
 </figure>
 
 
@@ -658,12 +646,8 @@ Data Params: {&quot;input&quot;: &lt;input&gt;}
 
 <p>You can link a model to an application with <a href="http://docs.clipper.ai/en/release-0.2/#clipper_admin.ClipperConnection.link_model_to_app"><code>ClipperConnection.link_model_to_app</code></a>.</p>
 
-
 <figure>
-    
-        <img src="/images/link_model.png" />
-    
-    
+    <img src="/images/link_model.png"/> 
 </figure>
 
 
@@ -679,12 +663,8 @@ to Clipper cannot be updated or changed. Clipper just treats versions as unique 
 
 <p>When a new version of a model is deployed (through a call to <code>deploy_model</code> or via using one of the model deployers), Clipper will automatically start routing requests to the new version.</p>
 
-
 <figure>
-    
-        <img src="/images/update_model.png" />
-    
-    
+    <img src="/images/update_model.png"/> 
 </figure>
 
 
@@ -694,12 +674,8 @@ to Clipper cannot be updated or changed. Clipper just treats versions as unique 
 
 <p>This just changes which version of the model the application&rsquo;s routes requests to.</p>
 
-
 <figure>
-    
-        <img src="/images/rollback_version.png" />
-    
-    
+    <img src="/images/rollback_version.png"/> 
 </figure>
 
 
@@ -711,12 +687,8 @@ to Clipper cannot be updated or changed. Clipper just treats versions as unique 
 
 <p>If there are currently less than the specified number of replicas active, Clipper will launch more. If there are more than the specified number of replicas, Clipper will stop some.</p>
 
-
 <figure>
-    
-        <img src="/images/add_replicas.png" />
-    
-    
+    <img src="/images/add_replicas.png"/> 
 </figure>
 
 
