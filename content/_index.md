@@ -16,10 +16,22 @@ The simplest way to start using Clipper is to use the Clipper Admin Python tool 
 Read the [container orchestration guide]({{< relref "tutorials/container_managers.md" >}}) to learn about other ways to run Clipper,
 including on Kubernetes.
 
+### Examples
+Check out the link to find detailed examples.
+- Examples dir: https://github.com/ucbrise/clipper/tree/develop/examples
+- Basic example: https://github.com/ucbrise/clipper/tree/develop/examples/basic_query
+- Image query example: https://github.com/ucbrise/clipper/tree/develop/examples/image_query
+- Notebook examples: https://github.com/ucbrise/clipper/tree/develop/examples/frameworks
+- Monitoring: https://github.com/ucbrise/clipper/tree/develop/examples/monitoring
+
 ### Install Clipper
 
 Before starting Clipper, you must have a recent version of [Docker](https://www.docker.com/) and Python installed.
-We recommend installing Clipper into an Anaconda environment. Clipper currently supports Python 2, 3.5, 3.6.
+We recommend installing Clipper into an Anaconda environment. Clipper currently supports Python 2, 3.5, 3.6, and 3.7.
+
+- OS: Clipper supports Linux and MacOS
+- Python 2, 3.5, 3.6, 3.7
+- Version information: https://github.com/ucbrise/clipper/releases
 
 ```sh
 pip install clipper_admin

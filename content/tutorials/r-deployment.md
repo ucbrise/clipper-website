@@ -8,6 +8,7 @@ weight = 5
 
 Rclipper
 --------
+**R clipper is currently not maintained**
 
 Rclipper is a package for building serveable Clipper models from R
 functions. Given an API-compatible R function, Rclipper’s
