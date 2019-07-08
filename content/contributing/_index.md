@@ -11,6 +11,9 @@ chapter = false
 
 Development of Clipper is coordinated through GitHub.
 
+Clipper is under active development. Feel free to raise issues if you have any questions. 
+Also, send us emails for any inquiry clipper-dev@gmail.com
+
 To get started, clone the [repository](https://github.com/ucbrise/clipper)
 including submodules:
 

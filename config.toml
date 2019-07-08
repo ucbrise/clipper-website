@@ -10,7 +10,7 @@ googleAnalytics = "UA-99816998-1"
 pre = "<h3>More</h3>"
 name = "<i class='fa fa-book'></i> API Docs"
 identifier = "apidoc"
-url = "http://docs.clipper.ai"
+url = "http://docs.clipper.ai/en/v0.4.1/"
 weight = 10
 
 [[menu.shortcuts]]
