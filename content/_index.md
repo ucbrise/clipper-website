@@ -17,21 +17,27 @@ Read the [container orchestration guide]({{< relref "tutorials/container_manager
 including on Kubernetes.
 
 ### Examples
-Check out the link to find detailed examples.
-- Examples dir: https://github.com/ucbrise/clipper/tree/develop/examples
-- Basic example: https://github.com/ucbrise/clipper/tree/develop/examples/basic_query
-- Image query example: https://github.com/ucbrise/clipper/tree/develop/examples/image_query
-- Notebook examples: https://github.com/ucbrise/clipper/tree/develop/examples/frameworks
-- Monitoring: https://github.com/ucbrise/clipper/tree/develop/examples/monitoring
+Check out the links below to find detailed examples:
+
+- [All Examples](https://github.com/ucbrise/clipper/tree/develop/examples)
+
+- [Basic Cluster Walkthrough](https://github.com/ucbrise/clipper/tree/develop/examples/basic_query)
+
+- [Querying with Images as Input](https://github.com/ucbrise/clipper/tree/develop/examples/image_query)
+
+- [Using Clipper with ML Frameworks (PyTorch, TensorFlow, XGBoost, etc.)](https://github.com/ucbrise/clipper/tree/develop/examples/frameworks)
+
+- [Custom Metrics & Monitoring](https://github.com/ucbrise/clipper/tree/develop/examples/monitoring)
 
 ### Install Clipper
 
-Before starting Clipper, you must have a recent version of [Docker](https://www.docker.com/) and Python installed.
-We recommend installing Clipper into an Anaconda environment. Clipper currently supports Python 2, 3.5, 3.6, and 3.7.
+Before starting Clipper, you must have a recent version of [Docker](https://www.docker.com/) and Python installed. Clipper currently supports Python 2, 3.5, 3.6, and 3.7. (Future features may not support Python 2.)
 
-- OS: Clipper supports Linux and MacOS
-- Python 2, 3.5, 3.6, 3.7
-- Version information: https://github.com/ucbrise/clipper/releases
+We recommend installing Clipper in an Anaconda environment. 
+
+Please note that Clipper only provides support for devices running Linux or MacOS.
+
+[Version Information](https://github.com/ucbrise/clipper/releases)
 
 ```sh
 pip install clipper_admin
