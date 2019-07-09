@@ -4,7 +4,8 @@ title = "Clipper"
 theme = "hugo-theme-learn"
 # PygmentsCodeFences = true
 PygmentsStyle = "monokai"
-googleAnalytics = "UA-99816998-1"
+# Simon <xmo@berkeley.edu> has the ga account
+googleAnalytics = "UA-143524082-2"
 
 [[menu.shortcuts]]
 pre = "<h3>More</h3>"
